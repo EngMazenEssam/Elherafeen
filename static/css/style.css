@@ -371,6 +371,11 @@ box-shadow: 0 10px 28px rgba(224,27,27,0.22);
   gap: 0.5rem;
   box-shadow: 0 6px 20px rgba(224,27,27,0.12);
 }
+.brand-go::after {
+  content: "↗";
+  font-size: 0.95rem;
+  color: #111;
+}
 
 .product-card:hover {
   transform: translateY(-8px);

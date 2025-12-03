@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Elherafeen — Login</title>
+  <link rel="stylesheet" href="/Elherafeen/static/css/login.css" />
+</head>
+<body>
+  <div class="layout">
+
+   
+   <!-- LEFT: image + overlay container -->
+<section class="split left">
+  <img class="bg" src="/Elherafeen/static/images/other/login page.jpg" alt="engine background">
+
+  <!-- overlay wrap = CONTAINER خارجي تقدر تنقل كله مرة واحدة -->
+ <div class="left-overlay">
+  <div class="left-textbox">
+    <img src="/Elherafeen/static/images/icons/ELHERAFEEN LOGO WHITE- croped.png" class="overlay-logo" alt="Elherafeen Logo">
+<div> 
+    <p class="left-p">Your trusted source for quality car parts</p>
+</div>
+
+  </div>
+</div>
+
+</section>
+
+    <!-- RIGHT: login card (logo, welcome, form) -->
+    <section class="split right">
+      <div class="card">
+        <img src="/Elherafeen/static/images/icons/ELHERAFEEN LOGO BLACK - croped.png" alt="Elherafeen logo" class="logo">
+        <div class="welcome">
+            <h2>Welcome back</h2>
+            <p class="subtitle">Sign in to your Elherafeen account</p>
+
+        </div>
+
+        <form class="form" autocomplete="off" novalidate>
+          <label for="email">Email</label>
+          <input id="email" type="email" placeholder="Enter your email" required>
+
+          <label for="password">Password</label>
+          <div class="pass-row">
+            <input id="password" type="password" placeholder="Enter your password" required>
+            <a class="forgot" href="#">Forgot password?</a>
+          </div>
+
+          <label class="remember">
+            <input type="checkbox" aria-label="Remember me"> Remember me
+          </label>
+
+          <button type="submit" class="btn">Sign In</button>
+
+          <p class="signup">Don't have an account? <a href="/Elherafeen/templates/register.html">register</a></p>
+        </form>
+      </div>
+    </section>
+
+  </div>
+</body>
+</html>

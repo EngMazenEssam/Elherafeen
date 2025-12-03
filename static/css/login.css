@@ -1,0 +1,182 @@
+
+
+
+
+/* Reset + base */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html,body { height: 100%; font-family: Inter, "Helvetica Neue", Arial, sans-serif; background: #f4f6f8; -webkit-font-smoothing:antialiased; }
+a { color: inherit; }
+
+/* Layout: two equal splits */
+.layout {
+  display: flex;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+}
+
+/* each half */
+.split {
+  flex: 1 1 50%;
+  position: relative;
+  min-width: 320px;
+}
+
+/* LEFT: background and new container system */
+.left {
+  overflow: hidden;
+  display: block;
+  position: relative;
+}
+
+/* background as it is */
+.left .bg {
+  width: 100%;
+  height: 100vh;
+  object-fit: cover;
+  display: block;
+  filter: saturate(.95) contrast(.92);
+}
+
+/* OUTER CONTAINER (move this to position text group easily) */
+.left-overlay {
+  position: absolute;
+  /* عدّل هنا مكان الكونتينر كله */
+  left: 30%;
+  bottom: 40%;
+  /* لو عايز تنقله للمنتصف */
+  /* top: 50%; left: 50%; transform: translate(-50%, -50%); */
+  max-width: 70%;
+  z-index: 5;
+}
+
+/* INNER CONTAINER (for background/padding, styling text box) */
+
+/* titles */
+
+.left-textbox {
+  text-align: center;
+  
+}
+
+.left-overlay{
+  text-align: center;
+}
+
+.p-left{
+    text-align: center;
+}
+
+.left-textbox h1 {
+  font-size: 56px;
+  font-weight: 800;
+  margin-bottom: 12px;
+}
+
+.left-textbox p {
+
+
+  color: rgb(255, 255, 255);
+  font-size: 18px;
+  opacity: .95;
+}
+
+.overlay-logo {
+  width: 260px;        /* عدّل الحجم براحتك */
+  max-width: 100%;
+  margin-bottom: 14px;
+  display: block;
+}
+
+
+/* RIGHT: center card */
+.right { display: flex; align-items: center; justify-content: center; padding: 36px; background: #fafafa; }
+.card {
+
+  width: 420px;
+  max-width: 92%;
+  background: #fff;
+  border-radius: 12px;
+  padding: 34px;
+  box-shadow: 0 12px 30px rgba(12,20,40,0.08), 0 4px 8px rgba(0,0,0,0.04);
+  text-align: center;
+  border: 1px solid rgba(0,0,0,0.06);
+}
+
+/* logo above */
+.logo {  
+  width: 150px;
+  object-fit: 
+  contain; 
+  margin: 0 auto 6px; 
+  display: block;
+ }
+
+/* headings */
+.card h2 { font-size: 22px; margin-top: 6px; color: #0b1722; }
+.subtitle { color: #8b94a4; font-size: 13px; margin-bottom: 18px; }
+
+/* form styles */
+.form { text-align: left; margin-top: 6px; }
+.form label { display:block; margin-bottom:6px; font-weight:700; font-size:13px; color:#222; }
+.form input[type="email"],
+.form input[type="password"],
+.form input[type="text"],
+.form input[type="tel"] {
+  width: 100%;
+  padding: 11px 12px;
+  border-radius: 8px;
+  border: 1px solid #e6ecf2;
+  background: #fbfdff;
+  font-size: 15px;
+  outline: none;
+}
+.form input:focus { box-shadow: 0 6px 18px rgba(21,86,216,0.08); border-color: #c7dbff; }
+
+/* password row with forgot link */
+.pass-row { position: relative; }
+.forgot {
+  position: absolute;
+  right: 0;
+  top: -22px;
+  font-size: 12px;
+  color: #1565d8;
+  text-decoration: none;
+}
+
+/* remember row */
+.remember { display: flex; align-items: center; gap:8px; margin-top:10px; font-size: 13px; color:#333; }
+
+/* button */
+.btn {
+  width: 100%;
+  padding: 12px;
+  margin-top: 14px;
+  background: linear-gradient(180deg,#1a1d21,#d81b0e);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(21,86,216,0.18);
+}
+.btn:active { transform: translateY(1px); }
+
+.btn:hover {
+  transform: translateY(-2px);
+  transition: all 0.3s ease;
+}
+
+/* signup link */
+.signup { text-align:center; margin-top: 12px; font-size: 13px; color:#777; }
+.signup a { color: #1565d8; text-decoration: none; }
+
+/* responsive: stack on smaller screens */
+@media (max-width: 900px) {
+  .layout { flex-direction: column; }
+  .left .bg { height: 40vh; }
+  .left-content { bottom: 12%; left: 6%; max-width: 86%; }
+  .left-content h1 { font-size: 36px; }
+  .card { width: 96%; padding: 22px; border-radius: 10px; }
+  .right { padding: 18px; }
+}
