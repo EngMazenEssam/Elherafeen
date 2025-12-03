@@ -6,33 +6,52 @@
   <link rel="stylesheet" href="/Elherafeen/static/css/style.css"> <!-- Temp For Local Testing -->
   <title>Elherafeen Store</title>
 </head>
-<main>
-  <body>
+<body>
+  <main>
   
     <header>
+
       <div class="container">
-      <div class="logo">ELHERAFEEN</div>
-      <nav class="Sections">
-        <a href="#">Section 1</a>
-        <a href="#">Section 2</a>
-        <a href="#">Section 3</a>
-        <a href="#">Section 4</a>
-        <a href="#">Section 5</a>
-      </nav>
-      <div class="icons">
-        <button type="button" class="icon-btn">❤</button>
-        <button type="button" class="icon-btn">🛒</button>
-        <a class="btn auth" href="/login">Login</a>
+        <div class="top-row">
+          
+          <div class="logo"><img src="/Elherafeen/static/images/icons/ELHERAFEEN LOGO BLACK.png" alt="ELHERAFEEN"></div>
+          
+          <div class="search-bar">
+            <input type="search" placeholder="Search for parts">
+          </div>
+
+          <div class="icons">
+          <button type="button" class="icon-btn">❤</button>
+          <button type="button" class="icon-btn">🛒</button>
+          <a class="btn auth" href="/login">Login</a>
+          </div>
+        </div>
+
+        <nav class="sections">
+          <a href="#">Section 1</a>
+          <a href="#">Section 2</a>
+          <a href="#">Section 3</a>
+          <a href="#">Section 4</a>
+          <a href="#">Section 5</a>
+        </nav>
+        
       </div>
-    </div>
+
     </header>
   
     <section class="hero">
-      <h1> Quality Auto Parts for Every Vehicle</h1>
-      <p> Find the perfect parts for your car with fast shipping and expert support. 
-      Over 1 million parts in stock from trusted brands
-      </p>
-      <button type="button">Shop Now</button>
+      <img src="/Elherafeen/static/images/other/Hero background.jpg" alt=""> 
+      <div class="hero-inner">
+        <p class="hook">Up to 40% Off This Week</p>
+        <h1> Quality Auto Parts for Every Vehicle</h1>
+
+        
+        <p class="description">Find the perfect parts for your car with fast shipping and expert support.
+        <br>Over 1 million parts in stock from trusted brands.</p>
+          
+        <a class="btn-ShopNow" href="/products" role="button">Shop Now →</a>
+          
+      </div>
     </section>
   
     <section class = "brands">
@@ -94,6 +113,6 @@
       <h2>Get In Touch</h2>
     </footer>
   
-  </body>
-</main>
+  </main>
+</body>
 </html>
