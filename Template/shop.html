@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ELHERAFEEN - Auto Parts</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8f9fa; }
+        
+        /* Custom Scrollbar for Sidebar */
+        .custom-scroll::-webkit-scrollbar { width: 6px; }
+        .custom-scroll::-webkit-scrollbar-track { background: #1a1a1a; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+        
+        /* Card Hover Effect */
+        .product-card { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        .product-card:hover { transform: translateY(-4px); box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1); }
+        
+        /* Sidebar Link Hover */
+        .sidebar-link:hover { background-color: #333; border-left: 4px solid #ef4444; padding-left: 16px; }
+        .sidebar-link { transition: all 0.2s; border-left: 4px solid transparent; }
+        .sidebar-link.active { background-color: #333; border-left: 4px solid #ef4444; padding-left: 16px; font-weight: 600; }
+
+        /* Loader */
+        .loader { border-top-color: #ef4444; -webkit-animation: spinner 1.5s linear infinite; animation: spinner 1.5s linear infinite; }
+        @keyframes spinner { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <!-- Header -->
+    <header class="bg-white border-b border-gray-200 sticky top-0 z-50">
+        <div class="container mx-auto px-6 h-20 flex items-center justify-between">
+            <!-- Logo -->
+            <div class="flex items-center">
+                <h1 class="text-2xl font-bold tracking-widest text-gray-900">ELHERAFEEN</h1>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="hidden md:flex flex-1 mx-12">
+                <div class="relative w-full max-w-xl mx-auto">
+                    <span class="absolute inset-y-0 left-0 pl-3 flex items-center">
+                        <i class="fas fa-search text-gray-400"></i>
+                    </span>
+                    <input type="text" id="searchInput" placeholder="Search for parts..." 
+                           class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 bg-gray-50 text-sm transition-colors">
+                </div>
+            </div>
+
+            <!-- Icons -->
+            <div class="flex items-center space-x-6">
+                <button class="text-gray-600 hover:text-red-500 transition"><i class="far fa-user text-xl"></i></button>
+                <button class="text-gray-600 hover:text-red-500 transition relative">
+                    <i class="fas fa-shopping-cart text-xl"></i>
+                    <span id="cartCount" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center opacity-0 transition-opacity">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Layout -->
+    <div class="container mx-auto px-6 py-8 flex flex-col lg:flex-row gap-8">
+        
+        <!-- Sidebar (Desktop) -->
+        <aside class="hidden lg:block w-64 flex-shrink-0">
+            <div class="bg-[#1a1a1a] text-gray-300 rounded-lg overflow-hidden shadow-lg sticky top-24">
+                <div class="px-5 py-4 border-b border-gray-700 bg-[#111]">
+                    <h3 class="text-white font-bold tracking-wider text-sm uppercase">Categories</h3>
+                </div>
+                <nav class="flex flex-col py-2 custom-scroll max-h-[calc(100vh-200px)] overflow-y-auto" id="sidebarCategories">
+                    <!-- Categories injected by JS -->
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Mobile Filter Toggle -->
+        <div class="lg:hidden mb-4">
+            <button onclick="document.getElementById('mobileMenu').classList.toggle('hidden')" class="w-full bg-[#1a1a1a] text-white py-3 px-4 rounded-lg flex justify-between items-center">
+                <span>Browse Categories</span>
+                <i class="fas fa-chevron-down"></i>
+            </button>
+            <div id="mobileMenu" class="hidden bg-[#1a1a1a] text-gray-300 mt-2 rounded-lg p-2">
+                <div id="mobileCategories"></div>
+            </div>
+        </div>
+
+        <!-- Product Grid -->
+        <main class="flex-1">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-bold text-gray-800" id="categoryTitle">All Products</h2>
+                <span class="text-sm text-gray-500" id="resultCount">Showing 0 results</span>
+            </div>
+
+            <!-- Loader -->
+            <div id="loader" class="flex justify-center py-20 hidden">
+                <div class="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-12 w-12"></div>
+            </div>
+
+            <!-- Grid Container -->
+            <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
+                <!-- Products injected by JS -->
+            </div>
+        </main>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed bottom-5 right-5 bg-gray-900 text-white px-6 py-3 rounded-lg shadow-xl transform translate-y-20 opacity-0 transition-all duration-300 z-50 flex items-center gap-3">
+        <i class="fas fa-check-circle text-green-400"></i>
+        <span>Added to cart</span>
+    </div>
+
+    <script>
+        // --- 1. DATASETS (From your prompt generation) ---
+        
+        const categoriesData = {
+            "Engine": ["SILZKGR8B8S", "W712/95", "941006"],
+            "Brakes": ["0986494019", "09.A448.11", "GDB3332"],
+            "Electrical": ["574012068", "439864", "64210"],
+            "Suspension": ["339031", "2991601", "376045SP"],
+            "Cooling": ["221-3600", "KP15680XS", "TX1887D"],
+            "Fluids": ["152566", "15D5B8", "550046646"]
+        };
+
+        const inventoryData = {
+            "SELLER_01": {
+                "products": [
+                    { "oem": "152566", "name": "Mobil 1 FS x1 5W-40 Synthetic Oil", "category": "Fluids", "brand": "Mobil 1", "price": 850, "currency": "EGP", "images": ["placeholder"] },
+                    { "oem": "09.A448.11", "name": "Brembo Coated Disc Brake Rotor", "category": "Brakes", "brand": "Brembo", "price": 2400, "currency": "EGP", "images": ["placeholder"] },
+                    { "oem": "574012068", "name": "Varta Silver Dynamic E11 Battery", "category": "Electrical", "brand": "Varta", "price": 3500, "currency": "EGP", "images": ["placeholder"] },
+                    { "oem": "339031", "name": "KYB Excel-G Gas Strut", "category": "Suspension", "brand": "KYB", "price": 2100, "currency": "EGP", "images": ["placeholder"] },
+                    { "oem": "KP15680XS", "name": "Gates Water Pump Kit", "category": "Cooling", "brand": "Gates", "price": 1850, "currency": "EGP", "images": ["placeholder"] },
+                    { "oem": "64210", "name": "Osram Night Breaker H7", "category": "Electrical", "brand": "Osram", "price": 450, "currency": "EGP", "images": ["placeholder"] }
+                ]
+            },
+            "SELLER_02": {
+                "products": [
+                    { "oem": "0986494019", "name": "Bosch Disc Brake Pads", "category": "Brakes", "brand": "Bosch", "price": 1150, "currency": "EGP", "images": ["placeholder"] },
+                    { "oem": "221-3600", "name": "Denso Radiator Assembly", "category": "Cooling", "brand": "Denso", "price": 4200, "currency": "EGP", "images": ["placeholder"] },
+                    { "oem": "SILZKGR8B8S", "name": "NGK Laser Iridium Spark Plug", "category": "Engine", "brand": "NGK", "price": 900, "currency": "EGP", "images": ["placeholder"] },
+                    { "oem": "15D5B8", "name": "Castrol React DOT 4", "category": "Fluids", "brand": "Castrol", "price": 150, "currency": "EGP", "images": ["placeholder"] },
+                    { "oem": "2991601", "name": "Lemförder Control Arm", "category": "Suspension", "brand": "Lemförder", "price": 3100, "currency": "EGP", "images": ["placeholder"] },
+                    { "oem": "941006", "name": "Dayco Timing Belt", "category": "Engine", "brand": "Dayco", "price": 600, "currency": "EGP", "images": ["placeholder"] }
+                ]
+            },
+            "SELLER_03": {
+                "products": [
+                    { "oem": "376045SP", "name": "Monroe OESpectrum Rear Shock", "category": "Suspension", "brand": "Monroe", "price": 1350, "currency": "EGP", "images": ["placeholder"] },
+                    { "oem": "W712/95", "name": "Mann-Filter Oil Filter", "category": "Engine", "brand": "Mann", "price": 250, "currency": "EGP", "images": ["placeholder"] },
+                    { "oem": "439864", "name": "Valeo Alternator 14V", "category": "Electrical", "brand": "Valeo", "price": 1800, "currency": "EGP", "images": ["placeholder"] },
+                    { "oem": "550046646", "name": "Shell Helix Ultra 5W-30", "category": "Fluids", "brand": "Shell", "price": 950, "currency": "EGP", "images": ["placeholder"] },
+                    { "oem": "TX1887D", "name": "Mahle Thermostat", "category": "Cooling", "brand": "Mahle", "price": 550, "currency": "EGP", "images": ["placeholder"] },
+                    { "oem": "GDB3332", "name": "TRW Brake Pad Set", "category": "Brakes", "brand": "TRW", "price": 890, "currency": "EGP", "images": ["placeholder"] }
+                ]
+            }
+        };
+
+        // --- 2. LOGIC: Flatten Inventory to create a Master Product List ---
+        let allProducts = [];
+        
+        Object.values(inventoryData).forEach(seller => {
+            seller.products.forEach(p => {
+                // Add a random ID for keys
+                p.id = Math.random().toString(36).substr(2, 9);
+                allProducts.push(p);
+            });
+        });
+
+        // --- 3. DOM ELEMENTS ---
+        const productGrid = document.getElementById('productGrid');
+        const sidebar = document.getElementById('sidebarCategories');
+        const mobileCategories = document.getElementById('mobileCategories');
+        const searchInput = document.getElementById('searchInput');
+        const resultCount = document.getElementById('resultCount');
+        const categoryTitle = document.getElementById('categoryTitle');
+        const toast = document.getElementById('toast');
+        const cartCountEl = document.getElementById('cartCount');
+        let cartTotal = 0;
+
+        // --- 4. FUNCTIONS ---
+
+        // Helper: Get generic image based on category
+        function getImage(category) {
+            // These are placeholder SVG representations for demo purposes
+            const colors = {
+                'Engine': 'bg-gray-200 text-gray-600',
+                'Brakes': 'bg-red-100 text-red-500',
+                'Electrical': 'bg-yellow-100 text-yellow-600',
+                'Suspension': 'bg-blue-100 text-blue-500',
+                'Cooling': 'bg-cyan-100 text-cyan-500',
+                'Fluids': 'bg-amber-100 text-amber-600'
+            };
+            const icons = {
+                'Engine': 'fa-cogs',
+                'Brakes': 'fa-compact-disc',
+                'Electrical': 'fa-bolt',
+                'Suspension': 'fa-spring', // font awesome doesn't have spring, using text fallback
+                'Cooling': 'fa-fan',
+                'Fluids': 'fa-oil-can'
+            };
+
+            const bgClass = colors[category] || 'bg-gray-100 text-gray-500';
+            const iconClass = icons[category] || 'fa-box';
+
+            return `
+                <div class="h-48 w-full ${bgClass} flex items-center justify-center">
+                    <i class="fas ${iconClass} text-6xl opacity-80"></i>
+                </div>
+            `;
+        }
+
+        function renderProducts(products) {
+            productGrid.innerHTML = '';
+            resultCount.textContent = `Showing ${products.length} results`;
+
+            if (products.length === 0) {
+                productGrid.innerHTML = `
+                    <div class="col-span-full text-center py-10">
+                        <i class="fas fa-search text-gray-300 text-5xl mb-4"></i>
+                        <p class="text-gray-500 text-lg">No parts found matching your criteria.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            products.forEach(product => {
+                const card = document.createElement('div');
+                card.className = 'product-card bg-white rounded-lg overflow-hidden border border-gray-100 flex flex-col h-full relative group';
+                
+                // Construct HTML
+                card.innerHTML = `
+                    <div class="relative overflow-hidden">
+                        ${getImage(product.category)}
+                        <span class="absolute top-2 right-2 bg-black bg-opacity-70 text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">
+                            ${product.condition || 'New'}
+                        </span>
+                    </div>
+                    
+                    <div class="p-4 flex flex-col flex-1">
+                        <div class="mb-2">
+                            <span class="text-xs font-bold text-gray-400 uppercase tracking-wide">${product.brand}</span>
+                            <h3 class="text-gray-800 font-semibold text-sm leading-snug mt-1 h-10 overflow-hidden line-clamp-2" title="${product.name}">${product.name}</h3>
+                        </div>
+                        
+                        <div class="mt-auto pt-4 flex items-center justify-between">
+                            <div>
+                                <span class="block text-xs text-gray-400">Price</span>
+                                <span class="text-lg font-bold text-gray-900">${product.price} <span class="text-xs font-normal">${product.currency}</span></span>
+                            </div>
+                        </div>
+
+                        <button onclick="addToCart('${product.name}')" class="mt-4 w-full bg-[#ef4444] hover:bg-red-600 text-white text-sm font-medium py-2.5 rounded shadow-sm transition-colors flex items-center justify-center gap-2">
+                            <i class="fas fa-shopping-cart text-xs"></i> Add to Cart
+                        </button>
+                    </div>
+                `;
+                productGrid.appendChild(card);
+            });
+        }
+
+        function renderSidebar() {
+            const allLink = document.createElement('a');
+            allLink.href = "#";
+            allLink.className = "sidebar-link active block px-5 py-3 text-sm font-medium text-gray-300 hover:text-white";
+            allLink.textContent = "All Products";
+            allLink.onclick = (e) => filterCategory(e, 'All');
+            
+            sidebar.appendChild(allLink);
+            // Clone for mobile
+            mobileCategories.appendChild(allLink.cloneNode(true));
+            mobileCategories.lastChild.onclick = (e) => filterCategory(e, 'All');
+
+            Object.keys(categoriesData).forEach(cat => {
+                const link = document.createElement('a');
+                link.href = "#";
+                link.className = "sidebar-link block px-5 py-3 text-sm font-medium text-gray-300 hover:text-white capitalize";
+                link.textContent = cat;
+                link.onclick = (e) => filterCategory(e, cat);
+                sidebar.appendChild(link);
+                
+                // Clone for mobile
+                const mobileLink = link.cloneNode(true);
+                mobileLink.onclick = (e) => filterCategory(e, cat);
+                mobileCategories.appendChild(mobileLink);
+            });
+        }
+
+        function filterCategory(e, category) {
+            e.preventDefault();
+            
+            // Update Active State
+            document.querySelectorAll('.sidebar-link').forEach(el => el.classList.remove('active'));
+            if(e.target.classList.contains('sidebar-link')) {
+                 e.target.classList.add('active');
+            }
+
+            // Update Title
+            categoryTitle.textContent = category === 'All' ? 'All Products' : category;
+
+            // Filter Logic
+            if (category === 'All') {
+                renderProducts(allProducts);
+            } else {
+                const filtered = allProducts.filter(p => p.category === category);
+                renderProducts(filtered);
+            }
+
+            // Close mobile menu if open
+            document.getElementById('mobileMenu').classList.add('hidden');
+        }
+
+        function addToCart(productName) {
+            cartTotal++;
+            cartCountEl.textContent = cartTotal;
+            cartCountEl.classList.remove('opacity-0');
+            
+            // Toast Animation
+            toast.querySelector('span').textContent = `${productName} added to cart`;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+
+        // --- 5. INITIALIZATION ---
+        
+        // Search Functionality
+        searchInput.addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            const filtered = allProducts.filter(p => 
+                p.name.toLowerCase().includes(term) || 
+                p.brand.toLowerCase().includes(term) ||
+                p.oem.toLowerCase().includes(term)
+            );
+            categoryTitle.textContent = term ? `Search results for "${term}"` : "All Products";
+            renderProducts(filtered);
+        });
+
+        // Initialize
+        renderSidebar();
+        renderProducts(allProducts);
+
+    </script>
+</body>
+</html>

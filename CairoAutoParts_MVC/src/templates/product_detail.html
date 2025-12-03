@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ product.name }} - ELHERAFEEN</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>body { font-family: 'Inter', sans-serif; background-color: #f8f9fa; }</style>
+</head>
+<body class="text-gray-800">
+    <!-- Header -->
+    <header class="bg-white border-b border-gray-200 sticky top-0 z-50">
+        <div class="container mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="/" class="text-2xl font-bold tracking-widest text-gray-900">ELHERAFEEN</a>
+            <div class="flex items-center space-x-6">
+                <a href="/" class="text-gray-600 hover:text-red-500 font-medium">Home</a>
+                <button class="text-gray-600 hover:text-red-500 relative"><i class="fas fa-shopping-cart text-xl"></i></button>
+            </div>
+        </div>
+    </header>
+
+    <div class="container mx-auto px-6 py-10">
+        <!-- Breadcrumb -->
+        <nav class="text-sm text-gray-500 mb-8">
+            <a href="/" class="hover:text-red-500">Home</a> <span class="mx-2">/</span>
+            <span class="hover:text-red-500">{{ product.category }}</span> <span class="mx-2">/</span>
+            <span class="text-gray-900 font-medium">{{ product.name }}</span>
+        </nav>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 bg-white p-8 rounded-xl shadow-sm border border-gray-100">
+            <!-- Left: Image Section -->
+            <div class="space-y-4">
+                {% set icons = {'Engine': 'fa-cogs', 'Brakes': 'fa-compact-disc', 'Electrical': 'fa-bolt', 'Suspension': 'fa-spring', 'Cooling': 'fa-fan', 'Fluids': 'fa-oil-can'} %}
+                {% set colors = {'Engine': 'bg-gray-200 text-gray-600', 'Brakes': 'bg-red-50 text-red-500', 'Electrical': 'bg-yellow-50 text-yellow-600', 'Suspension': 'bg-blue-50 text-blue-500', 'Cooling': 'bg-cyan-50 text-cyan-500', 'Fluids': 'bg-amber-50 text-amber-600'} %}
+                
+                <div class="aspect-square w-full rounded-xl {{ colors[product.category] }} flex items-center justify-center relative overflow-hidden group">
+                    <i class="fas {{ icons[product.category] or 'fa-box' }} text-9xl opacity-80 transition transform group-hover:scale-110 duration-500"></i>
+                    <div class="absolute top-4 left-4">
+                         <span class="bg-black text-white text-xs font-bold px-3 py-1 rounded uppercase tracking-wider">{{ product.condition }}</span>
+                    </div>
+                </div>
+                <!-- Thumbnails (Simulated) -->
+                <div class="grid grid-cols-3 gap-4">
+                    <div class="aspect-square rounded-lg bg-gray-50 border border-gray-200 cursor-pointer hover:border-red-500 transition flex items-center justify-center"><i class="fas fa-camera text-gray-300"></i></div>
+                    <div class="aspect-square rounded-lg bg-gray-50 border border-gray-200 cursor-pointer hover:border-red-500 transition flex items-center justify-center"><i class="fas fa-box-open text-gray-300"></i></div>
+                    <div class="aspect-square rounded-lg bg-gray-50 border border-gray-200 cursor-pointer hover:border-red-500 transition flex items-center justify-center"><i class="fas fa-tag text-gray-300"></i></div>
+                </div>
+            </div>
+
+            <!-- Right: Details Section -->
+            <div class="flex flex-col">
+                <div class="mb-1 text-sm font-bold text-red-500 uppercase tracking-wider">{{ product.brand }}</div>
+                <h1 class="text-3xl font-bold text-gray-900 mb-2">{{ product.name }}</h1>
+                <div class="flex items-center space-x-2 mb-6 text-sm">
+                    <div class="flex text-yellow-400 text-xs">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <span class="text-gray-500">({{ product.sold_count }} sold)</span>
+                    <span class="text-gray-300">|</span>
+                    <span class="text-gray-500">OEM: <span class="font-mono text-gray-700">{{ product.oem }}</span></span>
+                </div>
+
+                <div class="text-3xl font-bold text-gray-900 mb-6">{{ product.price }} <span class="text-lg font-normal text-gray-500">{{ product.currency }}</span></div>
+
+                <div class="prose prose-sm text-gray-600 mb-8">
+                    <p>{{ product.description }}</p>
+                </div>
+
+                <!-- Add to Cart / Actions -->
+                <div class="space-y-4 mt-auto">
+                    <div class="flex items-center space-x-4">
+                         <div class="flex items-center border border-gray-300 rounded-lg">
+                            <button class="px-4 py-2 hover:bg-gray-100 transition" onclick="updateQty(-1)">-</button>
+                            <span id="qty" class="px-4 font-bold">1</span>
+                            <button class="px-4 py-2 hover:bg-gray-100 transition" onclick="updateQty(1)">+</button>
+                        </div>
+                        <div class="text-sm text-green-600 font-medium"><i class="fas fa-check-circle mr-1"></i> In Stock ({{ product.stock }})</div>
+                    </div>
+
+                    <div class="flex gap-4">
+                        <button class="flex-1 bg-black text-white py-4 rounded-lg font-bold hover:bg-gray-800 transition flex items-center justify-center gap-2">
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                        </button>
+                        <button class="w-14 h-14 border border-gray-300 rounded-lg flex items-center justify-center hover:bg-gray-50 hover:text-red-500 transition">
+                            <i class="far fa-heart text-xl"></i>
+                        </button>
+                    </div>
+                    <button class="w-full border-2 border-gray-200 text-gray-700 font-bold py-3 rounded-lg hover:border-gray-900 hover:text-black transition">Buy Now</button>
+                </div>
+                
+                <div class="mt-8 pt-8 border-t border-gray-100 space-y-3 text-sm text-gray-500">
+                    <div class="flex items-center gap-3"><i class="fas fa-truck text-gray-400 w-5"></i> Free shipping on orders over 1000 EGP</div>
+                    <div class="flex items-center gap-3"><i class="fas fa-undo text-gray-400 w-5"></i> 30-Day Returns Policy</div>
+                    <div class="flex items-center gap-3"><i class="fas fa-shield-alt text-gray-400 w-5"></i> 1 Year Warranty included</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Description / Specs Tabs -->
+        <div class="mt-12 bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+            <div class="flex border-b border-gray-200 bg-gray-50">
+                <button class="px-8 py-4 font-bold text-gray-900 bg-white border-t-2 border-red-500">Description</button>
+                <button class="px-8 py-4 font-medium text-gray-500 hover:text-gray-800">Specifications</button>
+                <button class="px-8 py-4 font-medium text-gray-500 hover:text-gray-800">Reviews (3)</button>
+            </div>
+            <div class="p-8">
+                <h3 class="text-lg font-bold mb-4">Product Description</h3>
+                <p class="text-gray-600 mb-4">{{ product.description }}</p>
+                <p class="text-gray-600">The {{ product.brand }} {{ product.name }} is engineered to meet or exceed OEM specifications. Designed for durability and performance, it is the perfect choice for your vehicle maintenance needs.</p>
+                
+                <h3 class="text-lg font-bold mt-8 mb-4">Key Features</h3>
+                <ul class="list-disc list-inside space-y-2 text-gray-600">
+                    <li>Brand: {{ product.brand }}</li>
+                    <li>Type: {{ product.type }}</li>
+                    <li>Category: {{ product.category }}</li>
+                    <li>Condition: {{ product.condition }}</li>
+                    <li>Seller: {{ product.seller_name }}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function updateQty(change) {
+            const el = document.getElementById('qty');
+            let val = parseInt(el.textContent);
+            val = Math.max(1, Math.min(val + change, {{ product.stock }}));
+            el.textContent = val;
+        }
+    </script>
+</body>
+</html>
