@@ -166,6 +166,8 @@ header {
   font-weight: 700;
   text-decoration: none;
   box-shadow: 0 8px 24px rgba(224, 27, 27, 0.101);
+  transform: translateY(-2);
+  transition: all 0.3s ease ;
 }
 
 .btn-ShopNow:hover {
