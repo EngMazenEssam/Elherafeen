@@ -48,10 +48,8 @@
                 <div class="brand-text" style="color:var(--primary-color); font-size:0.875rem;">{{ product.brand }}</div>
                 <h1 class="detail-title">{{ product.name }}</h1>
                 <div class="rating">
-                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
-                    <span style="color:#6b7280; margin-left:0.5rem">({{ product.sold_count }} sold)</span>
-                    <span style="color:#d1d5db; margin:0 0.5rem">|</span>
-                    <span style="color:#6b7280">OEM: <b>{{ product.oem }}</b></span>
+                    <span style="color: #f59e0b; margin-right: 0.5rem;">★★★★★</span>
+                    <span style="color: #6b7280; font-size: 0.875rem;">{{ product.sold_count }} sold</span>
                 </div>
 
                 <div class="detail-price">{{ product.price }} <span class="currency" style="font-size:1.25rem">{{ product.currency }}</span></div>
@@ -60,27 +58,29 @@
                     <p>{{ product.description }}</p>
                 </div>
 
-                <div class="actions">
-                    <div class="qty-row">
-                        <div class="qty-selector">
-                            <button class="qty-btn" onclick="updateQty(-1)">-</button>
-                            <span id="qty" class="qty-val">1</span>
-                            <button class="qty-btn" onclick="updateQty(1)">+</button>
+                <form method="post" action="/add-to-cart" style="margin-top: 1.5rem;">
+                    <div class="actions">
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <label for="qty" style="font-weight: 600;">Quantity:</label>
+                            <select id="qty" name="quantity" style="padding: 0.5rem; border: 1px solid #d1d5db; border-radius: 0.375rem;">
+                                {% for i in range(1, product.stock + 1) %}
+                                <option value="{{ i }}" {% if i == 1 %}selected{% endif %}>{{ i }}</option>
+                                {% endfor %}
+                            </select>
+                            <span style="color: #6b7280; font-size: 0.875rem;">{{ product.stock }} available</span>
                         </div>
-                        <div class="stock-status"><i class="fas fa-check-circle"></i> In Stock ({{ product.stock }})</div>
+                        <input type="hidden" name="product_id" value="{{ product.id }}">
+                        <button type="submit" style="margin-top: 1rem; padding: 0.75rem 2rem; background-color: var(--primary-color); color: white; border: none; border-radius: 0.375rem; cursor: pointer; font-weight: 600;">
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                        </button>
                     </div>
-
-                    <div class="cart-row">
-                        <button class="btn-add"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
-                        <button style="width:50px; border:1px solid #d1d5db; border-radius:0.5rem; color:#4b5563"><i class="far fa-heart"></i></button>
-                    </div>
-                    <button class="btn-buy">Buy Now</button>
-                </div>
+                </form>
                 
                 <div style="margin-top:2rem; padding-top:1.5rem; border-top:1px solid #f3f4f6; color:#6b7280; font-size:0.875rem; display:flex; flex-direction:column; gap:0.75rem;">
-                    <div><i class="fas fa-truck" style="width:20px"></i> Free shipping on orders over 1000 EGP</div>
-                    <div><i class="fas fa-undo" style="width:20px"></i> 30-Day Returns Policy</div>
-                    <div><i class="fas fa-shield-alt" style="width:20px"></i> 1 Year Warranty included</div>
+                    <div><strong style="color: var(--text-main);">OEM:</strong> {{ product.oem }}</div>
+                    <div><strong style="color: var(--text-main);">Seller:</strong> {{ product.seller_name }}</div>
+                    <div><strong style="color: var(--text-main);">Category:</strong> {{ product.category }}</div>
+                    <div><strong style="color: var(--text-main);">Type:</strong> {{ product.type }}</div>
                 </div>
             </div>
         </div>
@@ -99,22 +99,14 @@
                 <h3>Key Features</h3>
                 <ul style="padding-left:1.5rem">
                     <li>Brand: {{ product.brand }}</li>
-                    <li>Type: {{ product.type }}</li>
-                    <li>Category: {{ product.category }}</li>
                     <li>Condition: {{ product.condition }}</li>
-                    <li>Seller: {{ product.seller_name }}</li>
+                    <li>Category: {{ product.category }}</li>
+                    <li>Type: {{ product.type }}</li>
+                    <li>Tags: {{ ', '.join(product.tags) }}</li>
                 </ul>
             </div>
         </div>
     </div>
 
-    <script>
-        function updateQty(change) {
-            const el = document.getElementById('qty');
-            let val = parseInt(el.textContent);
-            val = Math.max(1, Math.min(val + change, {{ product.stock }}));
-            el.textContent = val;
-        }
-    </script>
 </body>
 </html>
