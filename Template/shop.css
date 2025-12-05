@@ -1,4 +1,4 @@
-/* PAGE LAYOUT */
+PAGE LAYOUT
 .shop-container {
     display: grid;
     grid-template-columns: 260px auto;

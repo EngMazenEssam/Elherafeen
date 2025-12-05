@@ -61,6 +61,137 @@ cars_data = {
   }
 }
 
+# --- CSS CONTENT (New) ---
+
+CSS_CONTENT = """
+:root {
+    --primary-color: #ef4444; /* Red */
+    --primary-hover: #dc2626;
+    --dark-bg: #1a1a1a;
+    --light-bg: #f8f9fa;
+    --text-main: #1f2937;
+    --text-muted: #6b7280;
+    --border: #e5e7eb;
+    --white: #ffffff;
+}
+
+body { font-family: 'Inter', sans-serif; background-color: var(--light-bg); margin: 0; color: var(--text-main); }
+* { box-sizing: border-box; }
+a { text-decoration: none; color: inherit; }
+button { cursor: pointer; border: none; background: none; }
+
+/* Layout Utilities */
+.container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.items-center { align-items: center; }
+.justify-between { justify-content: space-between; }
+.gap-6 { gap: 1.5rem; }
+.gap-8 { gap: 2rem; }
+.mt-auto { margin-top: auto; }
+.w-full { width: 100%; }
+.hidden { display: none; }
+
+/* Header */
+header { background: var(--white); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 50; height: 80px; display: flex; align-items: center; }
+.header-wrapper { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+.logo { font-size: 1.5rem; font-weight: 700; letter-spacing: 0.1em; color: #111; }
+
+.search-container { position: relative; flex: 1; max-width: 500px; margin: 0 2rem; }
+.search-input { width: 100%; padding: 0.5rem 1rem 0.5rem 2.5rem; border: 1px solid #d1d5db; border-radius: 0.5rem; background-color: #f9fafb; outline: none; }
+.search-input:focus { border-color: var(--primary-color); }
+.search-icon { position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); color: #9ca3af; }
+
+.nav-icons { display: flex; gap: 1.5rem; align-items: center; }
+.nav-icon { font-size: 1.25rem; color: #4b5563; transition: color 0.2s; position: relative; }
+.nav-icon:hover { color: var(--primary-color); }
+.badge { position: absolute; top: -8px; right: -8px; background: var(--primary-color); color: white; font-size: 0.7rem; font-weight: bold; height: 18px; width: 18px; border-radius: 50%; display: flex; justify-content: center; align-items: center; }
+
+/* Main Layout */
+.main-layout { display: flex; gap: 2rem; padding-top: 2rem; padding-bottom: 2rem; }
+
+/* Sidebar */
+aside { width: 250px; flex-shrink: 0; display: none; }
+@media (min-width: 1024px) { aside { display: block; } }
+
+.sidebar-box { background-color: var(--dark-bg); border-radius: 0.5rem; overflow: hidden; position: sticky; top: 100px; }
+.sidebar-header { padding: 1rem 1.25rem; background-color: #111; border-bottom: 1px solid #374151; }
+.sidebar-title { color: white; font-weight: bold; font-size: 0.875rem; text-transform: uppercase; margin: 0; }
+.sidebar-nav { padding: 0.5rem 0; max-height: calc(100vh - 200px); overflow-y: auto; }
+.sidebar-link { display: block; padding: 0.75rem 1.25rem; color: #d1d5db; border-left: 4px solid transparent; transition: all 0.2s; }
+.sidebar-link:hover { background-color: #333; border-left-color: var(--primary-color); padding-left: 1.5rem; }
+.sidebar-link.active { background-color: #333; border-left-color: var(--primary-color); padding-left: 1.5rem; font-weight: 600; color: white; }
+
+/* Product Grid */
+main { flex: 1; }
+.page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+.page-title { font-size: 1.25rem; font-weight: 700; margin: 0; }
+.result-count { font-size: 0.875rem; color: var(--text-muted); }
+
+.grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.5rem; }
+
+.product-card { background: white; border: 1px solid #f3f4f6; border-radius: 0.5rem; overflow: hidden; display: flex; flex-direction: column; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; }
+.product-card:hover { transform: translateY(-4px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
+
+.card-img-wrapper { position: relative; height: 180px; display: flex; justify-content: center; align-items: center; }
+.card-badge { position: absolute; top: 0.5rem; right: 0.5rem; background: rgba(0,0,0,0.7); color: white; font-size: 0.7rem; font-weight: bold; padding: 0.25rem 0.5rem; border-radius: 0.25rem; text-transform: uppercase; }
+.card-icon { font-size: 4rem; opacity: 0.7; }
+
+.card-body { padding: 1rem; display: flex; flex-direction: column; flex: 1; }
+.brand-text { font-size: 0.75rem; font-weight: 700; color: #9ca3af; text-transform: uppercase; }
+.product-name { font-size: 0.95rem; font-weight: 600; margin: 0.25rem 0; line-height: 1.4; height: 2.8em; overflow: hidden; }
+.card-footer { margin-top: auto; padding-top: 1rem; display: flex; justify-content: space-between; align-items: center; }
+.price { font-size: 1.125rem; font-weight: 700; color: #111; }
+.currency { font-size: 0.75rem; font-weight: 400; color: #6b7280; }
+.btn-icon { background-color: var(--primary-color); color: white; padding: 0.5rem; border-radius: 9999px; transition: background 0.2s; }
+.btn-icon:hover { background-color: var(--primary-hover); }
+
+/* Detail Page */
+.breadcrumb { margin-bottom: 2rem; font-size: 0.875rem; color: var(--text-muted); }
+.breadcrumb a:hover { color: var(--primary-color); }
+.detail-container { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; background: white; padding: 2rem; border-radius: 0.75rem; border: 1px solid #f3f4f6; }
+@media(max-width: 768px) { .detail-container { grid-template-columns: 1fr; } }
+
+.detail-img-box { border-radius: 0.75rem; display: flex; justify-content: center; align-items: center; aspect-ratio: 1/1; position: relative; }
+.detail-icon { font-size: 8rem; opacity: 0.8; }
+.thumbnails { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1rem; }
+.thumb { aspect-ratio: 1/1; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 0.5rem; display: flex; justify-content: center; align-items: center; color: #d1d5db; }
+
+.detail-info { display: flex; flex-direction: column; }
+.detail-title { font-size: 1.875rem; font-weight: 700; margin: 0 0 0.5rem 0; }
+.rating { color: #fbbf24; font-size: 0.875rem; margin-bottom: 1.5rem; }
+.detail-price { font-size: 2rem; font-weight: 700; margin-bottom: 1.5rem; }
+.description { color: #4b5563; line-height: 1.6; margin-bottom: 2rem; }
+
+.actions { margin-top: auto; }
+.qty-row { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+.qty-selector { display: flex; border: 1px solid #d1d5db; border-radius: 0.5rem; overflow: hidden; }
+.qty-btn { padding: 0.5rem 1rem; background: #f9fafb; transition: background 0.2s; }
+.qty-btn:hover { background: #e5e7eb; }
+.qty-val { padding: 0.5rem 1rem; font-weight: bold; min-width: 40px; text-align: center; }
+.stock-status { color: #16a34a; font-weight: 500; font-size: 0.875rem; }
+
+.cart-row { display: flex; gap: 1rem; margin-bottom: 1rem; }
+.btn-add { flex: 1; background: #111; color: white; padding: 1rem; border-radius: 0.5rem; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 0.5rem; transition: background 0.2s; }
+.btn-add:hover { background: #333; }
+.btn-buy { width: 100%; border: 2px solid #e5e7eb; padding: 0.75rem; border-radius: 0.5rem; font-weight: bold; color: #374151; transition: all 0.2s; }
+.btn-buy:hover { border-color: #111; color: #111; }
+
+.features-box { margin-top: 3rem; background: white; border-radius: 0.75rem; border: 1px solid #f3f4f6; overflow: hidden; }
+.tabs { display: flex; border-bottom: 1px solid #e5e7eb; background: #f9fafb; }
+.tab { padding: 1rem 2rem; font-weight: 500; color: #6b7280; }
+.tab.active { background: white; border-top: 2px solid var(--primary-color); color: #111; font-weight: 700; }
+.tab-content { padding: 2rem; color: #4b5563; }
+
+/* Colors Helpers (for categories) */
+.bg-gray-200 { background-color: #e5e7eb; color: #4b5563; }
+.bg-red-50 { background-color: #fef2f2; color: #ef4444; }
+.bg-yellow-50 { background-color: #fefce8; color: #d97706; }
+.bg-blue-50 { background-color: #eff6ff; color: #3b82f6; }
+.bg-cyan-50 { background-color: #ecfeff; color: #06b6d4; }
+.bg-amber-50 { background-color: #fffbeb; color: #d97706; }
+"""
+
 # --- FILE CONTENT STRINGS ---
 
 MODEL_PY_CONTENT = """
@@ -148,59 +279,48 @@ HTML_INDEX_CONTENT = """
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ELHERAFEEN - Auto Parts</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Inter', sans-serif; background-color: #f8f9fa; }
-        .custom-scroll::-webkit-scrollbar { width: 6px; }
-        .custom-scroll::-webkit-scrollbar-track { background: #1a1a1a; }
-        .custom-scroll::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
-        .product-card { transition: transform 0.2s ease, box-shadow 0.2s ease; cursor: pointer; }
-        .product-card:hover { transform: translateY(-4px); box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1); }
-        .sidebar-link.active { background-color: #333; border-left: 4px solid #ef4444; padding-left: 16px; font-weight: 600; }
-        .sidebar-link { transition: all 0.2s; border-left: 4px solid transparent; }
-        .sidebar-link:hover { background-color: #333; border-left: 4px solid #ef4444; padding-left: 16px; }
-    </style>
 </head>
-<body class="text-gray-800">
+<body>
 
-    <header class="bg-white border-b border-gray-200 sticky top-0 z-50">
-        <div class="container mx-auto px-6 h-20 flex items-center justify-between">
-            <h1 class="text-2xl font-bold tracking-widest text-gray-900">ELHERAFEEN</h1>
-            <div class="hidden md:flex flex-1 mx-12 relative max-w-xl">
-                <span class="absolute inset-y-0 left-0 pl-3 flex items-center"><i class="fas fa-search text-gray-400"></i></span>
-                <input type="text" id="searchInput" placeholder="Search..." class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-red-500 bg-gray-50">
+    <header>
+        <div class="container header-wrapper">
+            <a href="/" class="logo">ELHERAFEEN</a>
+            <div class="search-container">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" id="searchInput" placeholder="Search..." class="search-input">
             </div>
-            <div class="flex items-center space-x-6">
-                <button class="text-gray-600 hover:text-red-500"><i class="far fa-user text-xl"></i></button>
-                <button class="text-gray-600 hover:text-red-500 relative">
-                    <i class="fas fa-shopping-cart text-xl"></i>
-                    <span id="cartCount" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center opacity-0 transition-opacity">0</span>
+            <div class="nav-icons">
+                <button class="nav-icon"><i class="far fa-user"></i></button>
+                <button class="nav-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span id="cartCount" class="badge" style="display:none">0</span>
                 </button>
             </div>
         </div>
     </header>
 
-    <div class="container mx-auto px-6 py-8 flex flex-col lg:flex-row gap-8">
-        <aside class="hidden lg:block w-64 flex-shrink-0">
-            <div class="bg-[#1a1a1a] text-gray-300 rounded-lg overflow-hidden shadow-lg sticky top-24">
-                <div class="px-5 py-4 border-b border-gray-700 bg-[#111]"><h3 class="text-white font-bold text-sm uppercase">Categories</h3></div>
-                <nav class="flex flex-col py-2 custom-scroll max-h-[calc(100vh-200px)] overflow-y-auto">
-                    <a href="#" class="sidebar-link active block px-5 py-3 text-sm font-medium text-gray-300 hover:text-white" onclick="filterCategory(event, 'All')">All Products</a>
+    <div class="container main-layout">
+        <aside>
+            <div class="sidebar-box">
+                <div class="sidebar-header"><h3 class="sidebar-title">Categories</h3></div>
+                <nav class="sidebar-nav">
+                    <a href="#" class="sidebar-link active" onclick="filterCategory(event, 'All')">All Products</a>
                     {% for cat in categories %}
-                    <a href="#" class="sidebar-link block px-5 py-3 text-sm font-medium text-gray-300 hover:text-white capitalize" onclick="filterCategory(event, '{{ cat }}')">{{ cat }}</a>
+                    <a href="#" class="sidebar-link" onclick="filterCategory(event, '{{ cat }}')">{{ cat }}</a>
                     {% endfor %}
                 </nav>
             </div>
         </aside>
 
-        <main class="flex-1">
-            <div class="flex justify-between items-center mb-6">
-                <h2 class="text-xl font-bold text-gray-800" id="categoryTitle">All Products</h2>
-                <span class="text-sm text-gray-500" id="resultCount">Showing {{ products|length }} results</span>
+        <main>
+            <div class="page-header">
+                <h2 class="page-title" id="categoryTitle">All Products</h2>
+                <span class="result-count" id="resultCount">Showing {{ products|length }} results</span>
             </div>
-            <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6"></div>
+            <div id="productGrid" class="grid-container"></div>
         </main>
     </div>
 
@@ -212,8 +332,8 @@ HTML_INDEX_CONTENT = """
 
         function getImage(category) {
             const icons = {'Engine': 'fa-cogs', 'Brakes': 'fa-compact-disc', 'Electrical': 'fa-bolt', 'Suspension': 'fa-spring', 'Cooling': 'fa-fan', 'Fluids': 'fa-oil-can'};
-            const colors = {'Engine': 'bg-gray-200 text-gray-600', 'Brakes': 'bg-red-100 text-red-500', 'Electrical': 'bg-yellow-100 text-yellow-600', 'Suspension': 'bg-blue-100 text-blue-500', 'Cooling': 'bg-cyan-100 text-cyan-500', 'Fluids': 'bg-amber-100 text-amber-600'};
-            return `<div class="h-48 w-full ${colors[category]||'bg-gray-100'} flex items-center justify-center"><i class="fas ${icons[category]||'fa-box'} text-6xl opacity-80"></i></div>`;
+            const colors = {'Engine': 'bg-gray-200', 'Brakes': 'bg-red-50', 'Electrical': 'bg-yellow-50', 'Suspension': 'bg-blue-50', 'Cooling': 'bg-cyan-50', 'Fluids': 'bg-amber-50'};
+            return `<div class="card-img-wrapper ${colors[category]||'bg-gray-200'}"><i class="fas ${icons[category]||'fa-box'} card-icon"></i></div>`;
         }
 
         function renderProducts(products) {
@@ -221,21 +341,19 @@ HTML_INDEX_CONTENT = """
             resultCount.textContent = `Showing ${products.length} results`;
             products.forEach(p => {
                 const card = document.createElement('div');
-                card.className = 'product-card bg-white rounded-lg overflow-hidden border border-gray-100 flex flex-col h-full relative group';
-                // Link to product detail page
+                card.className = 'product-card';
                 card.onclick = () => window.location.href = `/product/${p.id}`;
                 card.innerHTML = `
-                    <div class="relative overflow-hidden">${getImage(p.category)}
-                        <span class="absolute top-2 right-2 bg-black bg-opacity-70 text-white text-[10px] font-bold px-2 py-1 rounded uppercase">${p.condition}</span>
+                    <div style="position:relative">
+                        ${getImage(p.category)}
+                        <span class="card-badge">${p.condition}</span>
                     </div>
-                    <div class="p-4 flex flex-col flex-1">
-                        <div class="mb-2">
-                            <span class="text-xs font-bold text-gray-400 uppercase">${p.brand}</span>
-                            <h3 class="text-gray-800 font-semibold text-sm mt-1 h-10 overflow-hidden line-clamp-2">${p.name}</h3>
-                        </div>
-                        <div class="mt-auto pt-4 flex justify-between items-center">
-                            <div><span class="block text-xs text-gray-400">Price</span><span class="text-lg font-bold text-gray-900">${p.price} <span class="text-xs font-normal">${p.currency}</span></span></div>
-                            <button class="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition shadow-sm"><i class="fas fa-shopping-cart text-sm"></i></button>
+                    <div class="card-body">
+                        <span class="brand-text">${p.brand}</span>
+                        <h3 class="product-name">${p.name}</h3>
+                        <div class="card-footer">
+                            <div><span class="price">${p.price} <span class="currency">${p.currency}</span></span></div>
+                            <button class="btn-icon"><i class="fas fa-shopping-cart"></i></button>
                         </div>
                     </div>`;
                 productGrid.appendChild(card);
@@ -251,7 +369,7 @@ HTML_INDEX_CONTENT = """
         }
 
         renderProducts(allProducts);
-        // Basic search
+        
         document.getElementById('searchInput').addEventListener('input', (e) => {
             const term = e.target.value.toLowerCase();
             renderProducts(allProducts.filter(p => p.name.toLowerCase().includes(term) || p.oem.toLowerCase().includes(term)));
@@ -268,114 +386,100 @@ HTML_DETAIL_CONTENT = """
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ product.name }} - ELHERAFEEN</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>body { font-family: 'Inter', sans-serif; background-color: #f8f9fa; }</style>
 </head>
-<body class="text-gray-800">
-    <!-- Header -->
-    <header class="bg-white border-b border-gray-200 sticky top-0 z-50">
-        <div class="container mx-auto px-6 h-20 flex items-center justify-between">
-            <a href="/" class="text-2xl font-bold tracking-widest text-gray-900">ELHERAFEEN</a>
-            <div class="flex items-center space-x-6">
-                <a href="/" class="text-gray-600 hover:text-red-500 font-medium">Home</a>
-                <button class="text-gray-600 hover:text-red-500 relative"><i class="fas fa-shopping-cart text-xl"></i></button>
+<body>
+    <header>
+        <div class="container header-wrapper">
+            <a href="/" class="logo">ELHERAFEEN</a>
+            <div class="nav-icons">
+                <a href="/" class="nav-icon" style="font-size:1rem; text-decoration:none">Home</a>
+                <button class="nav-icon"><i class="fas fa-shopping-cart"></i></button>
             </div>
         </div>
     </header>
 
-    <div class="container mx-auto px-6 py-10">
-        <!-- Breadcrumb -->
-        <nav class="text-sm text-gray-500 mb-8">
-            <a href="/" class="hover:text-red-500">Home</a> <span class="mx-2">/</span>
-            <span class="hover:text-red-500">{{ product.category }}</span> <span class="mx-2">/</span>
-            <span class="text-gray-900 font-medium">{{ product.name }}</span>
+    <div class="container" style="padding-top:2rem; padding-bottom:4rem;">
+        <nav class="breadcrumb">
+            <a href="/">Home</a> <span>/</span>
+            <span>{{ product.category }}</span> <span>/</span>
+            <span style="color:var(--text-main); font-weight:500">{{ product.name }}</span>
         </nav>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 bg-white p-8 rounded-xl shadow-sm border border-gray-100">
-            <!-- Left: Image Section -->
-            <div class="space-y-4">
+        <div class="detail-container">
+            <!-- Left: Images -->
+            <div>
                 {% set icons = {'Engine': 'fa-cogs', 'Brakes': 'fa-compact-disc', 'Electrical': 'fa-bolt', 'Suspension': 'fa-spring', 'Cooling': 'fa-fan', 'Fluids': 'fa-oil-can'} %}
-                {% set colors = {'Engine': 'bg-gray-200 text-gray-600', 'Brakes': 'bg-red-50 text-red-500', 'Electrical': 'bg-yellow-50 text-yellow-600', 'Suspension': 'bg-blue-50 text-blue-500', 'Cooling': 'bg-cyan-50 text-cyan-500', 'Fluids': 'bg-amber-50 text-amber-600'} %}
+                {% set colors = {'Engine': 'bg-gray-200', 'Brakes': 'bg-red-50', 'Electrical': 'bg-yellow-50', 'Suspension': 'bg-blue-50', 'Cooling': 'bg-cyan-50', 'Fluids': 'bg-amber-50'} %}
                 
-                <div class="aspect-square w-full rounded-xl {{ colors[product.category] }} flex items-center justify-center relative overflow-hidden group">
-                    <i class="fas {{ icons[product.category] or 'fa-box' }} text-9xl opacity-80 transition transform group-hover:scale-110 duration-500"></i>
-                    <div class="absolute top-4 left-4">
-                         <span class="bg-black text-white text-xs font-bold px-3 py-1 rounded uppercase tracking-wider">{{ product.condition }}</span>
-                    </div>
+                <div class="detail-img-box {{ colors[product.category] }}">
+                    <i class="fas {{ icons[product.category] or 'fa-box' }} detail-icon"></i>
+                    <span class="card-badge" style="top:1rem; left:1rem; right:auto;">{{ product.condition }}</span>
                 </div>
-                <!-- Thumbnails (Simulated) -->
-                <div class="grid grid-cols-3 gap-4">
-                    <div class="aspect-square rounded-lg bg-gray-50 border border-gray-200 cursor-pointer hover:border-red-500 transition flex items-center justify-center"><i class="fas fa-camera text-gray-300"></i></div>
-                    <div class="aspect-square rounded-lg bg-gray-50 border border-gray-200 cursor-pointer hover:border-red-500 transition flex items-center justify-center"><i class="fas fa-box-open text-gray-300"></i></div>
-                    <div class="aspect-square rounded-lg bg-gray-50 border border-gray-200 cursor-pointer hover:border-red-500 transition flex items-center justify-center"><i class="fas fa-tag text-gray-300"></i></div>
+                <div class="thumbnails">
+                    <div class="thumb"><i class="fas fa-camera"></i></div>
+                    <div class="thumb"><i class="fas fa-box-open"></i></div>
+                    <div class="thumb"><i class="fas fa-tag"></i></div>
                 </div>
             </div>
 
-            <!-- Right: Details Section -->
-            <div class="flex flex-col">
-                <div class="mb-1 text-sm font-bold text-red-500 uppercase tracking-wider">{{ product.brand }}</div>
-                <h1 class="text-3xl font-bold text-gray-900 mb-2">{{ product.name }}</h1>
-                <div class="flex items-center space-x-2 mb-6 text-sm">
-                    <div class="flex text-yellow-400 text-xs">
-                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
-                    </div>
-                    <span class="text-gray-500">({{ product.sold_count }} sold)</span>
-                    <span class="text-gray-300">|</span>
-                    <span class="text-gray-500">OEM: <span class="font-mono text-gray-700">{{ product.oem }}</span></span>
+            <!-- Right: Info -->
+            <div class="detail-info">
+                <div class="brand-text" style="color:var(--primary-color); font-size:0.875rem;">{{ product.brand }}</div>
+                <h1 class="detail-title">{{ product.name }}</h1>
+                <div class="rating">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                    <span style="color:#6b7280; margin-left:0.5rem">({{ product.sold_count }} sold)</span>
+                    <span style="color:#d1d5db; margin:0 0.5rem">|</span>
+                    <span style="color:#6b7280">OEM: <b>{{ product.oem }}</b></span>
                 </div>
 
-                <div class="text-3xl font-bold text-gray-900 mb-6">{{ product.price }} <span class="text-lg font-normal text-gray-500">{{ product.currency }}</span></div>
+                <div class="detail-price">{{ product.price }} <span class="currency" style="font-size:1.25rem">{{ product.currency }}</span></div>
 
-                <div class="prose prose-sm text-gray-600 mb-8">
+                <div class="description">
                     <p>{{ product.description }}</p>
                 </div>
 
-                <!-- Add to Cart / Actions -->
-                <div class="space-y-4 mt-auto">
-                    <div class="flex items-center space-x-4">
-                         <div class="flex items-center border border-gray-300 rounded-lg">
-                            <button class="px-4 py-2 hover:bg-gray-100 transition" onclick="updateQty(-1)">-</button>
-                            <span id="qty" class="px-4 font-bold">1</span>
-                            <button class="px-4 py-2 hover:bg-gray-100 transition" onclick="updateQty(1)">+</button>
+                <div class="actions">
+                    <div class="qty-row">
+                        <div class="qty-selector">
+                            <button class="qty-btn" onclick="updateQty(-1)">-</button>
+                            <span id="qty" class="qty-val">1</span>
+                            <button class="qty-btn" onclick="updateQty(1)">+</button>
                         </div>
-                        <div class="text-sm text-green-600 font-medium"><i class="fas fa-check-circle mr-1"></i> In Stock ({{ product.stock }})</div>
+                        <div class="stock-status"><i class="fas fa-check-circle"></i> In Stock ({{ product.stock }})</div>
                     </div>
 
-                    <div class="flex gap-4">
-                        <button class="flex-1 bg-black text-white py-4 rounded-lg font-bold hover:bg-gray-800 transition flex items-center justify-center gap-2">
-                            <i class="fas fa-shopping-cart"></i> Add to Cart
-                        </button>
-                        <button class="w-14 h-14 border border-gray-300 rounded-lg flex items-center justify-center hover:bg-gray-50 hover:text-red-500 transition">
-                            <i class="far fa-heart text-xl"></i>
-                        </button>
+                    <div class="cart-row">
+                        <button class="btn-add"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
+                        <button style="width:50px; border:1px solid #d1d5db; border-radius:0.5rem; color:#4b5563"><i class="far fa-heart"></i></button>
                     </div>
-                    <button class="w-full border-2 border-gray-200 text-gray-700 font-bold py-3 rounded-lg hover:border-gray-900 hover:text-black transition">Buy Now</button>
+                    <button class="btn-buy">Buy Now</button>
                 </div>
                 
-                <div class="mt-8 pt-8 border-t border-gray-100 space-y-3 text-sm text-gray-500">
-                    <div class="flex items-center gap-3"><i class="fas fa-truck text-gray-400 w-5"></i> Free shipping on orders over 1000 EGP</div>
-                    <div class="flex items-center gap-3"><i class="fas fa-undo text-gray-400 w-5"></i> 30-Day Returns Policy</div>
-                    <div class="flex items-center gap-3"><i class="fas fa-shield-alt text-gray-400 w-5"></i> 1 Year Warranty included</div>
+                <div style="margin-top:2rem; padding-top:1.5rem; border-top:1px solid #f3f4f6; color:#6b7280; font-size:0.875rem; display:flex; flex-direction:column; gap:0.75rem;">
+                    <div><i class="fas fa-truck" style="width:20px"></i> Free shipping on orders over 1000 EGP</div>
+                    <div><i class="fas fa-undo" style="width:20px"></i> 30-Day Returns Policy</div>
+                    <div><i class="fas fa-shield-alt" style="width:20px"></i> 1 Year Warranty included</div>
                 </div>
             </div>
         </div>
 
-        <!-- Description / Specs Tabs -->
-        <div class="mt-12 bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-            <div class="flex border-b border-gray-200 bg-gray-50">
-                <button class="px-8 py-4 font-bold text-gray-900 bg-white border-t-2 border-red-500">Description</button>
-                <button class="px-8 py-4 font-medium text-gray-500 hover:text-gray-800">Specifications</button>
-                <button class="px-8 py-4 font-medium text-gray-500 hover:text-gray-800">Reviews (3)</button>
+        <div class="features-box">
+            <div class="tabs">
+                <div class="tab active">Description</div>
+                <div class="tab">Specifications</div>
+                <div class="tab">Reviews (3)</div>
             </div>
-            <div class="p-8">
-                <h3 class="text-lg font-bold mb-4">Product Description</h3>
-                <p class="text-gray-600 mb-4">{{ product.description }}</p>
-                <p class="text-gray-600">The {{ product.brand }} {{ product.name }} is engineered to meet or exceed OEM specifications. Designed for durability and performance, it is the perfect choice for your vehicle maintenance needs.</p>
+            <div class="tab-content">
+                <h3 style="margin-top:0;">Product Description</h3>
+                <p>{{ product.description }}</p>
+                <p>The {{ product.brand }} {{ product.name }} is engineered to meet or exceed OEM specifications. Designed for durability and performance.</p>
                 
-                <h3 class="text-lg font-bold mt-8 mb-4">Key Features</h3>
-                <ul class="list-disc list-inside space-y-2 text-gray-600">
+                <h3>Key Features</h3>
+                <ul style="padding-left:1.5rem">
                     <li>Brand: {{ product.brand }}</li>
                     <li>Type: {{ product.type }}</li>
                     <li>Category: {{ product.category }}</li>
@@ -402,7 +506,7 @@ README_CONTENT = """
 # CSAI 203 Course Project - Team ELHERAFEEN
 
 ## Description
-This is an Auto Parts E-commerce system built with Flask and HTML/TailwindCSS.
+This is an Auto Parts E-commerce system built with Flask and HTML/CSS (No frameworks).
 It implements the MVC architecture.
 
 ## How to Run
@@ -442,11 +546,14 @@ def generate_files():
     write_file("src/controllers.py", CONTROLLER_PY_CONTENT)
     write_file("src/app.py", APP_PY_CONTENT)
 
-    # 3. HTML Views
+    # 3. HTML Views (Now without Tailwind)
     write_file("src/templates/index.html", HTML_INDEX_CONTENT)
     write_file("src/templates/product_detail.html", HTML_DETAIL_CONTENT)
 
-    # 4. Meta
+    # 4. Static Assets (New)
+    write_file("src/static/style.css", CSS_CONTENT)
+
+    # 5. Meta
     write_file("README.md", README_CONTENT)
     write_file("deployment/requirements.txt", "flask\npytest")
     write_file("tests/test_basic.py", "def test_dummy(): assert True")
@@ -455,5 +562,5 @@ def generate_files():
 if __name__ == "__main__":
     create_structure()
     generate_files()
-    print("\\n✅ Project regenerated with Product Details Page!")
+    print("\\n✅ Project regenerated with Pure CSS and Product Details Page!")
     print(f"Go to '{PROJECT_ROOT}/src' and run 'python app.py'")

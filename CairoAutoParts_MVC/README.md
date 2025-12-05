@@ -1,7 +1,7 @@
 # CSAI 203 Course Project - Team ELHERAFEEN
 
 ## Description
-This is an Auto Parts E-commerce system built with Flask and HTML/TailwindCSS.
+This is an Auto Parts E-commerce system built with Flask and HTML/CSS (No frameworks).
 It implements the MVC architecture.
 
 ## How to Run
