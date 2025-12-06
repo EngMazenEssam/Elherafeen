@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ELHERAFEEN - Auto Parts</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/Ali.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header>
+        <div class="container header-wrapper">
+            <a href="{{ url_for('home.home') }}" class="logo">ELHERAFEEN</a>
+            <form method="get" action="{{ url_for('product.product_list') }}" class="search-container">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" name="search" placeholder="Search..." class="search-input" value="{{ search_term }}">
+            </form>
+            <div class="nav-icons">
+                <button type="button" class="nav-icon"><i class="far fa-user"></i></button>
+                <button type="button" class="nav-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span id="cartCount" class="badge" style="display:none">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="container main-layout">
+        <aside>
+            <div class="sidebar-box">
+                <div class="sidebar-header"><h3 class="sidebar-title">Categories</h3></div>
+                <nav class="sidebar-nav">
+                    <a href="{{ url_for('product.product_list', category='All', search=search_term) }}" class="sidebar-link {% if selected_category == 'All' %}active{% endif %}">All Products</a>
+                    {% for cat in categories %}
+                    <a href="{{ url_for('product.product_list', category=cat, search=search_term) }}" class="sidebar-link {% if selected_category == cat %}active{% endif %}">{{ cat }}</a>
+                    {% endfor %}
+                </nav>
+            </div>
+        </aside>
+
+        <main>
+            <div class="page-header">
+                <h2 class="page-title" id="categoryTitle">
+                    {% if search_term %}
+                        Search Results: "{{ search_term }}"
+                    {% elif selected_category == 'All' %}
+                        All Products
+                    {% else %}
+                        {{ selected_category }}
+                    {% endif %}
+                </h2>
+                <span class="result-count" id="resultCount">Showing {{ products|length }} results</span>
+            </div>
+            <div id="productGrid" class="grid-container">
+                {% if products %}
+                    {% for product in products %}
+                    <div class="product-card" onclick="window.location.href='{{ url_for('product.product_detail', product_id=product.id) }}'">
+                        <div style="position:relative">
+                            <div class="card-img-wrapper {% if product.category == 'Engine' %}bg-gray-200{% elif product.category == 'Brakes' %}bg-red-50{% elif product.category == 'Electrical' %}bg-yellow-50{% elif product.category == 'Suspension' %}bg-blue-50{% elif product.category == 'Cooling' %}bg-cyan-50{% elif product.category == 'Fluids' %}bg-amber-50{% else %}bg-gray-200{% endif %}">
+                                {% if product.category == 'Engine' %}<i class="fas fa-cogs card-icon"></i>{% elif product.category == 'Brakes' %}<i class="fas fa-compact-disc card-icon"></i>{% elif product.category == 'Electrical' %}<i class="fas fa-bolt card-icon"></i>{% elif product.category == 'Suspension' %}<i class="fas fa-spring card-icon"></i>{% elif product.category == 'Cooling' %}<i class="fas fa-fan card-icon"></i>{% elif product.category == 'Fluids' %}<i class="fas fa-oil-can card-icon"></i>{% else %}<i class="fas fa-box card-icon"></i>{% endif %}
+                            </div>
+                            <span class="card-badge">{{ product.condition }}</span>
+                        </div>
+                        <div class="card-body">
+                            <span class="brand-text">{{ product.brand }}</span>
+                            <h3 class="product-name">{{ product.name }}</h3>
+                            <div class="card-footer">
+                                <div><span class="price">{{ product.price }} <span class="currency">{{ product.currency }}</span></span></div>
+                                <button type="button" class="btn-icon"><i class="fas fa-shopping-cart"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 3rem;">
+                        <p style="color: #9ca3af; font-size: 1rem;">No products found</p>
+                    </div>
+                {% endif %}
+            </div>
+        </main>
+    </div>
+
+</body>
+</html>

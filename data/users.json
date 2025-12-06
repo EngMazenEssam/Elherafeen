@@ -1,0 +1,16 @@
+[
+  {
+    "id": "f7ac4cb7-63a0-4af1-8ae9-72c83446b2cb",
+    "fullname": "Mazen Essam",
+    "email": "mazenessam@gmail.com",
+    "phone": "01143454630",
+    "password_hash": "5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5"
+  },
+  {
+    "id": "b3f9cc10-ae3b-4911-9da8-7ab0cc54bc02",
+    "fullname": "Mazen Essam",
+    "email": "mezaessam@gmail.com",
+    "phone": "01118621010",
+    "password_hash": "fe2592b42a727e977f055947385b709cc82b16b9a87f88c6abf3900d65d0cdc3"
+  }
+]

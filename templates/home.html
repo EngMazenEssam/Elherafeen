@@ -2,213 +2,173 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">  For Flask -->
-  <link rel="stylesheet" href="/Elherafeen/static/css/Home.css"> <!-- Temp For Local Testing -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/Home.css') }}">
   <title>Elherafeen Store</title>
 </head>
 <body>
   <main>
-  
     <header>
-
       <div class="container">
         <div class="top-row">
-          
-          <div class="logo"><img src="/Elherafeen/static/images/icons/ELHERAFEEN LOGO BLACK.png" alt="ELHERAFEEN"></div>
-          
+          <div class="logo">
+            <img src="{{ url_for('static', filename='images/icons/ELHERAFEEN LOGO BLACK.png') }}" alt="ELHERAFEEN">
+          </div>
           <div class="search-bar">
             <input type="search" placeholder="Search for parts">
           </div>
-
           <div class="icons">
-          <button type="button" class="icon-btn">❤</button>
-          <button type="button" class="icon-btn">🛒</button>
-          <a class="btn auth" href="/Elherafeen/templates/login.html">Login</a>
+            <button type="button" class="icon-btn">❤</button>
+            <a href="{{ url_for('cart.cart') }}" class="icon-btn" aria-label="View cart">🛒</a>
+            <a class="btn auth" href="/login">Login</a>
           </div>
         </div>
-
         <nav class="sections">
-          <a href="#">Section 1</a>
-          <a href="#">Section 2</a>
+          <a href="{{ url_for('home.home') }}">Home</a>
+          <a href="{{ url_for('product.product_list') }}">All Products</a>
           <a href="#">Section 3</a>
           <a href="#">Section 4</a>
           <a href="#">Section 5</a>
         </nav>
-        
       </div>
-
     </header>
-  
+
     <section class="hero">
-      <img src="/Elherafeen/static/images/other/11.jpeg" alt=""> 
+      <img src="{{ url_for('static', filename='images/other/11.jpeg') }}" alt="">
       <div class="hero-inner">
         <p class="hook">Up to 40% Off This Week</p>
-        <h1> Quality Auto Parts for Every Vehicle</h1>
-
-        
-        <p class="description">Find the perfect parts for your car with fast shipping and expert support.
-        <br>Over 1 million parts in stock from trusted brands.</p>
-          
-        <a class="btn-ShopNow" href="/products" role="button">Shop Now →</a>
-          
+        <h1>Quality Auto Parts for Every Vehicle</h1>
+        <p class="description">
+          Find the perfect parts for your car with fast shipping and expert support.
+          <br>Over 1 million parts in stock from trusted brands.
+        </p>
+        <a class="btn-ShopNow" href="{{ url_for('product.product_list') }}" role="button">Shop Now →</a>
       </div>
     </section>
-  
-    <section class = "brands">
+
+    <section class="brands">
       <div class="shop">
         <h2>Shop by Brand</h2>
-        <p> Browse our extensive selection of auto parts organized by category</p>
+        <p>Browse our extensive selection of auto parts organized by category</p>
       </div>
       <div class="brand-grid">
-
-        <a href="/brands/benz" class="brand-link">
-          <figure class="brand-card">
-          
-          <img src="/Elherafeen/static/images/brands/Benz Card.png" alt="Audi">
-          <figcaption>Benz</figcaption>
-          <button class="brand-go" aria-label="View Audi products"></button>
-        </figure>
-        </a>
-        <a href="/brands/benz" class="brand-link">
-          <figure class="brand-card">
-          
-          <img src="/Elherafeen/static/images/brands/Benz Card.png" alt="Audi">
-          <figcaption>Benz</figcaption>
-          <button class="brand-go" aria-label="View Audi products"></button>
-        </figure>
-        </a>
-        <a href="/brands/benz" class="brand-link">
-          <figure class="brand-card">
-          
-          <img src="/Elherafeen/static/images/brands/Benz Card.png" alt="Audi">
-          <figcaption>Benz</figcaption>
-          <button class="brand-go" aria-label="View Audi products"></button>
-        </figure>
-        </a>
-        <a href="/brands/benz" class="brand-link">
-          <figure class="brand-card">
-          
-          <img src="/Elherafeen/static/images/brands/Benz Card.png" alt="Audi">
-          <figcaption>Benz</figcaption>
-          <button class="brand-go" aria-label="View Audi products"></button>
-        </figure>
-        </a>
-        <a href="/brands/benz" class="brand-link">
-          <figure class="brand-card">
-          
-          <img src="/Elherafeen/static/images/brands/Benz Card.png" alt="Audi">
-          <figcaption>Benz</figcaption>
-          <button class="brand-go" aria-label="View Audi products"></button>
-        </figure>
-        </a>
-        <a href="/brands/benz" class="brand-link">
-          <figure class="brand-card">
-          
-          <img src="/Elherafeen/static/images/brands/Benz Card.png" alt="Audi">
-          <figcaption>Benz</figcaption>
-          <button class="brand-go" aria-label="View Audi products"></button>
-        </figure>
-        </a>
-        <a href="/brands/benz" class="brand-link">
-          <figure class="brand-card">
-          
-          <img src="/Elherafeen/static/images/brands/Benz Card.png" alt="Audi">
-          <figcaption>Benz</figcaption>
-          <button class="brand-go" aria-label="View Audi products"></button>
-        </figure>
-        </a>
-        <a href="/brands/benz" class="brand-link">
-          <figure class="brand-card">
-          
-          <img src="/Elherafeen/static/images/brands/Benz Card.png" alt="Audi">
-          <figcaption>Benz</figcaption>
-          <button class="brand-go" aria-label="View Audi products"></button>
-        </figure>
-        </a>
-        
-        
+        {% for i in range(8) %}
+          <a href="/brands/benz" class="brand-link">
+            <figure class="brand-card">
+              <img src="{{ url_for('static', filename='images/brands/Benz Card.png') }}" alt="Benz">
+              <figcaption>Benz</figcaption>
+              <button class="brand-go" aria-label="View Benz products"></button>
+            </figure>
+          </a>
+        {% endfor %}
       </div>
     </section>
-  
-<section class="featured-products">
-  <div class="featured-header-inner">
-    <div class="featured-title">
-      <h2>Featured Products</h2>
-      <p class="featured-sub">Top-rated parts from trusted brands</p>
-    </div>
 
-    <a class="btn view-all" href="/products" aria-label="View all products">View All</a>
-  </div>
-
-  <div class="product-grid">
-    <!-- Card 1 -->
-    <article class="product-card" data-id="p001">
-      <div class="product-media">
-        <img src="/Elherafeen/static/images/products/Premium Brake Disc Set.jpg" alt="Premium Brake Disc Set" loading="lazy">
-      </div>
-      <div class="product-body">
-        <p class="product-brand">BrakeMaster</p>
-        <h3 class="product-title">Premium Brake Disc Set</h3>
-        <div class="price-row">
-          <span class="product-price">$199.99</span>
-          <button type="button" class="btn add-to-cart" aria-label="Add Premium Brake Disc Set to cart">🛒 Add to Cart</button>
+    <section class="featured-products">
+      <div class="featured-header-inner">
+        <div class="featured-title">
+          <h2>Featured Products</h2>
+          <p class="featured-sub">Top-rated parts from trusted brands</p>
         </div>
+        <a class="btn view-all" href="{{ url_for('product.product_list') }}" aria-label="View all products">View All</a>
       </div>
-    </article>
 
-    <!-- Card 2 -->
-    <article class="product-card" data-id="p002">
-      <div class="product-media">
-        <img src="/Elherafeen/static/images/products/High Performance Air Filter.jpg" alt="High Performance Air Filter" loading="lazy">
-      </div>
-      <div class="product-body">
-        <p class="product-brand">AirFlow Pro</p>
-        <h3 class="product-title">High Performance Air Filter</h3>
-        <div class="price-row">
-          <span class="product-price">$99.99</span>
-          <button type="button" class="btn add-to-cart" aria-label="Add High Performance Air Filter to cart">🛒 Add to Cart</button>
-        </div>
-      </div>
-    </article>
+      <div class="product-grid">
+        <article class="product-card" data-id="p001">
+          <div class="product-media">
+            <img src="{{ url_for('static', filename='images/products/Premium Brake Disc Set.jpg') }}" alt="Premium Brake Disc Set" loading="lazy">
+          </div>
+          <div class="product-body">
+            <p class="product-brand">BrakeMaster</p>
+            <h3 class="product-title">Premium Brake Disc Set</h3>
+            <div class="price-row">
+              <span class="product-price">2400 EGP</span>
+              <button type="button" class="btn add-to-cart" data-oem="09.A448.11" aria-label="Add Premium Brake Disc Set to cart">
+                🛒 Add to Cart
+              </button>
+            </div>
+          </div>
+        </article>
 
-    <!-- Card 3 -->
-    <article class="product-card" data-id="p003">
-      <div class="product-media">
-        <img src="/Elherafeen/static/images/products/Premium All-Season Tire.jpg" alt="Premium Tire" loading="lazy">
-      </div>
-      <div class="product-body">
-        <p class="product-brand">BrakeMaster</p>
-        <h3 class="product-title">Premium Tire</h3>
-        <div class="price-row">
-          <span class="product-price">$80.50</span>
-          <button type="button" class="btn add-to-cart" aria-label="Add Premium Tire to cart">🛒 Add to Cart</button>
-        </div>
-      </div>
-    </article>
+        <article class="product-card" data-id="p002">
+          <div class="product-media">
+            <img src="{{ url_for('static', filename='images/products/High Performance Air Filter.jpg') }}" alt="High Performance Air Filter" loading="lazy">
+          </div>
+          <div class="product-body">
+            <p class="product-brand">AirFlow Pro</p>
+            <h3 class="product-title">High Performance Air Filter</h3>
+            <div class="price-row">
+              <span class="product-price">850 EGP</span>
+              <button type="button" class="btn add-to-cart" data-oem="152566" aria-label="Add filter to cart">
+                🛒 Add to Cart
+              </button>
+            </div>
+          </div>
+        </article>
 
-    <!-- Card 4 -->
-    <article class="product-card" data-id="p004">
-      <div class="product-media">
-        <img src="/Elherafeen/static/images/products/AGM Car Battery 12V.jpg" alt="Premium Jumper Cables" loading="lazy">
-      </div>
-      <div class="product-body">
-        <p class="product-brand">BrakeMaster</p>
-        <h3 class="product-title">Premium Jumper Cables</h3>
-        <div class="price-row">
-          <span class="product-price">$159.99</span>
-          <button type="button" class="btn add-to-cart" aria-label="Add Premium Jumper Cables to cart">🛒 Add to Cart</button>
-        </div>
-      </div>
-    </article>
-  </div>
-</section>
-<!-- END SECTION -->
+        <article class="product-card" data-id="p003">
+          <div class="product-media">
+            <img src="{{ url_for('static', filename='images/products/Premium All-Season Tire.jpg') }}" alt="Premium Tire" loading="lazy">
+          </div>
+          <div class="product-body">
+            <p class="product-brand">BrakeMaster</p>
+            <h3 class="product-title">Premium Tire</h3>
+            <div class="price-row">
+              <span class="product-price">2400 EGP</span>
+              <button type="button" class="btn add-to-cart" data-oem="09.A448.11" aria-label="Add tire to cart">
+                🛒 Add to Cart
+              </button>
+            </div>
+          </div>
+        </article>
 
-  
+        <article class="product-card" data-id="p004">
+          <div class="product-media">
+            <img src="{{ url_for('static', filename='images/products/AGM Car Battery 12V.jpg') }}" alt="Car Battery" loading="lazy">
+          </div>
+          <div class="product-body">
+            <p class="product-brand">BatteryCo</p>
+            <h3 class="product-title">Premium Car Battery</h3>
+            <div class="price-row">
+              <span class="product-price">850 EGP</span>
+              <button type="button" class="btn add-to-cart" data-oem="152566" aria-label="Add battery to cart">
+                🛒 Add to Cart
+              </button>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
     <footer>
       <h2>Get In Touch</h2>
     </footer>
-  
   </main>
+
+  <script>
+    const addToCartUrl = "{{ url_for('cart.add_to_cart') }}";
+    document.querySelectorAll(".add-to-cart").forEach(btn => {
+      btn.addEventListener("click", async () => {
+        const oem = btn.dataset.oem;
+        try {
+          const resp = await fetch(addToCartUrl, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ oem: oem, quantity: 1 })
+          });
+          const data = await resp.json();
+          if (resp.ok && data.ok) {
+            btn.innerText = "✔ Added";
+            btn.disabled = true;
+            setTimeout(() => {
+              btn.innerText = "🛒 Add to Cart";
+              btn.disabled = false;
+            }, 1500);
+          }
+        } catch (err) {
+          console.error(err);
+        }
+      });
+    });
+  </script>
 </body>
 </html>

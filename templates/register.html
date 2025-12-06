@@ -4,18 +4,26 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Elherafeen — Sign Up</title>
-  <link rel="stylesheet" href="/Elherafeen/static/css/login.css" />
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}" />
 </head>
 <body>
   <div class="layout">
 
-    <!-- LEFT: صورة + نص (نفس شكل لوجين) -->
     <section class="split left">
-      <img class="bg" src="/Elherafeen/static/images/other/sign up ...jpg" alt="engine background">
+      <img
+        class="bg"
+        src="{{ url_for('static', filename='images/other/sign up ...jpg') }}"
+        alt="engine background"
+      >
       <div class="left-overlay">
         <div class="left-textbox">
-          <img src="/Elherafeen/static/images/icons/ELHERAFEEN LOGO WHITE- croped.png" class="overlay-logo" alt="Elherafeen Logo">
-          <p>Create your account and start managing orders  </p>
+          <img
+            src="{{ url_for('static', filename='images/icons/ELHERAFEEN LOGO WHITE- croped.png') }}"
+            class="overlay-logo"
+            alt="Elherafeen Logo"
+          >
+          <p>Create your account and start managing orders</p>
         </div>
       </div>
     </section>
@@ -23,33 +31,76 @@
     <!-- RIGHT: signup card -->
     <section class="split right">
       <div class="card">
-        <img src="/Elherafeen/static/images/icons/ELHERAFEEN LOGO BLACK - croped.png" alt="Elherafeen logo" class="logo">
+        <img
+          src="{{ url_for('static', filename='images/icons/ELHERAFEEN LOGO BLACK - croped.png') }}"
+          alt="Elherafeen logo"
+          class="logo"
+        >
         <h2>Create account</h2>
         <p class="subtitle">Join Elherafeen — it's quick and easy</p>
 
-        <form class="form" autocomplete="off" novalidate>
+        <form
+          class="form"
+          method="post"
+          action="{{ url_for('customer.register') }}"
+          autocomplete="off"
+          novalidate
+        >
           <label for="fullname">Full name</label>
-          <input id="fullname" type="text" placeholder="Your full name" required>
+          <input
+            id="fullname"
+            name="fullname"
+            type="text"
+            placeholder="Your full name"
+            required
+          >
 
           <label for="email">Email</label>
-          <input id="email" type="email" placeholder="Enter your email" required>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            placeholder="Enter your email"
+            required
+          >
 
           <label for="phone">Phone (optional)</label>
-          <input id="phone" type="tel" placeholder="0100xxxxxxx">
+          <input
+            id="phone"
+            name="phone"
+            type="tel"
+            placeholder="0100xxxxxxx"
+          >
 
           <label for="password">Password</label>
-          <input id="password" type="password" placeholder="Create a password" required>
+          <input
+            id="password"
+            name="password"
+            type="password"
+            placeholder="Create a password"
+            required
+          >
 
           <label for="confirm">Confirm password</label>
-          <input id="confirm" type="password" placeholder="Repeat password" required>
+          <input
+            id="confirm"
+            name="confirm"
+            type="password"
+            placeholder="Repeat password"
+            required
+          >
 
           <label class="remember">
-            <input type="checkbox" required> I agree to the <a href="#">Terms & Conditions</a>
+            <input type="checkbox" required>
+            I agree to the <a href="#">Terms &amp; Conditions</a>
           </label>
 
           <button type="submit" class="btn">Sign Up</button>
 
-          <p class="signup">Already have an account? <a href="login.html">Sign in</a></p>
+          <p class="signup">
+            Already have an account?
+            <a href="{{ url_for('customer.login') }}">Sign in</a>
+          </p>
         </form>
       </div>
     </section>
