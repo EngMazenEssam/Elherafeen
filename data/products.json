@@ -1,0 +1,40 @@
+{
+  "SELLER_01": {
+    "name": "Cairo Auto Parts",
+    "phone": "+20 123 456 7890",
+    "location": "Nasr City, Cairo",
+    "rating": 4.8,
+    "products": [
+      {
+        "oem": "152566",
+        "name": "Mobil 1 FS x1 5W-40 Synthetic Oil",
+        "category": "Fluids",
+        "type": "Oil",
+        "brand": "Mobil 1",
+        "condition": "New",
+        "price": 850,
+        "currency": "EGP",
+        "stock": 50,
+        "images": ["placeholder"],
+        "description": "Advanced full synthetic engine oil.",
+        "sold_count": 120,
+        "tags": ["oil", "maintenance"]
+      },
+      {
+        "oem": "09.A448.11",
+        "name": "Brembo Coated Disc Brake Rotor",
+        "category": "Brakes",
+        "type": "Rotor",
+        "brand": "Brembo",
+        "condition": "New",
+        "price": 2400,
+        "currency": "EGP",
+        "stock": 10,
+        "images": ["placeholder"],
+        "description": "High carbon UV coated disc.",
+        "sold_count": 55,
+        "tags": ["brakes", "performance"]
+      }
+    ]
+  }
+}
