@@ -1,13 +1,12 @@
 from flask import Flask
 from app.config import SECRET_KEY
 from app.routes.customer_routes import customer_bp
+from app import create_app
 
 
-def create_app() -> Flask:
-    app = Flask(__name__)
-    app.secret_key = SECRET_KEY
+from app import create_app
 
-    # تسجيل الـ blueprints
-    app.register_blueprint(customer_bp)
+app = create_app()
 
-    return app
+if __name__ == "__main__":
+    app.run(debug=True)

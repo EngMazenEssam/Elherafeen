@@ -27,10 +27,10 @@ def register():
         except ValueError as e:
             flash(str(e), "error")
             # نرجع نفس الصفحة برسالة الخطأ
-            return render_template("signup.html")
+            return render_template("register.html")
 
     # GET
-    return render_template("signup.html")
+    return render_template("register.html")
 
 
 @customer_bp.route("/login", methods=["GET", "POST"])

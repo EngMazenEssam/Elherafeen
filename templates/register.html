@@ -27,21 +27,22 @@
         <h2>Create account</h2>
         <p class="subtitle">Join Elherafeen — it's quick and easy</p>
 
-        <form class="form" autocomplete="off" novalidate>
+        <form class="form" method="post" action="{{ url_for('customer.register') }}" autocomplete="off" novalidate>
+
           <label for="fullname">Full name</label>
-          <input id="fullname" type="text" placeholder="Your full name" required>
+          <input id="fullname" name ="fullname" type="text" placeholder="Your full name" required>
 
           <label for="email">Email</label>
-          <input id="email" type="email" placeholder="Enter your email" required>
+          <input id="email" name="email" type="email" placeholder="Enter your email" required>
 
           <label for="phone">Phone (optional)</label>
-          <input id="phone" type="tel" placeholder="0100xxxxxxx">
+          <input id="phone" name="phone" type="tel" placeholder="0100xxxxxxx">
 
           <label for="password">Password</label>
-          <input id="password" type="password" placeholder="Create a password" required>
+          <input id="password" name="password" type="password" placeholder="Create a password" required>
 
           <label for="confirm">Confirm password</label>
-          <input id="confirm" type="password" placeholder="Repeat password" required>
+          <input id="confirm" name="confirm" type="password" placeholder="Repeat password" required>
 
           <label class="remember">
             <input type="checkbox" required> I agree to the <a href="#">Terms & Conditions</a>
@@ -49,7 +50,11 @@
 
           <button type="submit" class="btn">Sign Up</button>
 
-          <p class="signup">Already have an account? <a href="login.html">Sign in</a></p>
+        <p class="signup">
+  Already have an account?
+  <a href="{{ url_for('customer.login') }}">Sign in</a>
+</p>
+
         </form>
       </div>
     </section>
