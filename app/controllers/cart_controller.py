@@ -36,14 +36,6 @@ def update_cart_quantity_route():
     oem = data.get("oem")
     quantity = data.get("quantity")
 
-    if not oem:
-        return jsonify({"ok": False, "error": "Missing OEM"}), 400
-
-    try:
-        quantity = int(quantity)
-    except (TypeError, ValueError):
-        return jsonify({"ok": False, "error": "Invalid quantity"}), 400
-
     if quantity < 1:
         quantity = 1
 
@@ -52,7 +44,6 @@ def update_cart_quantity_route():
         return jsonify({"ok": False, "error": error}), status
 
     return jsonify({"ok": True}), 200
-
 
 @cart_bp.post("/cart/remove", endpoint="remove_from_cart")
 def remove_from_cart_route():

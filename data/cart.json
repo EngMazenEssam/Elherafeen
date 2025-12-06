@@ -2,7 +2,11 @@
   "items": [
     {
       "oem": "09.A448.11",
-      "quantity": 2
+      "quantity": 3
+    },
+    {
+      "oem": "152566",
+      "quantity": 4
     }
   ]
 }

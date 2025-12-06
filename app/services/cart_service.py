@@ -10,8 +10,8 @@ def build_products_by_oem():
       "SELLER_01": {
         "name": "...",
         "products": [
-           { "oem": "...", "price": ..., ... },
-           ...
+          { "oem": "...", "price": ..., ... },
+          ...
         ]
       },
       ...
