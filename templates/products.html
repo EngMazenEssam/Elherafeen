@@ -56,7 +56,7 @@
             <div id="productGrid" class="grid-container">
                 {% if products %}
                     {% for product in products %}
-                    <!-- <div class="product-card" onclick="window.location.href='{{ url_for('product.product_detail', product_id=product.id) }}'"> -->
+                    <div class="product-card" onclick="window.location.href='{{ url_for('product.product_detail', product_id=product.id) }}'">
                         <div style="position:relative">
                             <div class="card-img-wrapper {% if product.category == 'Engine' %}bg-gray-200{% elif product.category == 'Brakes' %}bg-red-50{% elif product.category == 'Electrical' %}bg-yellow-50{% elif product.category == 'Suspension' %}bg-blue-50{% elif product.category == 'Cooling' %}bg-cyan-50{% elif product.category == 'Fluids' %}bg-amber-50{% else %}bg-gray-200{% endif %}">
                                 {% if product.category == 'Engine' %}<i class="fas fa-cogs card-icon"></i>{% elif product.category == 'Brakes' %}<i class="fas fa-compact-disc card-icon"></i>{% elif product.category == 'Electrical' %}<i class="fas fa-bolt card-icon"></i>{% elif product.category == 'Suspension' %}<i class="fas fa-spring card-icon"></i>{% elif product.category == 'Cooling' %}<i class="fas fa-fan card-icon"></i>{% elif product.category == 'Fluids' %}<i class="fas fa-oil-can card-icon"></i>{% else %}<i class="fas fa-box card-icon"></i>{% endif %}
