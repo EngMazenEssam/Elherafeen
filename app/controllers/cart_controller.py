@@ -3,7 +3,9 @@ from app.services.cart_service import (
     get_cart_items_with_totals,
     update_cart_quantity,
     remove_from_cart,
+    add_to_cart,
 )
+
 
 cart_bp = Blueprint("cart", __name__)
 
@@ -54,6 +56,22 @@ def remove_from_cart_route():
         return jsonify({"ok": False, "error": "Missing OEM"}), 400
 
     ok, error, status = remove_from_cart(oem)
+    if not ok:
+        return jsonify({"ok": False, "error": error}), status
+
+    return jsonify({"ok": True}), 200
+
+@cart_bp.post("/cart/add", endpoint="add_to_cart")
+def add_to_cart_route():
+    """Add an item to the cart."""
+    data = request.get_json(silent=True) or {}
+    oem = data.get("oem")
+    quantity = data.get("quantity", 1)
+
+    if not oem:
+        return jsonify({"ok": False, "error": "Missing OEM"}), 400
+
+    ok, error, status = add_to_cart(oem, quantity)
     if not ok:
         return jsonify({"ok": False, "error": error}), status
 

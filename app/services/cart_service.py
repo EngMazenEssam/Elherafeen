@@ -112,3 +112,30 @@ def remove_from_cart(oem):
     cart_data["items"] = new_items
     save_cart_raw(cart_data)
     return True, None, 200
+
+def add_to_cart(oem, quantity=1):
+    """
+    Add an item to the cart (or increase quantity if it already exists).
+    Returns (ok, error_message_or_None, status_code)
+    """
+    cart_data = load_cart_raw()
+    items = cart_data.get("items", [])
+
+    try:
+        quantity = int(quantity)
+    except (TypeError, ValueError):
+        quantity = 1
+
+    if quantity < 1:
+        quantity = 1
+
+    for item in items:
+        if item.get("oem") == oem:
+            item["quantity"] = item.get("quantity", 1) + quantity
+            break
+    else:
+        items.append({"oem": oem, "quantity": quantity})
+
+    cart_data["items"] = items
+    save_cart_raw(cart_data)
+    return True, None, 200
