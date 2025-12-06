@@ -8,7 +8,6 @@
 <body>
   <main>
 
-    <!-- HEADER -->
     <header>
       <div class="container">
         <div class="top-row">
@@ -22,7 +21,7 @@
 
           <div class="icons">
             <button type="button" class="icon-btn">❤</button>
-            <a href="{{ url_for('cart') }}" class="icon-btn">🛒</a>
+            <a href="{{ url_for('cart.cart') }}">Cart</a>
             <a class="btn auth" href="/Elherafeen/templates/login.html">Login</a>
           </div>
         </div>
@@ -37,7 +36,6 @@
       </div>
     </header>
 
-    <!-- CART SECTION -->
     <section class="cart-page">
       <div class="container cart-layout">
 
@@ -47,7 +45,7 @@
         </div>
 
         <div class="cart-content">
-          <!-- LEFT: ITEMS LIST -->
+
           <div class="cart-items">
             {% if cart_items %}
               {% for item in cart_items %}
@@ -119,7 +117,6 @@
             {% endif %}
           </div>
 
-          <!-- RIGHT: SUMMARY -->
           <aside class="cart-summary">
             <h2>Order Summary</h2>
 
@@ -148,63 +145,64 @@
             <a href="#" class="btn cart-checkout-btn">Proceed to Checkout →</a>
             <a href="products.html" class="cart-continue-link">← Continue Shopping</a>
           </aside>
-        </div> <!-- /.cart-content -->
+        </div> 
 
       </div>
     </section>
 
   </main>
 
-  <!-- CART JS -->
+  <!-- CART JS FOR BUTTONS -->
   <script>
-    const updateQtyUrl = "{{ url_for('update_cart_quantity') }}";
-    const removeUrl = "{{ url_for('remove_from_cart') }}";
+    const updateUrl = "{{ url_for('cart.update_cart_quantity') }}";
+    const removeUrl = "{{ url_for('cart.remove_from_cart') }}";
 
-    // Handle + / - quantity
-    document.querySelectorAll(".qty-btn").forEach(btn => {
-      btn.addEventListener("click", async () => {
-        const direction = btn.dataset.direction;   // "plus" or "minus"
-        const oem = btn.dataset.oem;
+    // + / -
+document.querySelectorAll(".qty-btn").forEach(btn => {
+  btn.addEventListener("click", async () => {
+    const direction = btn.dataset.direction;
+    const oem = btn.dataset.oem;
 
-        const qtyContainer = btn.closest(".cart-qty-input");
-        const input = qtyContainer.querySelector("input");
+    const qtyContainer = btn.closest(".cart-qty-input");
+    const input = qtyContainer.querySelector("input");
 
-        let currentQty = parseInt(input.value, 10) || 1;
-        let newQty = currentQty;
+    let currentQty = parseInt(input.value, 10) || 1;
+    let newQty = currentQty;
 
-        if (direction === "plus") {
-          newQty = currentQty + 1;
-        } else if (direction === "minus") {
-          newQty = Math.max(1, currentQty - 1);
-        }
+    if (direction === "plus") {
+      newQty = currentQty + 1;
+    } else if (direction === "minus") {
+      newQty = Math.max(1, currentQty - 1);
+    }
 
-        input.value = newQty;
+    input.value = newQty;
 
-        try {
-          const resp = await fetch(updateQtyUrl, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-              oem: oem,
-              quantity: newQty
-            })
-          });
-
-          const data = await resp.json();
-          if (resp.ok && data.ok) {
-            window.location.reload();
-          } else {
-            console.error("Update failed:", data.error);
-          }
-        } catch (err) {
-          console.error("Network error:", err);
-        }
+    try {
+      const resp = await fetch(updateUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          oem: oem,
+          quantity: newQty
+        })
       });
-    });
 
-    // Handle Remove button
+      const data = await resp.json();
+      if (resp.ok && data.ok) {
+        window.location.reload();
+      } else {
+        console.error("Update failed:", data.error);
+      }
+    } catch (err) {
+      console.error("Network error:", err);
+    }
+  });
+});
+
+
+    //Remove btn
     document.querySelectorAll(".cart-remove-btn").forEach(btn => {
       btn.addEventListener("click", async () => {
         const oem = btn.dataset.oem;
