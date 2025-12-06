@@ -10,28 +10,21 @@
     <header>
       <div class="container">
         <div class="top-row">
-
           <div class="logo">
-            <img src="{{ url_for('static', filename='images/icons/ELHERAFEEN LOGO BLACK.png') }}"
-                alt="ELHERAFEEN">
+            <img src="{{ url_for('static', filename='images/icons/ELHERAFEEN LOGO BLACK.png') }}" alt="ELHERAFEEN">
           </div>
-
           <div class="search-bar">
             <input type="search" placeholder="Search for parts">
           </div>
-
           <div class="icons">
             <button type="button" class="icon-btn">❤</button>
-
             <a href="{{ url_for('cart.cart') }}" class="icon-btn" aria-label="View cart">🛒</a>
-
             <a class="btn auth" href="/login">Login</a>
           </div>
         </div>
-
         <nav class="sections">
           <a href="{{ url_for('home.home') }}">Home</a>
-          <a href="#">Section 2</a>
+          <a href="{{ url_for('product.product_list') }}">All Products</a>
           <a href="#">Section 3</a>
           <a href="#">Section 4</a>
           <a href="#">Section 5</a>
@@ -44,13 +37,11 @@
       <div class="hero-inner">
         <p class="hook">Up to 40% Off This Week</p>
         <h1>Quality Auto Parts for Every Vehicle</h1>
-
         <p class="description">
           Find the perfect parts for your car with fast shipping and expert support.
           <br>Over 1 million parts in stock from trusted brands.
         </p>
-
-        <a class="btn-ShopNow" href="/products" role="button">Shop Now →</a>
+        <a class="btn-ShopNow" href="{{ url_for('product.product_list') }}" role="button">Shop Now →</a>
       </div>
     </section>
 
@@ -59,13 +50,11 @@
         <h2>Shop by Brand</h2>
         <p>Browse our extensive selection of auto parts organized by category</p>
       </div>
-
       <div class="brand-grid">
         {% for i in range(8) %}
           <a href="/brands/benz" class="brand-link">
             <figure class="brand-card">
-              <img src="{{ url_for('static', filename='images/brands/Benz Card.png') }}"
-                  alt="Benz">
+              <img src="{{ url_for('static', filename='images/brands/Benz Card.png') }}" alt="Benz">
               <figcaption>Benz</figcaption>
               <button class="brand-go" aria-label="View Benz products"></button>
             </figure>
@@ -80,27 +69,20 @@
           <h2>Featured Products</h2>
           <p class="featured-sub">Top-rated parts from trusted brands</p>
         </div>
-
-        <a class="btn view-all" href="/products" aria-label="View all products">View All</a>
+        <a class="btn view-all" href="{{ url_for('product.product_list') }}" aria-label="View all products">View All</a>
       </div>
 
       <div class="product-grid">
-        <!-- Card 1 -->
         <article class="product-card" data-id="p001">
           <div class="product-media">
-            <img src="{{ url_for('static', filename='images/products/Premium Brake Disc Set.jpg') }}"
-                alt="Premium Brake Disc Set" loading="lazy">
+            <img src="{{ url_for('static', filename='images/products/Premium Brake Disc Set.jpg') }}" alt="Premium Brake Disc Set" loading="lazy">
           </div>
           <div class="product-body">
             <p class="product-brand">BrakeMaster</p>
             <h3 class="product-title">Premium Brake Disc Set</h3>
             <div class="price-row">
               <span class="product-price">2400 EGP</span>
-              <button
-                type="button"
-                class="btn add-to-cart"
-                data-oem="09.A448.11"
-                aria-label="Add Premium Brake Disc Set to cart">
+              <button type="button" class="btn add-to-cart" data-oem="09.A448.11" aria-label="Add Premium Brake Disc Set to cart">
                 🛒 Add to Cart
               </button>
             </div>
@@ -109,19 +91,14 @@
 
         <article class="product-card" data-id="p002">
           <div class="product-media">
-            <img src="{{ url_for('static', filename='images/products/High Performance Air Filter.jpg') }}"
-                alt="High Performance Air Filter" loading="lazy">
+            <img src="{{ url_for('static', filename='images/products/High Performance Air Filter.jpg') }}" alt="High Performance Air Filter" loading="lazy">
           </div>
           <div class="product-body">
             <p class="product-brand">AirFlow Pro</p>
             <h3 class="product-title">High Performance Air Filter</h3>
             <div class="price-row">
               <span class="product-price">850 EGP</span>
-              <button
-                type="button"
-                class="btn add-to-cart"
-                data-oem="152566"
-                aria-label="Add filter to cart">
+              <button type="button" class="btn add-to-cart" data-oem="152566" aria-label="Add filter to cart">
                 🛒 Add to Cart
               </button>
             </div>
@@ -130,19 +107,14 @@
 
         <article class="product-card" data-id="p003">
           <div class="product-media">
-            <img src="{{ url_for('static', filename='images/products/Premium All-Season Tire.jpg') }}"
-                alt="Premium Tire" loading="lazy">
+            <img src="{{ url_for('static', filename='images/products/Premium All-Season Tire.jpg') }}" alt="Premium Tire" loading="lazy">
           </div>
           <div class="product-body">
             <p class="product-brand">BrakeMaster</p>
             <h3 class="product-title">Premium Tire</h3>
             <div class="price-row">
               <span class="product-price">2400 EGP</span>
-              <button
-                type="button"
-                class="btn add-to-cart"
-                data-oem="09.A448.11"
-                aria-label="Add tire to cart">
+              <button type="button" class="btn add-to-cart" data-oem="09.A448.11" aria-label="Add tire to cart">
                 🛒 Add to Cart
               </button>
             </div>
@@ -151,25 +123,19 @@
 
         <article class="product-card" data-id="p004">
           <div class="product-media">
-            <img src="{{ url_for('static', filename='images/products/AGM Car Battery 12V.jpg') }}"
-                alt="Car Battery" loading="lazy">
+            <img src="{{ url_for('static', filename='images/products/AGM Car Battery 12V.jpg') }}" alt="Car Battery" loading="lazy">
           </div>
           <div class="product-body">
             <p class="product-brand">BatteryCo</p>
             <h3 class="product-title">Premium Car Battery</h3>
             <div class="price-row">
               <span class="product-price">850 EGP</span>
-              <button
-                type="button"
-                class="btn add-to-cart"
-                data-oem="152566"
-                aria-label="Add battery to cart">
+              <button type="button" class="btn add-to-cart" data-oem="152566" aria-label="Add battery to cart">
                 🛒 Add to Cart
               </button>
             </div>
           </div>
         </article>
-
       </div>
     </section>
 
@@ -180,41 +146,29 @@
 
   <script>
     const addToCartUrl = "{{ url_for('cart.add_to_cart') }}";
-
     document.querySelectorAll(".add-to-cart").forEach(btn => {
       btn.addEventListener("click", async () => {
         const oem = btn.dataset.oem;
-
         try {
           const resp = await fetch(addToCartUrl, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ oem: oem, quantity: 1 })
           });
-
           const data = await resp.json();
           if (resp.ok && data.ok) {
-
             btn.innerText = "✔ Added";
-            btn.style.backgroundColor = "#2ecc71";
             btn.disabled = true;
-
             setTimeout(() => {
               btn.innerText = "🛒 Add to Cart";
-              btn.style.backgroundColor = "";
               btn.disabled = false;
             }, 1500);
-
-          } else {
-            console.error("Add failed:", data.error);
           }
         } catch (err) {
-          console.error("Request failed:", err);
+          console.error(err);
         }
       });
     });
-</script>
-
-
+  </script>
 </body>
 </html>
