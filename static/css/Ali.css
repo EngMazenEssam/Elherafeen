@@ -46,7 +46,6 @@ header { background: var(--white); border-bottom: 1px solid var(--border); posit
 
 /* Sidebar */
 aside { width: 250px; flex-shrink: 0; display: none; }
-@media (min-width: 1024px) { aside { display: block; } }
 
 .sidebar-box { background-color: var(--dark-bg); border-radius: 0.5rem; overflow: hidden; position: sticky; top: 100px; }
 .sidebar-header { padding: 1rem 1.25rem; background-color: #111; border-bottom: 1px solid #374151; }
@@ -84,7 +83,6 @@ main { flex: 1; }
 .breadcrumb { margin-bottom: 2rem; font-size: 0.875rem; color: var(--text-muted); }
 .breadcrumb a:hover { color: var(--primary-color); }
 .detail-container { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; background: white; padding: 2rem; border-radius: 0.75rem; border: 1px solid #f3f4f6; }
-@media(max-width: 768px) { .detail-container { grid-template-columns: 1fr; } }
 
 .detail-img-box { border-radius: 0.75rem; display: flex; justify-content: center; align-items: center; aspect-ratio: 1/1; position: relative; }
 .detail-icon { font-size: 8rem; opacity: 0.8; }
