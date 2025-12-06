@@ -2,8 +2,195 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/Home.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <title>Elherafeen Store | Cart</title>
+  <style>
+    /* Additional styles for checkout functionality */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+        background-color: #f5f7fa;
+        color: #333;
+        line-height: 1.6;
+    }
+    
+    /* Checkout Form Styles */
+    .checkout-form-container {
+        display: none;
+        background-color: white;
+        border-radius: 10px;
+        padding: 25px;
+        margin-top: 30px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        animation: fadeIn 0.5s ease;
+    }
+    
+    .checkout-form-container.show {
+        display: block;
+    }
+    
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .checkout-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 2px solid #f0f0f0;
+    }
+    
+    .checkout-header h2 {
+        color: #1a3a8f;
+    }
+    
+    .close-checkout {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        color: #888;
+        cursor: pointer;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .close-checkout:hover {
+        background-color: #f5f5f5;
+        color: #333;
+    }
+    
+    .checkout-form {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+    
+    .form-group {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .form-group.full-width {
+        grid-column: 1 / -1;
+    }
+    
+    .form-label {
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: #555;
+    }
+    
+    .form-input {
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 1rem;
+        transition: border 0.3s;
+    }
+    
+    .form-input:focus {
+        border-color: #1a3a8f;
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(26, 58, 143, 0.1);
+    }
+    
+    .payment-methods {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .payment-option {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+    
+    .payment-option:hover {
+        background-color: #f8f9fa;
+    }
+    
+    .payment-option.selected {
+        border-color: #1a3a8f;
+        background-color: rgba(26, 58, 143, 0.05);
+    }
+    
+    .payment-icon {
+        font-size: 1.5rem;
+        color: #1a3a8f;
+    }
+    
+    .submit-order {
+        grid-column: 1 / -1;
+        background: linear-gradient(to right, #1a3a8f, #2d5cc2);
+        color: white;
+        border: none;
+        padding: 15px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        border-radius: 8px;
+        cursor: pointer;
+        margin-top: 10px;
+        transition: all 0.3s ease;
+    }
+    
+    .submit-order:hover {
+        background: linear-gradient(to right, #15317a, #1a3a8f);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(26, 58, 143, 0.2);
+    }
+    
+    .cart-checkout-btn {
+        width: 100%;
+        background: linear-gradient(to right, #1a3a8f, #2d5cc2);
+        color: white;
+        border: none;
+        padding: 15px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        border-radius: 8px;
+        cursor: pointer;
+        margin-top: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        text-align: center;
+    }
+    
+    .cart-checkout-btn:hover {
+        background: linear-gradient(to right, #15317a, #1a3a8f);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(26, 58, 143, 0.2);
+    }
+    
+    @media (max-width: 768px) {
+        .checkout-form {
+            grid-template-columns: 1fr;
+        }
+    }
+  </style>
 </head>
 <body>
   <main>
@@ -110,7 +297,7 @@
               <div class="cart-empty">
                 <div class="cart-empty-card">
                   <h2>Your cart is empty</h2>
-                  <p>Looks like you haven’t added any parts yet.</p>
+                  <p>Looks like you haven't added any parts yet.</p>
                   <a href="products.html" class="btn cart-empty-btn">Browse Products →</a>
                 </div>
               </div>
@@ -142,10 +329,91 @@
               <span>{{ total }} {{ currency }}</span>
             </div>
 
-            <a href="#" class="btn cart-checkout-btn">Proceed to Checkout →</a>
+            <button id="checkout-button" class="cart-checkout-btn">
+              <i class="fas fa-lock"></i> Proceed to Checkout
+            </button>
             <a href="products.html" class="cart-continue-link">← Continue Shopping</a>
           </aside>
         </div> 
+
+        <!-- Checkout Form (Initially Hidden) -->
+        <div id="checkout-form" class="checkout-form-container">
+          <div class="checkout-header">
+            <h2>Checkout</h2>
+            <button id="close-checkout" class="close-checkout">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+          
+          <form class="checkout-form" id="checkoutForm">
+            <div class="form-group">
+              <label class="form-label" for="firstName">First Name</label>
+              <input type="text" id="firstName" class="form-input" required placeholder="John">
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label" for="lastName">Last Name</label>
+              <input type="text" id="lastName" class="form-input" required placeholder="Doe">
+            </div>
+            
+            <div class="form-group full-width">
+              <label class="form-label" for="email">Email Address</label>
+              <input type="email" id="email" class="form-input" required placeholder="john.doe@example.com">
+            </div>
+            
+            <div class="form-group full-width">
+              <label class="form-label" for="address">Shipping Address</label>
+              <input type="text" id="address" class="form-input" required placeholder="123 Main Street, City, Country">
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label" for="city">City</label>
+              <input type="text" id="city" class="form-input" required placeholder="Cairo">
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label" for="zipCode">ZIP Code</label>
+              <input type="text" id="zipCode" class="form-input" required placeholder="12345">
+            </div>
+            
+            <div class="form-group full-width">
+              <label class="form-label">Payment Method</label>
+              <div class="payment-methods">
+                <div class="payment-option selected" data-payment="credit">
+                  <i class="fab fa-cc-visa payment-icon"></i>
+                  <span>Credit/Debit Card</span>
+                </div>
+                <div class="payment-option" data-payment="paypal">
+                  <i class="fab fa-paypal payment-icon"></i>
+                  <span>PayPal</span>
+                </div>
+                <div class="payment-option" data-payment="cash">
+                  <i class="fas fa-money-bill-wave payment-icon"></i>
+                  <span>Cash on Delivery</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="form-group full-width" id="cardNumberGroup">
+              <label class="form-label" for="cardNumber">Card Number</label>
+              <input type="text" id="cardNumber" class="form-input" required placeholder="1234 5678 9012 3456">
+            </div>
+            
+            <div class="form-group" id="expiryDateGroup">
+              <label class="form-label" for="expiryDate">Expiry Date</label>
+              <input type="text" id="expiryDate" class="form-input" required placeholder="MM/YY">
+            </div>
+            
+            <div class="form-group" id="cvvGroup">
+              <label class="form-label" for="cvv">CVV</label>
+              <input type="text" id="cvv" class="form-input" required placeholder="123">
+            </div>
+            
+            <button type="submit" class="submit-order">
+              <i class="fas fa-shopping-bag"></i> Place Your Order
+            </button>
+          </form>
+        </div>
 
       </div>
     </section>
@@ -157,52 +425,51 @@
     const updateUrl = "{{ url_for('cart.update_cart_quantity') }}";
     const removeUrl = "{{ url_for('cart.remove_from_cart') }}";
 
-    // + / -
-document.querySelectorAll(".qty-btn").forEach(btn => {
-  btn.addEventListener("click", async () => {
-    const direction = btn.dataset.direction;
-    const oem = btn.dataset.oem;
+    // + / - quantity buttons
+    document.querySelectorAll(".qty-btn").forEach(btn => {
+      btn.addEventListener("click", async () => {
+        const direction = btn.dataset.direction;
+        const oem = btn.dataset.oem;
 
-    const qtyContainer = btn.closest(".cart-qty-input");
-    const input = qtyContainer.querySelector("input");
+        const qtyContainer = btn.closest(".cart-qty-input");
+        const input = qtyContainer.querySelector("input");
 
-    let currentQty = parseInt(input.value, 10) || 1;
-    let newQty = currentQty;
+        let currentQty = parseInt(input.value, 10) || 1;
+        let newQty = currentQty;
 
-    if (direction === "plus") {
-      newQty = currentQty + 1;
-    } else if (direction === "minus") {
-      newQty = Math.max(1, currentQty - 1);
-    }
+        if (direction === "plus") {
+          newQty = currentQty + 1;
+        } else if (direction === "minus") {
+          newQty = Math.max(1, currentQty - 1);
+        }
 
-    input.value = newQty;
+        input.value = newQty;
 
-    try {
-      const resp = await fetch(updateUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          oem: oem,
-          quantity: newQty
-        })
+        try {
+          const resp = await fetch(updateUrl, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              oem: oem,
+              quantity: newQty
+            })
+          });
+
+          const data = await resp.json();
+          if (resp.ok && data.ok) {
+            window.location.reload();
+          } else {
+            console.error("Update failed:", data.error);
+          }
+        } catch (err) {
+          console.error("Network error:", err);
+        }
       });
+    });
 
-      const data = await resp.json();
-      if (resp.ok && data.ok) {
-        window.location.reload();
-      } else {
-        console.error("Update failed:", data.error);
-      }
-    } catch (err) {
-      console.error("Network error:", err);
-    }
-  });
-});
-
-
-    //Remove btn
+    //Remove button
     document.querySelectorAll(".cart-remove-btn").forEach(btn => {
       btn.addEventListener("click", async () => {
         const oem = btn.dataset.oem;
@@ -229,6 +496,108 @@ document.querySelectorAll(".qty-btn").forEach(btn => {
           console.error("Network error:", err);
         }
       });
+    });
+
+    // Checkout Form Functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      // Get DOM elements
+      const checkoutButton = document.getElementById('checkout-button');
+      const checkoutFormContainer = document.getElementById('checkout-form');
+      const closeCheckoutButton = document.getElementById('close-checkout');
+      const paymentOptions = document.querySelectorAll('.payment-option');
+      const checkoutFormElement = document.getElementById('checkoutForm');
+      
+      // Show checkout form when "Proceed to Checkout" is clicked
+      if (checkoutButton) {
+        checkoutButton.addEventListener('click', function() {
+          // Show the checkout form
+          checkoutFormContainer.classList.add('show');
+          
+          // Smooth scroll to checkout form
+          checkoutFormContainer.scrollIntoView({ behavior: 'smooth' });
+          
+          // Update the checkout button text
+          checkoutButton.innerHTML = '<i class="fas fa-check"></i> Checkout Form Opened';
+          checkoutButton.style.background = 'linear-gradient(to right, #28a745, #20c997)';
+          checkoutButton.disabled = true;
+        });
+      }
+      
+      // Close checkout form
+      if (closeCheckoutButton) {
+        closeCheckoutButton.addEventListener('click', function() {
+          // Hide the checkout form
+          checkoutFormContainer.classList.remove('show');
+          
+          // Reset the checkout button
+          if (checkoutButton) {
+            checkoutButton.innerHTML = '<i class="fas fa-lock"></i> Proceed to Checkout';
+            checkoutButton.style.background = 'linear-gradient(to right, #1a3a8f, #2d5cc2)';
+            checkoutButton.disabled = false;
+          }
+        });
+      }
+      
+      // Payment method selection
+      if (paymentOptions.length > 0) {
+        paymentOptions.forEach(option => {
+          option.addEventListener('click', function() {
+            // Remove selected class from all options
+            paymentOptions.forEach(opt => opt.classList.remove('selected'));
+            // Add selected class to clicked option
+            this.classList.add('selected');
+            
+            // Show/hide card details based on selection
+            const paymentType = this.getAttribute('data-payment');
+            const cardNumberGroup = document.getElementById('cardNumberGroup');
+            const expiryDateGroup = document.getElementById('expiryDateGroup');
+            const cvvGroup = document.getElementById('cvvGroup');
+            
+            if (paymentType === 'credit') {
+              cardNumberGroup.style.display = 'flex';
+              expiryDateGroup.style.display = 'flex';
+              cvvGroup.style.display = 'flex';
+              document.getElementById('cardNumber').required = true;
+              document.getElementById('expiryDate').required = true;
+              document.getElementById('cvv').required = true;
+            } else {
+              cardNumberGroup.style.display = 'none';
+              expiryDateGroup.style.display = 'none';
+              cvvGroup.style.display = 'none';
+              document.getElementById('cardNumber').required = false;
+              document.getElementById('expiryDate').required = false;
+              document.getElementById('cvv').required = false;
+            }
+          });
+        });
+      }
+      
+      // Form submission
+      if (checkoutFormElement) {
+        checkoutFormElement.addEventListener('submit', function(e) {
+          e.preventDefault();
+          
+          // Get form data
+          const firstName = document.getElementById('firstName').value;
+          const lastName = document.getElementById('lastName').value;
+          const email = document.getElementById('email').value;
+          const totalAmount = document.querySelector('.cart-summary-total span:last-child').textContent;
+          const paymentMethod = document.querySelector('.payment-option.selected').getAttribute('data-payment');
+          
+          // In a real application, you would send this data to a server
+          // Here we'll just show an alert
+          alert(`Thank you for your order, ${firstName} ${lastName}!\n\nA confirmation email has been sent to ${email}.\n\nPayment Method: ${paymentMethod.toUpperCase()}\n\nTotal Amount: ${totalAmount}`);
+          
+          // Reset form and close checkout
+          checkoutFormElement.reset();
+          checkoutFormContainer.classList.remove('show');
+          if (checkoutButton) {
+            checkoutButton.innerHTML = '<i class="fas fa-lock"></i> Proceed to Checkout';
+            checkoutButton.style.background = 'linear-gradient(to right, #1a3a8f, #2d5cc2)';
+            checkoutButton.disabled = false;
+          }
+        });
+      }
     });
   </script>
 </body>
