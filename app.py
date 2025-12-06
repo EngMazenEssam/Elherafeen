@@ -307,9 +307,9 @@ HTML_INDEX_CONTENT = """
             <div class="sidebar-box">
                 <div class="sidebar-header"><h3 class="sidebar-title">Categories</h3></div>
                 <nav class="sidebar-nav">
-                    <a href="#" class="sidebar-link active" onclick="filterCategory(event, 'All')">All Products</a>
+                    <a href="#" class="sidebar-link active">All Products</a>
                     {% for cat in categories %}
-                    <a href="#" class="sidebar-link" onclick="filterCategory(event, '{{ cat }}')">{{ cat }}</a>
+                    <a href="#" class="sidebar-link">{{ cat }}</a>
                     {% endfor %}
                 </nav>
             </div>
@@ -324,57 +324,7 @@ HTML_INDEX_CONTENT = """
         </main>
     </div>
 
-    <script>
-        const allProducts = {{ products | tojson }};
-        const productGrid = document.getElementById('productGrid');
-        const categoryTitle = document.getElementById('categoryTitle');
-        const resultCount = document.getElementById('resultCount');
-
-        function getImage(category) {
-            const icons = {'Engine': 'fa-cogs', 'Brakes': 'fa-compact-disc', 'Electrical': 'fa-bolt', 'Suspension': 'fa-spring', 'Cooling': 'fa-fan', 'Fluids': 'fa-oil-can'};
-            const colors = {'Engine': 'bg-gray-200', 'Brakes': 'bg-red-50', 'Electrical': 'bg-yellow-50', 'Suspension': 'bg-blue-50', 'Cooling': 'bg-cyan-50', 'Fluids': 'bg-amber-50'};
-            return `<div class="card-img-wrapper ${colors[category]||'bg-gray-200'}"><i class="fas ${icons[category]||'fa-box'} card-icon"></i></div>`;
-        }
-
-        function renderProducts(products) {
-            productGrid.innerHTML = '';
-            resultCount.textContent = `Showing ${products.length} results`;
-            products.forEach(p => {
-                const card = document.createElement('div');
-                card.className = 'product-card';
-                card.onclick = () => window.location.href = `/product/${p.id}`;
-                card.innerHTML = `
-                    <div style="position:relative">
-                        ${getImage(p.category)}
-                        <span class="card-badge">${p.condition}</span>
-                    </div>
-                    <div class="card-body">
-                        <span class="brand-text">${p.brand}</span>
-                        <h3 class="product-name">${p.name}</h3>
-                        <div class="card-footer">
-                            <div><span class="price">${p.price} <span class="currency">${p.currency}</span></span></div>
-                            <button class="btn-icon"><i class="fas fa-shopping-cart"></i></button>
-                        </div>
-                    </div>`;
-                productGrid.appendChild(card);
-            });
-        }
-
-        function filterCategory(e, cat) {
-            e.preventDefault();
-            document.querySelectorAll('.sidebar-link').forEach(el => el.classList.remove('active'));
-            e.target.classList.add('active');
-            categoryTitle.textContent = cat === 'All' ? 'All Products' : cat;
-            renderProducts(cat === 'All' ? allProducts : allProducts.filter(p => p.category === cat));
-        }
-
-        renderProducts(allProducts);
-        
-        document.getElementById('searchInput').addEventListener('input', (e) => {
-            const term = e.target.value.toLowerCase();
-            renderProducts(allProducts.filter(p => p.name.toLowerCase().includes(term) || p.oem.toLowerCase().includes(term)));
-        });
-    </script>
+    <!-- JavaScript removed: render products and filtering now performed server-side by Flask -->
 </body>
 </html>
 """
@@ -445,9 +395,9 @@ HTML_DETAIL_CONTENT = """
                 <div class="actions">
                     <div class="qty-row">
                         <div class="qty-selector">
-                            <button class="qty-btn" onclick="updateQty(-1)">-</button>
+                            <button class="qty-btn">-</button>
                             <span id="qty" class="qty-val">1</span>
-                            <button class="qty-btn" onclick="updateQty(1)">+</button>
+                            <button class="qty-btn">+</button>
                         </div>
                         <div class="stock-status"><i class="fas fa-check-circle"></i> In Stock ({{ product.stock }})</div>
                     </div>
@@ -490,14 +440,7 @@ HTML_DETAIL_CONTENT = """
         </div>
     </div>
 
-    <script>
-        function updateQty(change) {
-            const el = document.getElementById('qty');
-            let val = parseInt(el.textContent);
-            val = Math.max(1, Math.min(val + change, {{ product.stock }}));
-            el.textContent = val;
-        }
-    </script>
+    <!-- JavaScript removed: use server-side form/select for quantity -->
 </body>
 </html>
 """

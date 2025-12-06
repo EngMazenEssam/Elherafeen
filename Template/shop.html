@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ELHERAFEEN - Auto Parts</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="shop.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -78,12 +78,20 @@
 
         <!-- Mobile Filter Toggle -->
         <div class="lg:hidden mb-4">
-            <button onclick="document.getElementById('mobileMenu').classList.toggle('hidden')" class="w-full bg-[#1a1a1a] text-white py-3 px-4 rounded-lg flex justify-between items-center">
+            <button class="w-full bg-[#1a1a1a] text-white py-3 px-4 rounded-lg flex justify-between items-center">
                 <span>Browse Categories</span>
                 <i class="fas fa-chevron-down"></i>
             </button>
-            <div id="mobileMenu" class="hidden bg-[#1a1a1a] text-gray-300 mt-2 rounded-lg p-2">
-                <div id="mobileCategories"></div>
+            <div id="mobileMenu" class="bg-[#1a1a1a] text-gray-300 mt-2 rounded-lg p-2">
+                <div id="mobileCategories">
+                    <a href="#" class="sidebar-link block px-3 py-2 text-sm text-gray-300">All Products</a>
+                    <a href="#" class="sidebar-link block px-3 py-2 text-sm text-gray-300">Engine</a>
+                    <a href="#" class="sidebar-link block px-3 py-2 text-sm text-gray-300">Brakes</a>
+                    <a href="#" class="sidebar-link block px-3 py-2 text-sm text-gray-300">Electrical</a>
+                    <a href="#" class="sidebar-link block px-3 py-2 text-sm text-gray-300">Suspension</a>
+                    <a href="#" class="sidebar-link block px-3 py-2 text-sm text-gray-300">Cooling</a>
+                    <a href="#" class="sidebar-link block px-3 py-2 text-sm text-gray-300">Fluids</a>
+                </div>
             </div>
         </div>
 
@@ -101,7 +109,7 @@
 
             <!-- Grid Container -->
             <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
-                <!-- Products injected by JS -->
+                <!-- Products should be rendered server-side by Flask -->
             </div>
         </main>
     </div>
@@ -112,236 +120,6 @@
         <span>Added to cart</span>
     </div>
 
-    <script>
-        // --- 1. DATASETS (From your prompt generation) ---
-        
-        const categoriesData = {
-            "Engine": ["SILZKGR8B8S", "W712/95", "941006"],
-            "Brakes": ["0986494019", "09.A448.11", "GDB3332"],
-            "Electrical": ["574012068", "439864", "64210"],
-            "Suspension": ["339031", "2991601", "376045SP"],
-            "Cooling": ["221-3600", "KP15680XS", "TX1887D"],
-            "Fluids": ["152566", "15D5B8", "550046646"]
-        };
-
-        const inventoryData = {
-            "SELLER_01": {
-                "products": [
-                    { "oem": "152566", "name": "Mobil 1 FS x1 5W-40 Synthetic Oil", "category": "Fluids", "brand": "Mobil 1", "price": 850, "currency": "EGP", "images": ["placeholder"] },
-                    { "oem": "09.A448.11", "name": "Brembo Coated Disc Brake Rotor", "category": "Brakes", "brand": "Brembo", "price": 2400, "currency": "EGP", "images": ["placeholder"] },
-                    { "oem": "574012068", "name": "Varta Silver Dynamic E11 Battery", "category": "Electrical", "brand": "Varta", "price": 3500, "currency": "EGP", "images": ["placeholder"] },
-                    { "oem": "339031", "name": "KYB Excel-G Gas Strut", "category": "Suspension", "brand": "KYB", "price": 2100, "currency": "EGP", "images": ["placeholder"] },
-                    { "oem": "KP15680XS", "name": "Gates Water Pump Kit", "category": "Cooling", "brand": "Gates", "price": 1850, "currency": "EGP", "images": ["placeholder"] },
-                    { "oem": "64210", "name": "Osram Night Breaker H7", "category": "Electrical", "brand": "Osram", "price": 450, "currency": "EGP", "images": ["placeholder"] }
-                ]
-            },
-            "SELLER_02": {
-                "products": [
-                    { "oem": "0986494019", "name": "Bosch Disc Brake Pads", "category": "Brakes", "brand": "Bosch", "price": 1150, "currency": "EGP", "images": ["placeholder"] },
-                    { "oem": "221-3600", "name": "Denso Radiator Assembly", "category": "Cooling", "brand": "Denso", "price": 4200, "currency": "EGP", "images": ["placeholder"] },
-                    { "oem": "SILZKGR8B8S", "name": "NGK Laser Iridium Spark Plug", "category": "Engine", "brand": "NGK", "price": 900, "currency": "EGP", "images": ["placeholder"] },
-                    { "oem": "15D5B8", "name": "Castrol React DOT 4", "category": "Fluids", "brand": "Castrol", "price": 150, "currency": "EGP", "images": ["placeholder"] },
-                    { "oem": "2991601", "name": "Lemförder Control Arm", "category": "Suspension", "brand": "Lemförder", "price": 3100, "currency": "EGP", "images": ["placeholder"] },
-                    { "oem": "941006", "name": "Dayco Timing Belt", "category": "Engine", "brand": "Dayco", "price": 600, "currency": "EGP", "images": ["placeholder"] }
-                ]
-            },
-            "SELLER_03": {
-                "products": [
-                    { "oem": "376045SP", "name": "Monroe OESpectrum Rear Shock", "category": "Suspension", "brand": "Monroe", "price": 1350, "currency": "EGP", "images": ["placeholder"] },
-                    { "oem": "W712/95", "name": "Mann-Filter Oil Filter", "category": "Engine", "brand": "Mann", "price": 250, "currency": "EGP", "images": ["placeholder"] },
-                    { "oem": "439864", "name": "Valeo Alternator 14V", "category": "Electrical", "brand": "Valeo", "price": 1800, "currency": "EGP", "images": ["placeholder"] },
-                    { "oem": "550046646", "name": "Shell Helix Ultra 5W-30", "category": "Fluids", "brand": "Shell", "price": 950, "currency": "EGP", "images": ["placeholder"] },
-                    { "oem": "TX1887D", "name": "Mahle Thermostat", "category": "Cooling", "brand": "Mahle", "price": 550, "currency": "EGP", "images": ["placeholder"] },
-                    { "oem": "GDB3332", "name": "TRW Brake Pad Set", "category": "Brakes", "brand": "TRW", "price": 890, "currency": "EGP", "images": ["placeholder"] }
-                ]
-            }
-        };
-
-        // --- 2. LOGIC: Flatten Inventory to create a Master Product List ---
-        let allProducts = [];
-        
-        Object.values(inventoryData).forEach(seller => {
-            seller.products.forEach(p => {
-                // Add a random ID for keys
-                p.id = Math.random().toString(36).substr(2, 9);
-                allProducts.push(p);
-            });
-        });
-
-        // --- 3. DOM ELEMENTS ---
-        const productGrid = document.getElementById('productGrid');
-        const sidebar = document.getElementById('sidebarCategories');
-        const mobileCategories = document.getElementById('mobileCategories');
-        const searchInput = document.getElementById('searchInput');
-        const resultCount = document.getElementById('resultCount');
-        const categoryTitle = document.getElementById('categoryTitle');
-        const toast = document.getElementById('toast');
-        const cartCountEl = document.getElementById('cartCount');
-        let cartTotal = 0;
-
-        // --- 4. FUNCTIONS ---
-
-        // Helper: Get generic image based on category
-        function getImage(category) {
-            // These are placeholder SVG representations for demo purposes
-            const colors = {
-                'Engine': 'bg-gray-200 text-gray-600',
-                'Brakes': 'bg-red-100 text-red-500',
-                'Electrical': 'bg-yellow-100 text-yellow-600',
-                'Suspension': 'bg-blue-100 text-blue-500',
-                'Cooling': 'bg-cyan-100 text-cyan-500',
-                'Fluids': 'bg-amber-100 text-amber-600'
-            };
-            const icons = {
-                'Engine': 'fa-cogs',
-                'Brakes': 'fa-compact-disc',
-                'Electrical': 'fa-bolt',
-                'Suspension': 'fa-spring', // font awesome doesn't have spring, using text fallback
-                'Cooling': 'fa-fan',
-                'Fluids': 'fa-oil-can'
-            };
-
-            const bgClass = colors[category] || 'bg-gray-100 text-gray-500';
-            const iconClass = icons[category] || 'fa-box';
-
-            return `
-                <div class="h-48 w-full ${bgClass} flex items-center justify-center">
-                    <i class="fas ${iconClass} text-6xl opacity-80"></i>
-                </div>
-            `;
-        }
-
-        function renderProducts(products) {
-            productGrid.innerHTML = '';
-            resultCount.textContent = `Showing ${products.length} results`;
-
-            if (products.length === 0) {
-                productGrid.innerHTML = `
-                    <div class="col-span-full text-center py-10">
-                        <i class="fas fa-search text-gray-300 text-5xl mb-4"></i>
-                        <p class="text-gray-500 text-lg">No parts found matching your criteria.</p>
-                    </div>
-                `;
-                return;
-            }
-
-            products.forEach(product => {
-                const card = document.createElement('div');
-                card.className = 'product-card bg-white rounded-lg overflow-hidden border border-gray-100 flex flex-col h-full relative group';
-                
-                // Construct HTML
-                card.innerHTML = `
-                    <div class="relative overflow-hidden">
-                        ${getImage(product.category)}
-                        <span class="absolute top-2 right-2 bg-black bg-opacity-70 text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">
-                            ${product.condition || 'New'}
-                        </span>
-                    </div>
-                    
-                    <div class="p-4 flex flex-col flex-1">
-                        <div class="mb-2">
-                            <span class="text-xs font-bold text-gray-400 uppercase tracking-wide">${product.brand}</span>
-                            <h3 class="text-gray-800 font-semibold text-sm leading-snug mt-1 h-10 overflow-hidden line-clamp-2" title="${product.name}">${product.name}</h3>
-                        </div>
-                        
-                        <div class="mt-auto pt-4 flex items-center justify-between">
-                            <div>
-                                <span class="block text-xs text-gray-400">Price</span>
-                                <span class="text-lg font-bold text-gray-900">${product.price} <span class="text-xs font-normal">${product.currency}</span></span>
-                            </div>
-                        </div>
-
-                        <button onclick="addToCart('${product.name}')" class="mt-4 w-full bg-[#ef4444] hover:bg-red-600 text-white text-sm font-medium py-2.5 rounded shadow-sm transition-colors flex items-center justify-center gap-2">
-                            <i class="fas fa-shopping-cart text-xs"></i> Add to Cart
-                        </button>
-                    </div>
-                `;
-                productGrid.appendChild(card);
-            });
-        }
-
-        function renderSidebar() {
-            const allLink = document.createElement('a');
-            allLink.href = "#";
-            allLink.className = "sidebar-link active block px-5 py-3 text-sm font-medium text-gray-300 hover:text-white";
-            allLink.textContent = "All Products";
-            allLink.onclick = (e) => filterCategory(e, 'All');
-            
-            sidebar.appendChild(allLink);
-            // Clone for mobile
-            mobileCategories.appendChild(allLink.cloneNode(true));
-            mobileCategories.lastChild.onclick = (e) => filterCategory(e, 'All');
-
-            Object.keys(categoriesData).forEach(cat => {
-                const link = document.createElement('a');
-                link.href = "#";
-                link.className = "sidebar-link block px-5 py-3 text-sm font-medium text-gray-300 hover:text-white capitalize";
-                link.textContent = cat;
-                link.onclick = (e) => filterCategory(e, cat);
-                sidebar.appendChild(link);
-                
-                // Clone for mobile
-                const mobileLink = link.cloneNode(true);
-                mobileLink.onclick = (e) => filterCategory(e, cat);
-                mobileCategories.appendChild(mobileLink);
-            });
-        }
-
-        function filterCategory(e, category) {
-            e.preventDefault();
-            
-            // Update Active State
-            document.querySelectorAll('.sidebar-link').forEach(el => el.classList.remove('active'));
-            if(e.target.classList.contains('sidebar-link')) {
-                 e.target.classList.add('active');
-            }
-
-            // Update Title
-            categoryTitle.textContent = category === 'All' ? 'All Products' : category;
-
-            // Filter Logic
-            if (category === 'All') {
-                renderProducts(allProducts);
-            } else {
-                const filtered = allProducts.filter(p => p.category === category);
-                renderProducts(filtered);
-            }
-
-            // Close mobile menu if open
-            document.getElementById('mobileMenu').classList.add('hidden');
-        }
-
-        function addToCart(productName) {
-            cartTotal++;
-            cartCountEl.textContent = cartTotal;
-            cartCountEl.classList.remove('opacity-0');
-            
-            // Toast Animation
-            toast.querySelector('span').textContent = `${productName} added to cart`;
-            toast.classList.remove('translate-y-20', 'opacity-0');
-            setTimeout(() => {
-                toast.classList.add('translate-y-20', 'opacity-0');
-            }, 3000);
-        }
-
-        // --- 5. INITIALIZATION ---
-        
-        // Search Functionality
-        searchInput.addEventListener('input', (e) => {
-            const term = e.target.value.toLowerCase();
-            const filtered = allProducts.filter(p => 
-                p.name.toLowerCase().includes(term) || 
-                p.brand.toLowerCase().includes(term) ||
-                p.oem.toLowerCase().includes(term)
-            );
-            categoryTitle.textContent = term ? `Search results for "${term}"` : "All Products";
-            renderProducts(filtered);
-        });
-
-        // Initialize
-        renderSidebar();
-        renderProducts(allProducts);
-
-    </script>
+    <!-- JavaScript removed: template requires server-side rendering with Flask -->
 </body>
 </html>
