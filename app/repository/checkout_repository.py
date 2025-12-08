@@ -3,9 +3,6 @@ from pathlib import Path
 
 
 def get_data_folder():
-    """
-    Returns the path to the 'data' folder.
-    """
     current_file = Path(__file__)
 
     parent_folder = current_file.parent
@@ -18,10 +15,6 @@ def get_data_folder():
 
 
 def load_cart():
-    """
-    Load the cart.json file and return a dictionary.
-    If the file does not exist, return an empty cart structure.
-    """
     data_folder = get_data_folder()
     cart_file = data_folder / "cart.json"
 
@@ -50,13 +43,6 @@ def load_cart():
 
 
 def load_products():
-    """
-    Load all products from sellers_inventory.json and flatten them into a list.
-
-    Each product in the returned list will also include:
-    - seller_name
-    - id  (format: "<seller_id>_<oem>")
-    """
     data_folder = get_data_folder()
     products_file = data_folder / "sellers_inventory.json"
 
@@ -86,9 +72,6 @@ def load_products():
 
 
 def save_orders(orders):
-    """
-    Save the list of orders to orders.json.
-    """
     data_folder = get_data_folder()
     orders_file = data_folder / "orders.json"
 
@@ -97,9 +80,6 @@ def save_orders(orders):
 
 
 def clear_cart():
-    """
-    Reset the cart.json file to an empty cart.
-    """
     data_folder = get_data_folder()
     cart_file = data_folder / "cart.json"
 

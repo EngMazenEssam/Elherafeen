@@ -5,7 +5,6 @@ from app.models.user import User
 
 
 class UserRepository:
-    """Handles reading/writing users.json"""
 
     def _load_users(self) -> List[dict]:
         if not USERS_FILE.exists():

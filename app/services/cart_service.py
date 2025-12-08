@@ -3,20 +3,6 @@ from app.repository.product_repository import load_products_raw
 
 
 def build_products_by_oem():
-    """
-    Read products.json and return dict: {oem: product_data_with_seller_info}
-    products.json structure:
-    {
-      "SELLER_01": {
-        "name": "...",
-        "products": [
-          { "oem": "...", "price": ..., ... },
-          ...
-        ]
-      },
-      ...
-    }
-    """
     data = load_products_raw()
     products_by_oem = {}
 
@@ -36,12 +22,6 @@ def build_products_by_oem():
 
 
 def get_cart_items_with_totals():
-    """
-    Returns:
-      cart_items: list of { oem, quantity, product, line_total }
-      subtotal: float
-      total_quantity: int
-    """
     products_by_oem = build_products_by_oem()
     cart_data = load_cart_raw()
 
@@ -74,10 +54,6 @@ def get_cart_items_with_totals():
 
 
 def update_cart_quantity(oem, quantity):
-    """
-    Update quantity of an item in cart.
-    Returns (ok, error_message_or_None, status_code)
-    """
     cart_data = load_cart_raw()
     items = cart_data.get("items", [])
 
@@ -97,10 +73,6 @@ def update_cart_quantity(oem, quantity):
 
 
 def remove_from_cart(oem):
-    """
-    Remove item by OEM.
-    Returns (ok, error_message_or_None, status_code)
-    """
     cart_data = load_cart_raw()
     items = cart_data.get("items", [])
 
@@ -114,10 +86,6 @@ def remove_from_cart(oem):
     return True, None, 200
 
 def add_to_cart(oem, quantity=1):
-    """
-    Add an item to the cart (or increase quantity if it already exists).
-    Returns (ok, error_message_or_None, status_code)
-    """
     cart_data = load_cart_raw()
     items = cart_data.get("items", [])
 

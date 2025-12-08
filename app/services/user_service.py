@@ -5,20 +5,16 @@ from app.repository.user_repository import UserRepository
 
 
 class UserService:
-    """Business logic for users (register / login)."""
 
     def __init__(self, repo: Optional[UserRepository] = None) -> None:
         self.repo = repo or UserRepository()
 
-    # password hashing
     def _hash_password(self, password: str) -> str:
         return hashlib.sha256(password.encode("utf-8")).hexdigest()
 
-    # compare passwords
     def _check_password(self, plain: str, hashed: str) -> bool:
         return self._hash_password(plain) == hashed
 
-    # REGISTER
     def register_user(
         self,
         fullname: str,
@@ -50,7 +46,6 @@ class UserService:
         self.repo.add_user(new_user)
         return new_user
 
-    # LOGIN
     def login_user(self, email: str, password: str) -> User:
         email = (email or "").strip().lower()
         if not email or not password:

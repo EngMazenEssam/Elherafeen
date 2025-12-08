@@ -23,10 +23,8 @@ def _save_json(path, data):
 
 
 def load_cart_raw():
-    """Return raw dict from cart.json."""
     return _load_json(CART_FILE, default={"items": []})
 
 
 def save_cart_raw(cart_data):
-    """Overwrite cart.json with given dict."""
     _save_json(CART_FILE, cart_data)

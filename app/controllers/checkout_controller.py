@@ -91,7 +91,6 @@ def process_checkout():
         flash("Your cart is empty", "error")
         return redirect(url_for("cart.cart"))
 
-    # Calculate prices
     shipping = 100
     tax = round(subtotal * 0.14, 2)
     grand_total = subtotal + shipping + tax
