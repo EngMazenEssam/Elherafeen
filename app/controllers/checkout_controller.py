@@ -5,7 +5,6 @@ from pathlib import Path
 
 checkout_bp = Blueprint('checkout', __name__)
 
-# Helper functions
 def get_data_folder():
     base_dir = Path(__file__).parent.parent
     return base_dir / 'data'
@@ -51,17 +50,14 @@ def clear_cart():
     with open(cart_file, 'w') as f:
         json.dump(empty_cart, f, indent=2)
 
-# Checkout page route
 @checkout_bp.route('/checkout')
 def checkout_page():
-    # Load cart
     cart_data = load_cart()
     
     if not cart_data['items']:
         flash('Your cart is empty', 'error')
         return redirect('/cart')
     
-    # Load products to get details
     all_products = load_products()
     cart_items_with_details = []
     
@@ -83,10 +79,8 @@ def checkout_page():
     
     return render_template('checkout.html', cart=cart_data)
 
-# Process checkout
 @checkout_bp.route('/checkout', methods=['POST'])
 def process_checkout():
-    # Get form data
     first_name = request.form.get('first_name', '').strip()
     last_name = request.form.get('last_name', '').strip()
     email = request.form.get('email', '').strip()
@@ -96,22 +90,18 @@ def process_checkout():
     zip_code = request.form.get('zip', '').strip()
     payment_method = request.form.get('payment', 'cod')
     
-    # Validate required fields
     if not all([first_name, last_name, email, phone, address, city, zip_code]):
         flash('Please fill in all required fields', 'error')
         return redirect('/checkout')
     
-    # Load cart
     cart_data = load_cart()
     
     if not cart_data['items']:
         flash('Your cart is empty', 'error')
         return redirect('/cart')
     
-    # Generate order ID
     order_id = f"ORD-{datetime.now().strftime('%Y%m%d%H%M%S')}"
     
-    # Get product details
     all_products = load_products()
     order_items = []
     
@@ -130,7 +120,6 @@ def process_checkout():
                 order_items.append(order_item)
                 break
     
-    # Create order object
     order = {
         'order_id': order_id,
         'customer': {
@@ -151,7 +140,6 @@ def process_checkout():
         'notes': ''
     }
     
-    # Save order to orders.json
     try:
         with open(get_data_folder() / 'orders.json', 'r') as f:
             orders = json.load(f)
@@ -163,20 +151,16 @@ def process_checkout():
     with open(get_data_folder() / 'orders.json', 'w') as f:
         json.dump(orders, f, indent=2)
     
-    # Clear the cart
     clear_cart()
     
-    # Redirect to confirmation page
     return redirect(f'/order-confirmation/{order_id}')
 
-# Order confirmation page
 @checkout_bp.route('/order-confirmation/<order_id>')
 def order_confirmation(order_id):
     try:
         with open(get_data_folder() / 'orders.json', 'r') as f:
             orders = json.load(f)
         
-        # Find the order
         order = None
         for o in orders:
             if o['order_id'] == order_id:
@@ -193,14 +177,12 @@ def order_confirmation(order_id):
         flash('Order not found', 'error')
         return redirect('/')
 
-# Order history
 @checkout_bp.route('/orders')
 def order_history():
     try:
         with open(get_data_folder() / 'orders.json', 'r') as f:
             orders = json.load(f)
         
-        # Sort by date (newest first)
         orders.sort(key=lambda x: x.get('order_date', ''), reverse=True)
         
         return render_template('order_history.html', orders=orders)

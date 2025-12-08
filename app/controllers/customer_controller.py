@@ -9,7 +9,7 @@ from flask import (
 )
 from app.services.user_service import UserService
 
-customer_bp = Blueprint("customer", __name__)  # 👈 no url_prefix, so /login, /register
+customer_bp = Blueprint("customer", __name__)
 user_service = UserService()
 
 
@@ -48,7 +48,6 @@ def login():
         try:
             user = user_service.login_user(email, password)
 
-            # store user info in session
             session["user_id"] = user.id
             session["fullname"] = user.fullname
             session["email"] = user.email

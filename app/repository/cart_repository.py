@@ -1,32 +1,39 @@
 import os
 import json
 
-BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
-DATA_DIR = os.path.join(BASE_DIR, "data")
-CART_FILE = os.path.join(DATA_DIR, "cart.json")
+ROOT_DIR = os.path.abspath(
+    os.path.join(os.path.dirname(__file__), "..", "..")
+)
+
+DATA_FOLDER = os.path.join(ROOT_DIR, "data")
+
+CART_JSON_PATH = os.path.join(DATA_FOLDER, "cart.json")
 
 
-def _load_json(path, default):
+def read_json_file(path, default_value):
+
     if not os.path.exists(path):
-        return default
-    with open(path, encoding="utf-8") as f:
+        return default_value
+
+    with open(path, encoding="utf-8") as file:
         try:
-            return json.load(f)
+            return json.load(file)
         except json.JSONDecodeError:
-            return default
+            return default_value
 
+def write_json_file(path, data):
 
-def _save_json(path, data):
     os.makedirs(os.path.dirname(path), exist_ok=True)
-    with open(path, "w", encoding="utf-8") as f:
-        json.dump(data, f, ensure_ascii=False, indent=2)
+
+    with open(path, "w", encoding="utf-8") as file:
+        json.dump(data, file)
 
 
 def load_cart_raw():
-    """Return raw dict from cart.json."""
-    return _load_json(CART_FILE, default={"items": []})
+
+    return read_json_file(CART_JSON_PATH, default_value={"items": []})
 
 
-def save_cart_raw(cart_data):
-    """Overwrite cart.json with given dict."""
-    _save_json(CART_FILE, cart_data)
+def save_cart_raw(cart_dictionary):
+
+    write_json_file(CART_JSON_PATH, cart_dictionary)
