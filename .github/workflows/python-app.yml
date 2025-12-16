@@ -5,12 +5,12 @@ on:
     branches:
       - "main"
       - "develop"
-      - "Ali-Testing"  # Runs on all feature branches
+      - "Ali-Testing"  # Runs on the main, develop, and Ali-Testing branches
   pull_request:
     branches:
       - "main"
       - "develop"
-      - "Ali-Testing"  # Runs on all feature branches for pull requests
+      - "Ali-Testing"  # Runs on PRs targeting these branches
 
 permissions:
   contents: read  # Permissions to read repository contents
@@ -48,7 +48,7 @@ jobs:
 
     - name: Upload test results
       if: success()  # Upload test results only if the tests are successful
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v2  # Use the stable version v2
       with:
         name: pytest-results
         path: test-results/
@@ -56,4 +56,4 @@ jobs:
     - name: Notify on failure
       if: failure()  # Notify Slack only if the tests fail
       run: |
-        curl -X POST -H 'Content-type: application/json' --data '{"text":"Test failure on commit push"}' https://slack.com/api/webhookurl
+        curl -X POST -H 'Content-type: application/json' --data '{"text":"Test failure on commit push"}' ${{ secrets.SLACK_WEBHOOK_URL }}
