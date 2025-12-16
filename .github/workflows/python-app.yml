@@ -5,12 +5,12 @@ on:
     branches:
       - "main"
       - "develop"
-      - "feature/*"  # Runs on all feature branches
+      - "Ali-Testing"  # Runs on all feature branches
   pull_request:
     branches:
       - "main"
       - "develop"
-      - "feature/*"  # Runs on all feature branches for pull requests
+      - "Ali-Testing"  # Runs on all feature branches for pull requests
 
 permissions:
   contents: read  # Permissions to read repository contents
