@@ -8,107 +8,86 @@
 <body>
 
 <header>
-      <div class="container">
-        <div class="top-row">
-          <div class="logo">
-            <img src="{{ url_for('static', filename='images/icons/ELHERAFEEN LOGO BLACK.png') }}" alt="ELHERAFEEN">
-          </div>
-          <div class="search-bar">
-            <input type="search" placeholder="Search for parts">
-          </div>
-          <div class="icons">
-            <button type="button" class="icon-btn">❤</button>
-            <a href="{{ url_for('cart.cart') }}" class="icon-btn" aria-label="View cart">🛒</a>
-            <a class="btn auth" href="/login">Login</a>
-          </div>
-        </div>
-        <nav class="sections">
-          <a href="{{ url_for('home.home') }}">Home</a>
-          <a href="{{ url_for('product.product_list') }}">All Products</a>
-          <a href="{{ url_for('profile.profile') }}">Profile</a>
-          <a href="#">Section 4</a>
-          <a href="#">Section 5</a>
-        </nav>
+  <div class="container">
+    <div class="top-row">
+      <div class="logo">
+        <img src="{{ url_for('static', filename='images/icons/ELHERAFEEN LOGO BLACK.png') }}" alt="ELHERAFEEN">
       </div>
-    </header>
+
+      <div class="search-bar">
+        <input type="search" placeholder="Search for parts">
+      </div>
+
+      <div class="icons">
+        <button type="button" class="icon-btn">❤</button>
+        <a href="{{ url_for('cart.cart') }}" class="icon-btn" aria-label="View cart">🛒</a>
+        <a class="btn auth" href="/login">Login</a>
+      </div>
+    </div>
+
+    <nav class="sections">
+      <a href="{{ url_for('home.home') }}">Home</a>
+      <a href="{{ url_for('product.product_list') }}">All Products</a>
+      <a href="{{ url_for('profile.profile') }}">Profile</a>
+      <a href="#">Section 4</a>
+      <a href="#">Section 5</a>
+    </nav>
+  </div>
+</header>
 
 <main class="container profile-page">
 
+  <!-- ================= PROFILE INFO ================= -->
   <section class="card profile-card">
     <div class="profile-info">
       <img class="avatar" src="https://via.placeholder.com/80" alt="User">
       <div>
-        <h2>Ahmed Mohamed</h2>
-        <p>ahmed.mohamed@example.com</p>
+        <h2>{{ user.fullname }}</h2>
+        <p>{{ user.email }}</p>
+        <p class="muted">Phone: {{ user.phone }}</p>
       </div>
     </div>
     <a href="#" class="btn">Edit Profile</a>
   </section>
 
+  <!-- ================= ADDRESS ================= -->
   <section class="card address-card">
     <div class="card-header">
       <h3>Saved Address</h3>
       <a href="#" class="btn-outline">Edit Address</a>
     </div>
 
-    <p>123 Automotive Street, Building 5, Apt 12</p>
-    <p>Cairo, Egypt</p>
-    <p class="muted">Phone: +20 123 456 7890</p>
+    <p>{{ address.street }}</p>
+    <p>{{ address.city }}, {{ address.country }}</p>
+    <p class="muted">Phone: {{ address.phone }}</p>
   </section>
 
+  <!-- ================= ORDERS ================= -->
   <section class="card orders-card">
-    <div class="card-header">
-      <h3>📦 Order History</h3>
-      <p class="muted">View and track your recent orders</p>
-    </div>
 
+    {% for order in orders %}
     <div class="order-item">
       <div>
-        <strong>Order #2024-1547</strong>
-        <span class="badge completed">Completed</span>
-        <p class="muted">December 10, 2025</p>
+        <strong>Order #{{ order.order_id }}</strong>
+
+        <span class="badge
+          {% if order.status == 'Completed' %}completed
+          {% elif order.status == 'Shipped' %}shipped
+          {% else %}pending{% endif %}">
+          {{ order.status }}
+        </span>
+
+        <p class="muted">{{ order.date }}</p>
       </div>
+
       <div class="order-right">
-        <span class="price">$245.99</span>
+        <span class="price">{{ order.total }} EGP</span>
         <a href="#" class="details">View Details →</a>
       </div>
     </div>
-
-    <div class="order-item">
-      <div>
-        <strong>Order #2024-1523</strong>
-        <span class="badge shipped">Shipped</span>
-        <p class="muted">November 28, 2025</p>
-      </div>
-      <div class="order-right">
-        <span class="price">$189.50</span>
-        <a href="#" class="details">View Details →</a>
-      </div>
-    </div>
-
-    <div class="order-item">
-      <div>
-        <strong>Order #2024-1489</strong>
-        <span class="badge completed">Completed</span>
-        <p class="muted">November 15, 2025</p>
-      </div>
-      <div class="order-right">
-        <span class="price">$420.00</span>
-        <a href="#" class="details">View Details →</a>
-      </div>
-    </div>
-
-    <div class="order-item">
-      <div>
-        <strong>Order #2024-1402</strong>
-        <span class="badge pending">Pending</span>
-        <p class="muted">October 30, 2025</p>
-      </div>
-      <div class="order-right">
-        <span class="price">$125.75</span>
-        <a href="#" class="details">View Details →</a>
-      </div>
-    </div>
+    {% else %}
+    <p class="muted">No orders found.</p>
+    {% endfor %}
 
   </section>
 
