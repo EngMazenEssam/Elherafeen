@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Profile | Elherafeen Store</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+</head>
+<body>
+
+<header>
+      <div class="container">
+        <div class="top-row">
+          <div class="logo">
+            <img src="{{ url_for('static', filename='images/icons/ELHERAFEEN LOGO BLACK.png') }}" alt="ELHERAFEEN">
+          </div>
+          <div class="search-bar">
+            <input type="search" placeholder="Search for parts">
+          </div>
+          <div class="icons">
+            <button type="button" class="icon-btn">❤</button>
+            <a href="{{ url_for('cart.cart') }}" class="icon-btn" aria-label="View cart">🛒</a>
+            <a class="btn auth" href="/login">Login</a>
+          </div>
+        </div>
+        <nav class="sections">
+          <a href="{{ url_for('home.home') }}">Home</a>
+          <a href="{{ url_for('product.product_list') }}">All Products</a>
+          <a href="{{ url_for('profile.profile') }}">Profile</a>
+          <a href="#">Section 4</a>
+          <a href="#">Section 5</a>
+        </nav>
+      </div>
+    </header>
+
+<main class="container profile-page">
+
+  <section class="card profile-card">
+    <div class="profile-info">
+      <img class="avatar" src="https://via.placeholder.com/80" alt="User">
+      <div>
+        <h2>Ahmed Mohamed</h2>
+        <p>ahmed.mohamed@example.com</p>
+      </div>
+    </div>
+    <a href="#" class="btn">Edit Profile</a>
+  </section>
+
+  <section class="card address-card">
+    <div class="card-header">
+      <h3>Saved Address</h3>
+      <a href="#" class="btn-outline">Edit Address</a>
+    </div>
+
+    <p>123 Automotive Street, Building 5, Apt 12</p>
+    <p>Cairo, Egypt</p>
+    <p class="muted">Phone: +20 123 456 7890</p>
+  </section>
+
+  <section class="card orders-card">
+    <div class="card-header">
+      <h3>📦 Order History</h3>
+      <p class="muted">View and track your recent orders</p>
+    </div>
+
+    <div class="order-item">
+      <div>
+        <strong>Order #2024-1547</strong>
+        <span class="badge completed">Completed</span>
+        <p class="muted">December 10, 2025</p>
+      </div>
+      <div class="order-right">
+        <span class="price">$245.99</span>
+        <a href="#" class="details">View Details →</a>
+      </div>
+    </div>
+
+    <div class="order-item">
+      <div>
+        <strong>Order #2024-1523</strong>
+        <span class="badge shipped">Shipped</span>
+        <p class="muted">November 28, 2025</p>
+      </div>
+      <div class="order-right">
+        <span class="price">$189.50</span>
+        <a href="#" class="details">View Details →</a>
+      </div>
+    </div>
+
+    <div class="order-item">
+      <div>
+        <strong>Order #2024-1489</strong>
+        <span class="badge completed">Completed</span>
+        <p class="muted">November 15, 2025</p>
+      </div>
+      <div class="order-right">
+        <span class="price">$420.00</span>
+        <a href="#" class="details">View Details →</a>
+      </div>
+    </div>
+
+    <div class="order-item">
+      <div>
+        <strong>Order #2024-1402</strong>
+        <span class="badge pending">Pending</span>
+        <p class="muted">October 30, 2025</p>
+      </div>
+      <div class="order-right">
+        <span class="price">$125.75</span>
+        <a href="#" class="details">View Details →</a>
+      </div>
+    </div>
+
+  </section>
+
+</main>
+
+</body>
+</html>
