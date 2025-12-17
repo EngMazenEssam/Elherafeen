@@ -12,5 +12,12 @@
     "email": "mezaessam@gmail.com",
     "phone": "01118621010",
     "password_hash": "fe2592b42a727e977f055947385b709cc82b16b9a87f88c6abf3900d65d0cdc3"
+  },
+  {
+    "id": "292b6c7a-b722-4c78-a3c4-f39ddb213b42",
+    "fullname": "mohamed idres",
+    "email": "midres344@gmail.com",
+    "phone": "01028963559",
+    "password_hash": "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3"
   }
 ]

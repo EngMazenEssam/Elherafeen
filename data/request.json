@@ -1,0 +1,41 @@
+[
+  {
+    "id": "req_001",
+    "seller": "AutoZone Egypt",
+    "seller_id": "seller_01",
+    "oem": "152566",
+    "title": "Mobil 1 FS x1 5W-40 Synthetic Oil",
+    "category": "Fluids",
+    "type": "Oil",
+    "brand": "Mobil 1",
+    "condition": "New",
+    "price": 850,
+    "currency": "EGP",
+    "stock": 50,
+    "sku": "MOB-152566",
+    "image": "placeholder.jpg",
+    "description": "Advanced full synthetic engine oil.",
+    "submitted": "10 minutes ago",
+    "status": "pending"
+  }
+]
+    {
+        "id": "req_002",
+        "seller": "Brake Masters",
+        "seller_id": "seller_02",
+        "oem": "09.A448.11",
+        "title": "Brembo Coated Disc Brake Rotor",
+        "category": "Brakes",
+        "type": "Rotor",
+        "brand": "Brembo",
+        "condition": "New",
+        "price": 2400,
+        "currency": "EGP",
+        "stock": 10,
+        "sku": "BRE-09A44811",
+        "image": "placeholder.jpg",
+        "description": "High carbon UV coated disc.",
+        "submitted": "30 minutes ago",
+        "status": "pending"
+    }
+    ]
