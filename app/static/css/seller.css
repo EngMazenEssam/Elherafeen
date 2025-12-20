@@ -1,4 +1,92 @@
 /* Seller Dashboard - Elherafeen Theme */
+
+header {
+  background-color: white;
+}
+
+.top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.2rem 0;
+}
+
+.search-bar {
+  width: 50%;
+}
+
+.search-bar input {
+  width: 100%;
+  padding: 0.45rem 0.8rem;
+  border-radius: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: #f3f4f6;
+  font-size: 0.95rem;
+  outline: none;
+  text-align: center;
+}
+
+.search-bar input:focus {
+  border-color: #c01717;
+}
+
+.icons {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.icon-btn {
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  padding: 0.25rem 0.4rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn.auth {
+  background: #e01b1b;
+  color: #fff;
+  padding: 0.35rem 0.7rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.btn.auth:hover {
+  background: #c01717;
+  transition: background 0.3s;
+}
+
+.logo img {
+  height: 120px;
+}
+
+.sections {
+  display: flex;
+  justify-content: center;
+  gap: 4rem;
+  padding-bottom: 0.6rem;
+}
+
+.sections a {
+  display: inline-block;
+  background: #cccccc;
+  padding: 0.25rem 0.7rem;
+  margin-top: -26px;
+  border-radius: 14px;
+  color: #000000;
+  font-weight: 600;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+  text-decoration: none;
+}
+
+.sections a:hover {
+  background: #c01717;
+  color: #ffffff;
+  transition: background 0.3s, color 0.3s;
+}
+
 :root {
     --bg-light: #f5f5f5;
     --card-bg: #ffffff;
