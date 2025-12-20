@@ -4,6 +4,11 @@
 <head>
   <meta charset="UTF-8">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/Home.css') }}">
+  <link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+/>
+
   <title>Elherafeen Store</title>
 </head>
 
@@ -185,15 +190,67 @@
         </article>
       </div>
     </section>
+<footer class="site-footer">
+  <div class="footer-container">
 
-    <footer>
-      <h2>Get In Touch</h2>
-      <div class="contact-info">
-        <p><strong>Mobile:</strong> +201102010188</p>
-        <p><strong>Email:</strong> elherafeen@gmail.com</p>
-        <p><strong>Fax:</strong> +20-2-23456789</p>
+    <div class="footer-col brand">
+      <img
+        src="{{ url_for('static', filename='images/icons/ELHERAFEEN LOGO BLACK.png') }}"
+        alt="ELHERAFEEN"
+        class="footer-logo"
+      />
+      <p>
+        Premium quality products delivered with care.
+        Your trusted partner for all your shopping needs.
+      </p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/shop">Shop</a></li>
+        <li><a href="/brands">Brands</a></li>
+        <li><a href="/cart">Cart</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Contact Us</h4>
+      <div class="footer-contact">
+        <p>Elherafeen@gmail.com</p>
+        <p>(+20) 1143454630</p>
       </div>
-    </footer>
+
+      <h4 class="follow-title">Follow Us</h4>
+      <div class="social-icons">
+        <a href="https://www.linkedin.com/in/mazen-essam-a1a600343/" target="_blank" aria-label="LinkedIn">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+
+        <a href="https://www.linkedin.com/in/mohamed-idres-taman-80164a378/" target="_blank" aria-label="LinkedIn">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+
+        <a href="https://www.linkedin.com/in/ali-ahmed-ibrahim/" target="_blank" aria-label="LinkedIn">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+
+        <a href="https://www.linkedin.com/in/member4" target="_blank" aria-label="LinkedIn">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    © 2025 ELHERAFEEN. All rights reserved.
+  </div>
+</footer>
+
+
+
   </main>
 
   <script>
