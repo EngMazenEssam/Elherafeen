@@ -18,11 +18,13 @@ def create_app():
     from app.controllers.product_controller import product_bp
     from app.controllers.customer_controller import customer_bp
     from app.controllers.checkout_controller import checkout_bp
+    from app.controllers.seller_controller import seller_bp
 
     app.register_blueprint(home_bp)
     app.register_blueprint(cart_bp)
     app.register_blueprint(product_bp)
     app.register_blueprint(customer_bp)
     app.register_blueprint(checkout_bp)
+    app.register_blueprint(seller_bp)
     
     return app
