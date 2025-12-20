@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/Home.css') }}">
   <title>Elherafeen Store</title>
 </head>
+
 <body>
   <main>
     <header>
@@ -26,6 +28,7 @@
           <a href="{{ url_for('home.home') }}">Home</a>
           <a href="{{ url_for('product.product_list') }}">All Products</a>
           <a href="{{ url_for('profile.profile') }}">Profile</a>
+          <a href="{{ url_for('seller.dashboard') }}">Seller Dashboard</a>
           <a href="#">Section 4</a>
           <a href="#">Section 5</a>
         </nav>
@@ -47,19 +50,59 @@
 
     <section class="brands">
       <div class="shop">
-        <h2>Shop by Brand</h2>
+        <h2>Shop by Car Supplies</h2>
         <p>Browse our extensive selection of auto parts organized by category</p>
       </div>
       <div class="brand-grid">
-        {% for i in range(8) %}
-          <a href="/brands/benz" class="brand-link">
-            <figure class="brand-card">
-              <img src="{{ url_for('static', filename='images/brands/Benz Card.png') }}" alt="Benz">
-              <figcaption>Benz</figcaption>
-              <button class="brand-go" aria-label="View Benz products"></button>
-            </figure>
-          </a>
-        {% endfor %}
+        <a href="{{ url_for('product.product_list', category='Car Oils') }}" class="brand-link">
+          <figure class="brand-card">
+            <img src="{{ url_for('static', filename='images/supplies/oil.png') }}" alt="Car Oils">
+            <figcaption>Car Oils</figcaption>
+          </figure>
+        </a>
+        <a href="{{ url_for('product.product_list', category='Brakes') }}" class="brand-link">
+          <figure class="brand-card">
+            <img src="{{ url_for('static', filename='images/supplies/breaks.png') }}" alt="Brakes">
+            <figcaption>Brakes</figcaption>
+          </figure>
+        </a>
+        <a href="{{ url_for('product.product_list', category='Batteries') }}" class="brand-link">
+          <figure class="brand-card">
+            <img src="{{ url_for('static', filename='images/supplies/battery.png') }}" alt="Batteries">
+            <figcaption>Batteries</figcaption>
+          </figure>
+        </a>
+        <a href="{{ url_for('product.product_list', category='Cooling') }}" class="brand-link">
+          <figure class="brand-card">
+            <img src="{{ url_for('static', filename='images/products/High Performance Air Filter.jpg') }}"
+              alt="Cooling">
+            <figcaption>Cooling</figcaption>
+          </figure>
+        </a>
+        <a href="{{ url_for('product.product_list', category='Electrical') }}" class="brand-link">
+          <figure class="brand-card">
+            <img src="{{ url_for('static', filename='images/supplies/electrical.png') }}" alt="Electrical">
+            <figcaption>Electrical</figcaption>
+          </figure>
+        </a>
+        <a href="{{ url_for('product.product_list', category='Engine') }}" class="brand-link">
+          <figure class="brand-card">
+            <img src="{{ url_for('static', filename='images/products/High Performance Air Filter.jpg') }}" alt="Engine">
+            <figcaption>Engine</figcaption>
+          </figure>
+        </a>
+        <a href="{{ url_for('product.product_list', category='Suspensions') }}" class="brand-link">
+          <figure class="brand-card">
+            <img src="{{ url_for('static', filename='images/supplies/suspension.png') }}" alt="Suspensions">
+            <figcaption>Suspensions</figcaption>
+          </figure>
+        </a>
+        <a href="{{ url_for('product.product_list', category='Fluids') }}" class="brand-link">
+          <figure class="brand-card">
+            <img src="{{ url_for('static', filename='images/supplies/oil.png') }}" alt="Fluids">
+            <figcaption>Fluids</figcaption>
+          </figure>
+        </a>
       </div>
     </section>
 
@@ -75,14 +118,16 @@
       <div class="product-grid">
         <article class="product-card" data-id="p001">
           <div class="product-media">
-            <img src="{{ url_for('static', filename='images/products/Premium Brake Disc Set.jpg') }}" alt="Premium Brake Disc Set" loading="lazy">
+            <img src="{{ url_for('static', filename='images/products/Premium Brake Disc Set.jpg') }}"
+              alt="Premium Brake Disc Set" loading="lazy">
           </div>
           <div class="product-body">
             <p class="product-brand">BrakeMaster</p>
             <h3 class="product-title">Premium Brake Disc Set</h3>
             <div class="price-row">
               <span class="product-price">2400 EGP</span>
-              <button type="button" class="btn add-to-cart" data-oem="09.A448.11" aria-label="Add Premium Brake Disc Set to cart">
+              <button type="button" class="btn add-to-cart" data-oem="09.A448.11"
+                aria-label="Add Premium Brake Disc Set to cart">
                 🛒 Add to Cart
               </button>
             </div>
@@ -91,7 +136,8 @@
 
         <article class="product-card" data-id="p002">
           <div class="product-media">
-            <img src="{{ url_for('static', filename='images/products/High Performance Air Filter.jpg') }}" alt="High Performance Air Filter" loading="lazy">
+            <img src="{{ url_for('static', filename='images/products/High Performance Air Filter.jpg') }}"
+              alt="High Performance Air Filter" loading="lazy">
           </div>
           <div class="product-body">
             <p class="product-brand">AirFlow Pro</p>
@@ -107,7 +153,8 @@
 
         <article class="product-card" data-id="p003">
           <div class="product-media">
-            <img src="{{ url_for('static', filename='images/products/Premium All-Season Tire.jpg') }}" alt="Premium Tire" loading="lazy">
+            <img src="{{ url_for('static', filename='images/products/Premium All-Season Tire.jpg') }}"
+              alt="Premium Tire" loading="lazy">
           </div>
           <div class="product-body">
             <p class="product-brand">BrakeMaster</p>
@@ -123,7 +170,8 @@
 
         <article class="product-card" data-id="p004">
           <div class="product-media">
-            <img src="{{ url_for('static', filename='images/products/AGM Car Battery 12V.jpg') }}" alt="Car Battery" loading="lazy">
+            <img src="{{ url_for('static', filename='images/products/AGM Car Battery 12V.jpg') }}" alt="Car Battery"
+              loading="lazy">
           </div>
           <div class="product-body">
             <p class="product-brand">BatteryCo</p>
@@ -141,6 +189,11 @@
 
     <footer>
       <h2>Get In Touch</h2>
+      <div class="contact-info">
+        <p><strong>Mobile:</strong> +201102010188</p>
+        <p><strong>Email:</strong> elherafeen@gmail.com</p>
+        <p><strong>Fax:</strong> +20-2-23456789</p>
+      </div>
     </footer>
   </main>
 
@@ -171,4 +224,5 @@
     });
   </script>
 </body>
+
 </html>
