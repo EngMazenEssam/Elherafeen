@@ -34,26 +34,27 @@ class SellerService:
                 
                 image_filename = f"products/{unique_name}"
 
+        # Process tags
+        tags_input = form_data.get("tags", "")
+        tags_list = [t.strip() for t in tags_input.split(",") if t.strip()]
+
         product = {
             "id": product_id,
             "seller_id": seller_id,
             "status": "Pending",
             "submission_date": datetime.now().strftime("%Y-%m-%d"),
+            "name": form_data.get("name"),
+            "category": form_data.get("category"),
+            "type": form_data.get("type"),
             "brand": form_data.get("brand"),
-            "model": form_data.get("model"),
-            "year": form_data.get("year"),
             "condition": form_data.get("condition"),
             "price": form_data.get("price"),
             "currency": form_data.get("currency", "EGP"),
+            "stock": int(form_data.get("stock")) if form_data.get("stock") else 0,
+            "images": [image_filename],
             "description": form_data.get("description"),
-            "image": image_filename,
-            "specs": {
-                "engine_type": form_data.get("engine_type"),
-                "horsepower": form_data.get("horsepower"),
-                "transmission": form_data.get("transmission"),
-                "drivetrain": form_data.get("drivetrain"),
-                "fuel_type": form_data.get("fuel_type"),
-            }
+            "sold_count": 0,
+            "tags": tags_list
         }
 
         self.repo.add_pending_product(product)
