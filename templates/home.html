@@ -49,19 +49,59 @@
 
     <section class="brands">
       <div class="shop">
-        <h2>Shop by Brand</h2>
+        <h2>Shop by Car Supplies</h2>
         <p>Browse our extensive selection of auto parts organized by category</p>
       </div>
       <div class="brand-grid">
-        {% for i in range(8) %}
-        <a href="/brands/benz" class="brand-link">
+        <a href="{{ url_for('product.product_list', category='Car Oils') }}" class="brand-link">
           <figure class="brand-card">
-            <img src="{{ url_for('static', filename='images/brands/Benz Card.png') }}" alt="Benz">
-            <figcaption>Benz</figcaption>
-            <button class="brand-go" aria-label="View Benz products"></button>
+            <img src="{{ url_for('static', filename='images/supplies/oil.png') }}" alt="Car Oils">
+            <figcaption>Car Oils</figcaption>
           </figure>
         </a>
-        {% endfor %}
+        <a href="{{ url_for('product.product_list', category='Brakes') }}" class="brand-link">
+          <figure class="brand-card">
+            <img src="{{ url_for('static', filename='images/supplies/breaks.png') }}" alt="Brakes">
+            <figcaption>Brakes</figcaption>
+          </figure>
+        </a>
+        <a href="{{ url_for('product.product_list', category='Batteries') }}" class="brand-link">
+          <figure class="brand-card">
+            <img src="{{ url_for('static', filename='images/supplies/battery.png') }}" alt="Batteries">
+            <figcaption>Batteries</figcaption>
+          </figure>
+        </a>
+        <a href="{{ url_for('product.product_list', category='Cooling') }}" class="brand-link">
+          <figure class="brand-card">
+            <img src="{{ url_for('static', filename='images/products/High Performance Air Filter.jpg') }}"
+              alt="Cooling">
+            <figcaption>Cooling</figcaption>
+          </figure>
+        </a>
+        <a href="{{ url_for('product.product_list', category='Electrical') }}" class="brand-link">
+          <figure class="brand-card">
+            <img src="{{ url_for('static', filename='images/supplies/electrical.png') }}" alt="Electrical">
+            <figcaption>Electrical</figcaption>
+          </figure>
+        </a>
+        <a href="{{ url_for('product.product_list', category='Engine') }}" class="brand-link">
+          <figure class="brand-card">
+            <img src="{{ url_for('static', filename='images/products/High Performance Air Filter.jpg') }}" alt="Engine">
+            <figcaption>Engine</figcaption>
+          </figure>
+        </a>
+        <a href="{{ url_for('product.product_list', category='Suspensions') }}" class="brand-link">
+          <figure class="brand-card">
+            <img src="{{ url_for('static', filename='images/supplies/suspension.png') }}" alt="Suspensions">
+            <figcaption>Suspensions</figcaption>
+          </figure>
+        </a>
+        <a href="{{ url_for('product.product_list', category='Fluids') }}" class="brand-link">
+          <figure class="brand-card">
+            <img src="{{ url_for('static', filename='images/supplies/oil.png') }}" alt="Fluids">
+            <figcaption>Fluids</figcaption>
+          </figure>
+        </a>
       </div>
     </section>
 
