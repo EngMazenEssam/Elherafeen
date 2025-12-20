@@ -1,16 +1,1 @@
-{
-  "items": [
-    {
-      "oem": "152566",
-      "quantity": 4
-    },
-    {
-      "oem": "09.A448.11",
-      "quantity": 4
-    },
-    {
-      "oem": "152566",
-      "quantity": 4
-    }
-  ]
-}
+{"items": [{"oem": "09.A448.11", "quantity": 10}, {"oem": "941006", "quantity": 10}]}

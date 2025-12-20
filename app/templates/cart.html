@@ -328,9 +328,6 @@
             <button id="checkout-button" class="cart-checkout-btn">
               <i class="fas fa-lock"></i> Proceed to Checkout
             </button>
-            <a href="{{ url_for('checkout.checkout_page') }}" class="cart-checkout-btn">
-              Proceed to Checkout
-            </a>
 
             <a href="products.html" class="cart-continue-link">← Continue Shopping</a>
           </aside>
@@ -470,7 +467,6 @@
       });
     });
 
-    //Remove button
     // Remove button
     document.querySelectorAll(".cart-remove-btn").forEach(btn => {
       btn.addEventListener("click", async () => {
