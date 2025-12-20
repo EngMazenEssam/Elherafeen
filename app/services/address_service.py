@@ -1,16 +1,27 @@
-import json
-import os
-
-BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
-DATA_DIR = os.path.join(BASE_DIR, "data")
-ADDRESS_FILE = os.path.join(DATA_DIR, "addresses.json")
+from typing import Optional
+from app.repository.address_repository import AddressRepository
 
 
-def get_address_for_user(email):
-    if not os.path.exists(ADDRESS_FILE):
-        return None
 
-    with open(ADDRESS_FILE, encoding="utf-8") as f:
-        data = json.load(f)
+class AddressService:
+    def __init__(self, repo: Optional[AddressRepository] = None):
+        self.repo = repo or AddressRepository()
 
-    return data.get(email)
+    def get_address_for_user(self, email: str) -> Optional[dict]:
+        return self.repo.get_by_email(email)
+
+    def update_address(
+        self,
+        email: str,
+        street: str,
+        city: str,
+        country: str,
+        phone: str
+    ) -> bool:
+        return self.repo.update_address(
+            email=email,
+            street=street,
+            city=city,
+            country=country,
+            phone=phone
+        )

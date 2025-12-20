@@ -1,0 +1,164 @@
+
+header {
+  background-color: white;
+}
+
+.top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.2rem 0;
+}
+
+.search-bar {
+  width: 50%; 
+}
+
+.search-bar input {
+  width: 100%;
+  padding: 0.45rem 0.8rem;
+  border-radius: 20px;
+  border: 1px solid rgba(0,0,0,0.12);
+  background: #f3f4f6;
+  font-size: 0.95rem;
+  outline: none;
+  text-align: center;
+}
+
+.search-bar input:focus {
+  border-color: #c01717;
+}
+
+.icons 
+{
+  display:flex; 
+  align-items:center; 
+  gap: 0.5rem;
+}
+
+.icon-btn{
+  background: #fff;
+  border:1px solid rgba(0,0,0,0.12); 
+  padding:0.25rem 0.4rem;
+  border-radius:6px; 
+  cursor:pointer;
+}
+
+.btn.auth {
+  background:#e01b1b; 
+  color:#fff; 
+  padding:0.35rem 0.7rem; 
+  border-radius:8px; 
+  text-decoration:none; 
+  font-weight:600;
+}
+
+.btn.auth:hover {
+  background:#c01717; 
+  transition:background 0.3s;
+}
+
+.logo img {
+  height: 120px;
+}
+
+.sections {
+  display: flex;
+  justify-content: center;
+  gap: 4rem;
+  padding-bottom: 0.6rem;
+}
+
+.sections a {
+  display:inline-block;
+  background:#cccccc;
+  padding:0.25rem 0.7rem;
+  margin-top: -26px;
+  border-radius:14px;
+  color:#000000;
+  font-weight:600;
+  box-shadow:0 4px 10px rgba(0,0,0,0.04);
+  text-decoration:none;
+}
+
+.sections a:hover {
+  background:#c01717;
+  color:#ffffff;
+  transition:background 0.3s, color 0.3s;
+}
+
+
+.edit-profile-page {
+  padding: 3rem 0 4rem;
+  display: flex;
+  justify-content: center;
+}
+
+.edit-card {
+  width: 100%;
+  max-width: 520px;
+  background: #fff;
+  padding: 2rem 2.2rem;
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+}
+
+.edit-card h1 {
+  font-size: 1.8rem;
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.1rem;
+}
+
+.form-group label {
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+}
+
+.form-group input {
+  padding: 0.55rem 0.75rem;
+  border-radius: 10px;
+  border: 1px solid rgba(0,0,0,0.15);
+  font-size: 0.95rem;
+  background: #f9fafb;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #e01b1b;
+}
+
+.form-actions {
+  display: flex;
+  gap: 0.8rem;
+  margin-top: 1.2rem;
+}
+
+.btn-save {
+  background: #e01b1b;
+  color: #fff;
+  border: none;
+  padding: 0.55rem 1.2rem;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(224,27,27,0.15);
+}
+
+.btn-save:hover {
+  background: #c01717;
+}
+
+.btn-cancel {
+  text-decoration: none;
+  padding: 0.55rem 1.2rem;
+  border-radius: 10px;
+  border: 1px solid rgba(0,0,0,0.2);
+  color: #111;
+  font-weight: 600;
+}

@@ -37,7 +37,18 @@
 
 <main class="container profile-page">
 
-  <!-- ================= PROFILE INFO ================= -->
+  <section class="card">
+  <h3>Welcome back 👋</h3>
+
+  <p class="muted">
+    Keep your profile and address information up to date to enjoy a faster and smoother checkout experience.
+  </p>
+
+  <p class="muted">
+    You can edit your profile details or update your saved address anytime.
+  </p>
+  </section>
+
   <section class="card profile-card">
     <div class="profile-info">
       <img class="avatar" src="https://via.placeholder.com/80" alt="User">
@@ -47,48 +58,17 @@
         <p class="muted">Phone: {{ user.phone }}</p>
       </div>
     </div>
-    <a href="#" class="btn">Edit Profile</a>
+    <a href="{{ url_for('profile.edit_profile_page') }}" class="btn">Edit Profile</a>
   </section>
 
-  <!-- ================= ADDRESS ================= -->
   <section class="card address-card">
     <div class="card-header">
       <h3>Saved Address</h3>
-      <a href="#" class="btn-outline">Edit Address</a>
+      <a href="{{ url_for('profile.edit_address_page') }}" class="btn-outline">Edit Address</a>
     </div>
 
     <p>{{ address.street }}</p>
     <p>{{ address.city }}, {{ address.country }}</p>
-    <p class="muted">Phone: {{ address.phone }}</p>
-  </section>
-
-  <!-- ================= ORDERS ================= -->
-  <section class="card orders-card">
-
-    {% for order in orders %}
-    <div class="order-item">
-      <div>
-        <strong>Order #{{ order.order_id }}</strong>
-
-        <span class="badge
-          {% if order.status == 'Completed' %}completed
-          {% elif order.status == 'Shipped' %}shipped
-          {% else %}pending{% endif %}">
-          {{ order.status }}
-        </span>
-
-        <p class="muted">{{ order.date }}</p>
-      </div>
-
-      <div class="order-right">
-        <span class="price">{{ order.total }} EGP</span>
-        <a href="#" class="details">View Details →</a>
-      </div>
-    </div>
-    {% else %}
-    <p class="muted">No orders found.</p>
-    {% endfor %}
-
   </section>
 
 </main>
