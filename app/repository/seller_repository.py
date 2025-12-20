@@ -1,18 +1,12 @@
 import json
 import os
 from typing import List, Dict, Any, Optional
-from app.config import DATA_DIR  # Assuming DATA_DIR is available in config, if not I will use relative paths or fix config
+from app.config import DATA_DIR  
 
-# Define paths
-# Define paths
-# DATA_DIR is a Path object from config, converting to str for os.path.join compatibility if needed, 
-# or just using text construction. 
-# Best to rely on config's type if we can, but likely it's easier to just force str.
 PENDING_FILE = os.path.join(str(DATA_DIR), "pending.json")
 APPROVED_FILE = os.path.join(str(DATA_DIR), "approved.json")
 
 class SellerRepository:
-    """Handles reading/writing seller data (pending and approved products)."""
 
     def _load_json(self, path: str) -> List[Dict[str, Any]]:
         if not os.path.exists(path):
@@ -37,8 +31,6 @@ class SellerRepository:
         return products
 
     def get_approved_products(self, seller_id: str = None) -> List[Dict[str, Any]]:
-        # In a real app, authorized products might be in the main products.json
-        # But per requirements, there's an approved.json for this flow.
         products = self._load_json(APPROVED_FILE)
         if seller_id:
             return [p for p in products if p.get("seller_id") == seller_id]
@@ -50,7 +42,6 @@ class SellerRepository:
         self._save_json(PENDING_FILE, products)
 
     def move_to_approved(self, product_id: str) -> bool:
-        """Moves a product from pending to approved."""
         pending = self._load_json(PENDING_FILE)
         product_to_approve = None
         new_pending = []

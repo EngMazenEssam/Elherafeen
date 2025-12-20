@@ -6,7 +6,6 @@ service = SellerService()
 
 @seller_bp.route("/", methods=["GET"])
 def dashboard():
-    # Mock seller_id for now, or get from session
     seller_id = session.get("user_id", "seller_001") 
     
     data = service.get_dashboard_data(seller_id)

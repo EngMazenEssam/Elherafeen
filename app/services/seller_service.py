@@ -17,33 +17,23 @@ class SellerService:
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
     def submit_product(self, form_data, files, seller_id):
-        """
-        Processes the form submission.
-        1. Saves images/videos if present.
-        2. Constructs the product dictionary.
-        3. Saves to pending.json via repository.
-        """
         product_id = f"p-{uuid.uuid4().hex[:8]}"
         
         # Handle file upload
-        image_filename = "default.jpg" # Placeholder
+        image_filename = "default.jpg"
         if 'image' in files:
             file = files['image']
             if file and self._allowed_file(file.filename):
                 filename = secure_filename(file.filename)
-                # Unique name to prevent collision
                 unique_name = f"{product_id}_{filename}"
                 
-                # Ensure directory exists
                 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
                 
                 file_path = os.path.join(UPLOAD_FOLDER, unique_name)
                 file.save(file_path)
                 
-                # Store relative path for frontend
                 image_filename = f"products/{unique_name}"
 
-        # Construct product data matching requirements
         product = {
             "id": product_id,
             "seller_id": seller_id,
@@ -57,14 +47,12 @@ class SellerService:
             "currency": form_data.get("currency", "EGP"),
             "description": form_data.get("description"),
             "image": image_filename,
-            # Specs from the form
             "specs": {
                 "engine_type": form_data.get("engine_type"),
                 "horsepower": form_data.get("horsepower"),
                 "transmission": form_data.get("transmission"),
                 "drivetrain": form_data.get("drivetrain"),
                 "fuel_type": form_data.get("fuel_type"),
-                 # mileage or 0-60 could be added here
             }
         }
 

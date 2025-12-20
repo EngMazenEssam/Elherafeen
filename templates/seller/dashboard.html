@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,32 +9,35 @@
     <!-- Using Inter font for premium look -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
+
 <body>
     <div class="seller-container">
         <header class="seller-header">
             <div style="display: flex; justify-content: space-between; align-items: center;">
                 <h1>Seller Dashboard</h1>
-                <a href="{{ url_for('home.home') }}" style="color: var(--primary); text-decoration: none;">&larr; Back to Shop</a>
+                <a href="{{ url_for('home.home') }}" style="color: var(--primary); text-decoration: none;">&larr; Back
+                    to Shop</a>
             </div>
             <p style="color: var(--text-muted);">Manage your inventory and track approvals</p>
         </header>
 
         {% with messages = get_flashed_messages(with_categories=true) %}
-          {% if messages %}
-            {% for category, message in messages %}
-              <div style="padding: 15px; border-radius: 8px; margin-bottom: 20px; background: {{ '#003322' if category == 'success' else '#330000' }}; color: {{ '#00ff9d' if category == 'success' else '#ff4444' }}; border: 1px solid {{ '#00ff9d' if category == 'success' else '#ff4444' }};">
-                {{ message }}
-              </div>
-            {% endfor %}
-          {% endif %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div
+            style="padding: 15px; border-radius: 8px; margin-bottom: 20px; background: {{ '#003322' if category == 'success' else '#330000' }}; color: {{ '#00ff9d' if category == 'success' else '#ff4444' }}; border: 1px solid {{ '#00ff9d' if category == 'success' else '#ff4444' }};">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
         {% endwith %}
 
-        <!-- SUBMISSION FORM -->
+
         <section>
             <h2 class="section-title">Submit New Car Listing</h2>
             <div class="form-card">
                 <form action="{{ url_for('seller.submit_product') }}" method="POST" enctype="multipart/form-data">
-                    
+
                     <h3>1. Car Basic Information</h3>
                     <div class="form-grid">
                         <div class="form-group">
@@ -45,16 +49,17 @@
                                 <option value="Audi">Audi</option>
                                 <option value="Lamborghini">Lamborghini</option>
                                 <option value="Ferrari">Ferrari</option>
-                                <!-- Add more as needed -->
                             </select>
                         </div>
                         <div class="form-group">
                             <label>Car Model</label>
-                            <input type="text" name="model" class="form-control" placeholder="e.g. Aventador SVJ" required>
+                            <input type="text" name="model" class="form-control" placeholder="e.g. Aventador SVJ"
+                                required>
                         </div>
                         <div class="form-group">
                             <label>Year</label>
-                            <input type="number" name="year" class="form-control" placeholder="2024" min="1900" max="2025" required>
+                            <input type="number" name="year" class="form-control" placeholder="2024" min="1900"
+                                max="2025" required>
                         </div>
                         <div class="form-group">
                             <label>Condition</label>
@@ -111,7 +116,8 @@
                         </div>
                         <div class="form-group">
                             <label>Fuel Type / Range</label>
-                            <input type="text" name="fuel_type" class="form-control" placeholder="e.g. Premium Gasoline">
+                            <input type="text" name="fuel_type" class="form-control"
+                                placeholder="e.g. Premium Gasoline">
                         </div>
                     </div>
 
@@ -139,7 +145,8 @@
                         </div>
                         <div class="form-group" style="grid-column: span 2;">
                             <label>VIN (Optional)</label>
-                            <input type="text" name="vin" class="form-control" placeholder="Vehicle Identification Number">
+                            <input type="text" name="vin" class="form-control"
+                                placeholder="Vehicle Identification Number">
                         </div>
                     </div>
 
@@ -147,15 +154,18 @@
                     <div class="form-group">
                         <div class="file-upload-area" onclick="document.getElementById('fileInput').click()">
                             <p style="font-size: 1.2rem; color: var(--primary);">⬆ Drag & drop or click to upload</p>
-                            <p style="color: var(--text-muted); font-size: 0.9rem;">Supports JPG, PNG, WEBP, MP4 — Max 10MB</p>
-                            <input type="file" name="image" id="fileInput" style="display: none" onchange="document.getElementById('fileNameUI').innerText = this.files[0].name">
+                            <p style="color: var(--text-muted); font-size: 0.9rem;">Supports JPG, PNG, WEBP, MP4 — Max
+                                10MB</p>
+                            <input type="file" name="image" id="fileInput" style="display: none"
+                                onchange="document.getElementById('fileNameUI').innerText = this.files[0].name">
                             <p id="fileNameUI" style="margin-top: 10px; color: var(--success);"></p>
                         </div>
                     </div>
 
                     <h3>5. Supplier Notes</h3>
                     <div class="form-group">
-                        <textarea name="description" class="form-control" rows="4" placeholder="Include extra details such as car history, modifications, special conditions, etc."></textarea>
+                        <textarea name="description" class="form-control" rows="4"
+                            placeholder="Include extra details such as car history, modifications, special conditions, etc."></textarea>
                     </div>
 
                     <div style="text-align: right; margin-top: 30px;">
@@ -165,52 +175,53 @@
             </div>
         </section>
 
-        <!-- PENDING PRODUCTS -->
+
         <section>
             <h2 class="section-title">Pending Approval</h2>
             {% if pending_products %}
-                <div class="products-list">
-                    {% for p in pending_products %}
-                    <div class="product-item">
-                        <img src="{{ url_for('static', filename='images/' ~ p.image) if 'products/' not in p.image else url_for('static', filename='images/' ~ p.image.replace('static/images/', '')) }}" 
-                             alt="{{ p.model }}"
-                             onerror="this.src='{{ url_for('static', filename='images/products/default.jpg') }}'">
-                        <!-- Simple fix for pathing if necessary, assuming code saves to static/images/products -->
-                        <div class="product-details">
-                            <h4>{{ p.brand }} {{ p.model }}</h4>
-                            <p style="color: var(--text-muted); font-size: 0.9rem;">{{ p.price }} {{ p.currency }}</p>
-                            <p style="font-size: 0.8rem; margin-top: 10px;">Submitted: {{ p.submission_date }}</p>
-                            <span class="status-badge status-pending">Pending Review</span>
-                        </div>
+            <div class="products-list">
+                {% for p in pending_products %}
+                <div class="product-item">
+                    <img src="{{ url_for('static', filename='images/' ~ p.image) if 'products/' not in p.image else url_for('static', filename='images/' ~ p.image.replace('static/images/', '')) }}"
+                        alt="{{ p.model }}"
+                        onerror="this.src='{{ url_for('static', filename='images/products/default.jpg') }}'">
+                    <!-- Simple fix for pathing if necessary, assuming code saves to static/images/products -->
+                    <div class="product-details">
+                        <h4>{{ p.brand }} {{ p.model }}</h4>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">{{ p.price }} {{ p.currency }}</p>
+                        <p style="font-size: 0.8rem; margin-top: 10px;">Submitted: {{ p.submission_date }}</p>
+                        <span class="status-badge status-pending">Pending Review</span>
                     </div>
-                    {% endfor %}
                 </div>
+                {% endfor %}
+            </div>
             {% else %}
-                <p style="color: var(--text-muted); margin-bottom: 40px;">No pending submissions.</p>
+            <p style="color: var(--text-muted); margin-bottom: 40px;">No pending submissions.</p>
             {% endif %}
         </section>
 
-        <!-- APPROVED PRODUCTS -->
+
         <section>
             <h2 class="section-title">Approved Listings</h2>
             {% if approved_products %}
-                <div class="products-list">
-                    {% for p in approved_products %}
-                    <div class="product-item">
-                        <img src="{{ url_for('static', filename='images/' ~ p.image) }}" alt="{{ p.model }}">
-                        <div class="product-details">
-                            <h4>{{ p.brand }} {{ p.model }}</h4>
-                            <p style="color: var(--text-muted); font-size: 0.9rem;">{{ p.price }} {{ p.currency }}</p>
-                            <span class="status-badge status-approved">Live</span>
-                        </div>
+            <div class="products-list">
+                {% for p in approved_products %}
+                <div class="product-item">
+                    <img src="{{ url_for('static', filename='images/' ~ p.image) }}" alt="{{ p.model }}">
+                    <div class="product-details">
+                        <h4>{{ p.brand }} {{ p.model }}</h4>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">{{ p.price }} {{ p.currency }}</p>
+                        <span class="status-badge status-approved">Live</span>
                     </div>
-                    {% endfor %}
                 </div>
+                {% endfor %}
+            </div>
             {% else %}
-                <p style="color: var(--text-muted);">No approved listings locally.</p>
+            <p style="color: var(--text-muted);">No approved listings locally.</p>
             {% endif %}
         </section>
 
     </div>
 </body>
+
 </html>
