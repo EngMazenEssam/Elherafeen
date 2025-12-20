@@ -5,25 +5,26 @@ from app.models.user import User
 
 
 class UserRepository:
-    """Handles reading/writing users.json"""
 
     def _load_users(self) -> List[dict]:
         if not USERS_FILE.exists():
             return []
+
         with USERS_FILE.open("r", encoding="utf-8") as f:
             try:
                 data = json.load(f)
             except json.JSONDecodeError:
                 data = []
+
         if not isinstance(data, list):
             return []
+
         return data
 
     def _save_users(self, users: List[dict]) -> None:
         USERS_FILE.parent.mkdir(parents=True, exist_ok=True)
         with USERS_FILE.open("w", encoding="utf-8") as f:
             json.dump(users, f, ensure_ascii=False, indent=2)
-
 
     def get_all(self) -> List[User]:
         return [User.from_dict(u) for u in self._load_users()]
@@ -40,3 +41,22 @@ class UserRepository:
         users.append(user.to_dict())
         self._save_users(users)
         return user
+
+    def update_user(self, email: str, fullname: str, phone: str) -> bool:
+        email = email.lower().strip()
+
+        users = self._load_users()
+        updated = False
+
+        for u in users:
+            if u.get("email", "").lower().strip() == email:
+                u["fullname"] = fullname
+                u["phone"] = phone
+                updated = True
+                break
+
+        if not updated:
+            return False
+
+        self._save_users(users)
+        return True

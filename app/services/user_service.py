@@ -5,20 +5,21 @@ from app.repository.user_repository import UserRepository
 
 
 class UserService:
-    """Business logic for users (register / login)."""
-
     def __init__(self, repo: Optional[UserRepository] = None) -> None:
         self.repo = repo or UserRepository()
 
-    # password hashing
+    # =========================
+    # Password helpers
+    # =========================
     def _hash_password(self, password: str) -> str:
         return hashlib.sha256(password.encode("utf-8")).hexdigest()
 
-    # compare passwords
     def _check_password(self, plain: str, hashed: str) -> bool:
         return self._hash_password(plain) == hashed
 
-    # REGISTER
+    # =========================
+    # Register
+    # =========================
     def register_user(
         self,
         fullname: str,
@@ -41,18 +42,23 @@ class UserService:
             raise ValueError("This email is already registered.")
 
         password_hash = self._hash_password(password)
+
         new_user = User.create(
             fullname=fullname,
             email=email,
             phone=phone,
             password_hash=password_hash,
         )
+
         self.repo.add_user(new_user)
         return new_user
 
-    # LOGIN
+    # =========================
+    # Login
+    # =========================
     def login_user(self, email: str, password: str) -> User:
         email = (email or "").strip().lower()
+
         if not email or not password:
             raise ValueError("Email and password are required.")
 
@@ -64,3 +70,13 @@ class UserService:
             raise ValueError("Invalid email or password.")
 
         return user
+
+    # =========================
+    # Update profile (IMPORTANT)
+    # =========================
+    def update_user(self, email: str, fullname: str, phone: str) -> bool:
+        """
+        Delegates update logic to the repository.
+        Repository handles load + save.
+        """
+        return self.repo.update_user(email, fullname, phone)

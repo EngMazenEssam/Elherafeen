@@ -44,3 +44,9 @@ def filter_products(category=None, search=None):
     if category and category != "All":
         products = [p for p in products if p.get("category") == category]
     return products
+
+def get_product(seller_id, oem):
+    for sid, seller, product in iter_all_products():
+        if sid == seller_id and product.get("oem") == oem:
+            return product
+    return None

@@ -3,7 +3,6 @@ from app.repository.product_repository import load_products_raw
 
 
 def build_products_by_oem():
-
     all_sellers_data = load_products_raw()
     products_by_oem = {}
 
@@ -12,7 +11,6 @@ def build_products_by_oem():
 
         for product in seller_data.get("products", []):
             oem = product.get("oem")
-
 
             product_info = product.copy()
             product_info["seller_id"] = seller_id
@@ -24,7 +22,6 @@ def build_products_by_oem():
 
 
 def get_cart_items_with_totals():
-
     products_by_oem = build_products_by_oem()
     cart_data = load_cart_raw()
 
@@ -57,16 +54,12 @@ def get_cart_items_with_totals():
 
 
 def update_cart_quantity(oem, quantity):
-
     cart_data = load_cart_raw()
     items = cart_data.get("items", [])
-
-    item_found = False
 
     for item in items:
         if item.get("oem") == oem:
             item["quantity"] = quantity
-            item_found = True
             break
 
     cart_data["items"] = items
@@ -75,7 +68,6 @@ def update_cart_quantity(oem, quantity):
 
 
 def remove_from_cart(oem):
-
     cart_data = load_cart_raw()
     items = cart_data.get("items", [])
 
@@ -90,7 +82,6 @@ def remove_from_cart(oem):
 
 
 def add_to_cart(oem, quantity=1):
-
     cart_data = load_cart_raw()
     items = cart_data.get("items", [])
 
@@ -104,8 +95,7 @@ def add_to_cart(oem, quantity=1):
 
     for item in items:
         if item.get("oem") == oem:
-            current_quantity = item.get("quantity", 1)
-            item["quantity"] = current_quantity + quantity
+            item["quantity"] = item.get("quantity", 1) + quantity
             break
     else:
         items.append({"oem": oem, "quantity": quantity})

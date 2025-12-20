@@ -1,0 +1,244 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+}
+
+body {
+  background: #f5f5f5;
+  color: #111;
+}
+
+/* ================= COMMON ================= */
+.container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 1rem;
+}
+
+.card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 1.2rem;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+  margin-bottom: 1.4rem;
+}
+
+.muted {
+  color: #8b8b8b;
+  font-size: 0.9rem;
+}
+
+/* ================= HEADER ================= */
+
+header {
+  background-color: white;
+}
+
+.top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.2rem 0;
+}
+
+.search-bar {
+  width: 50%; 
+}
+
+.search-bar input {
+  width: 100%;
+  padding: 0.45rem 0.8rem;
+  border-radius: 20px;
+  border: 1px solid rgba(0,0,0,0.12);
+  background: #f3f4f6;
+  font-size: 0.95rem;
+  outline: none;
+  text-align: center;
+}
+
+.search-bar input:focus {
+  border-color: #c01717;
+}
+
+.icons 
+{
+  display:flex; 
+  align-items:center; 
+  gap: 0.5rem;
+}
+
+.icon-btn{
+  background: #fff;
+  border:1px solid rgba(0,0,0,0.12); 
+  padding:0.25rem 0.4rem;
+  border-radius:6px; 
+  cursor:pointer;
+}
+
+.btn.auth {
+  background:#e01b1b; 
+  color:#fff; 
+  padding:0.35rem 0.7rem; 
+  border-radius:8px; 
+  text-decoration:none; 
+  font-weight:600;
+}
+
+.btn.auth:hover {
+  background:#c01717; 
+  transition:background 0.3s;
+}
+
+.logo img {
+  height: 120px;
+}
+
+.sections {
+  display: flex;
+  justify-content: center;
+  gap: 4rem;
+  padding-bottom: 0.6rem;
+}
+
+.sections a {
+  display:inline-block;
+  background:#cccccc;
+  padding:0.25rem 0.7rem;
+  margin-top: -26px;
+  border-radius:14px;
+  color:#000000;
+  font-weight:600;
+  box-shadow:0 4px 10px rgba(0,0,0,0.04);
+  text-decoration:none;
+}
+
+.sections a:hover {
+  background:#c01717;
+  color:#ffffff;
+  transition:background 0.3s, color 0.3s;
+}
+
+/* ================= PROFILE ================= */
+.profile-page {
+  margin-top: 2rem;
+}
+
+.profile-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.profile-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.profile-info h2 {
+  font-size: 1.3rem;
+}
+
+.profile-info p {
+  color: #777;
+}
+
+/* ================= BUTTONS ================= */
+.btn {
+  background: #e01b1b;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.btn-outline {
+  border: 1px solid #e01b1b;
+  color: #e01b1b;
+  padding: 0.4rem 0.9rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+/* ================= ADDRESS ================= */
+.address-card p {
+  margin-top: 0.4rem;
+}
+
+/* ================= ORDERS ================= */
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.orders-card .card-header {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.2rem;
+}
+
+.order-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.9rem 0;
+  border-top: 1px solid #eee;
+}
+
+.order-item:first-of-type {
+  border-top: none;
+}
+
+.order-right {
+  text-align: right;
+}
+
+.price {
+  color: #e01b1b;
+  font-weight: 800;
+  display: block;
+}
+
+.details {
+  color: #e01b1b;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+/* ================= BADGES ================= */
+.badge {
+  font-size: 0.75rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px;
+  margin-left: 0.4rem;
+  font-weight: 700;
+}
+
+.completed {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.shipped {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.pending {
+  background: #fef3c7;
+  color: #92400e;
+}

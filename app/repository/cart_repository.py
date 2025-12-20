@@ -30,10 +30,9 @@ def write_json_file(path, data):
 
 
 def load_cart_raw():
-
     return read_json_file(CART_JSON_PATH, default_value={"items": []})
 
 
 def save_cart_raw(cart_dictionary):
-
     write_json_file(CART_JSON_PATH, cart_dictionary)
+

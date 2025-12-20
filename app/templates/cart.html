@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/Home.css') }}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/checkout.css') }}">
   <title>Elherafeen Store | Cart</title>
   <style>
     /* Additional styles for checkout functionality */
@@ -204,7 +205,7 @@
           <div class="icons">
             <button type="button" class="icon-btn">❤</button>
             <a href="{{ url_for('cart.cart') }}">Cart</a>
-            <a class="btn auth" href="/Elherafeen/templates/login.html">Login</a>
+            <a class="btn auth" href="{{ url_for('customer.login') }}">Login</a>
           </div>
         </div>
 
@@ -327,9 +328,13 @@
             <button id="checkout-button" class="cart-checkout-btn">
               <i class="fas fa-lock"></i> Proceed to Checkout
             </button>
+            <a href="{{ url_for('checkout.checkout_page') }}" class="cart-checkout-btn">
+              Proceed to Checkout
+            </a>
+
             <a href="products.html" class="cart-continue-link">← Continue Shopping</a>
           </aside>
-        </div> 
+        </div>
 
         <!-- Checkout Form (Initially Hidden) -->
         <div id="checkout-form" class="checkout-form-container">
@@ -421,6 +426,7 @@
     const removeUrl = "{{ url_for('cart.remove_from_cart') }}";
 
     // + / - quantity buttons
+    // + / - quantity
     document.querySelectorAll(".qty-btn").forEach(btn => {
       btn.addEventListener("click", async () => {
         const direction = btn.dataset.direction;
@@ -465,6 +471,7 @@
     });
 
     //Remove button
+    // Remove button
     document.querySelectorAll(".cart-remove-btn").forEach(btn => {
       btn.addEventListener("click", async () => {
         const oem = btn.dataset.oem;

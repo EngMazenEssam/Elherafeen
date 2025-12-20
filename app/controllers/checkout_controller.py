@@ -1,191 +1,167 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 import json
 from datetime import datetime
-from pathlib import Path
 
-checkout_bp = Blueprint('checkout', __name__)
+from app.services.cart_service import get_cart_items_with_totals
+from app.repository.checkout_repository import (
+    get_data_folder,
+    save_orders,
+    clear_cart,
+)
 
-def get_data_folder():
-    base_dir = Path(__file__).parent.parent
-    return base_dir / 'data'
+checkout_bp = Blueprint("checkout", __name__)
 
-def load_cart():
-    cart_file = get_data_folder() / 'cart.json'
-    try:
-        with open(cart_file, 'r') as f:
-            cart_data = json.load(f)
-            if 'items' not in cart_data:
-                cart_data['items'] = []
-            if 'total_items' not in cart_data:
-                cart_data['total_items'] = 0
-            if 'total_price' not in cart_data:
-                cart_data['total_price'] = 0
-            return cart_data
-    except FileNotFoundError:
-        return {"items": [], "total_items": 0, "total_price": 0}
 
-def load_products():
-    products_file = get_data_folder() / 'sellers_inventory.json'
-    try:
-        with open(products_file, 'r', encoding='utf-8') as f:
-            sellers = json.load(f)
-            all_products = []
-            for seller_id, seller_data in sellers.items():
-                for product in seller_data['products']:
-                    product['seller_name'] = seller_data['name']
-                    product['id'] = f"{seller_id}_{product['oem']}"
-                    all_products.append(product)
-            return all_products
-    except FileNotFoundError:
-        return []
-
-def save_orders(orders):
-    orders_file = get_data_folder() / 'orders.json'
-    with open(orders_file, 'w') as f:
-        json.dump(orders, f, indent=2)
-
-def clear_cart():
-    cart_file = get_data_folder() / 'cart.json'
-    empty_cart = {"items": [], "total_items": 0, "total_price": 0}
-    with open(cart_file, 'w') as f:
-        json.dump(empty_cart, f, indent=2)
-
-@checkout_bp.route('/checkout')
+@checkout_bp.route("/checkout")
 def checkout_page():
-    cart_data = load_cart()
-    
-    if not cart_data['items']:
-        flash('Your cart is empty', 'error')
-        return redirect('/cart')
-    
-    all_products = load_products()
-    cart_items_with_details = []
-    
-    for cart_item in cart_data['items']:
-        for product in all_products:
-            if product['oem'] == cart_item['oem']:
-                item_with_details = {
-                    'name': product.get('name', 'Unknown Product'),
-                    'oem': product.get('oem', ''),
-                    'price': product.get('price', 0),
-                    'quantity': cart_item['quantity'],
-                    'brand': product.get('brand', ''),
-                    'line_total': product.get('price', 0) * cart_item['quantity']
-                }
-                cart_items_with_details.append(item_with_details)
-                break
-    
-    cart_data['items'] = cart_items_with_details
-    
-    return render_template('checkout.html', cart=cart_data)
+    cart_items, subtotal, total_quantity = get_cart_items_with_totals()
 
-@checkout_bp.route('/checkout', methods=['POST'])
-def process_checkout():
-    first_name = request.form.get('first_name', '').strip()
-    last_name = request.form.get('last_name', '').strip()
-    email = request.form.get('email', '').strip()
-    phone = request.form.get('phone', '').strip()
-    address = request.form.get('address', '').strip()
-    city = request.form.get('city', '').strip()
-    zip_code = request.form.get('zip', '').strip()
-    payment_method = request.form.get('payment', 'cod')
-    
-    if not all([first_name, last_name, email, phone, address, city, zip_code]):
-        flash('Please fill in all required fields', 'error')
-        return redirect('/checkout')
-    
-    cart_data = load_cart()
-    
-    if not cart_data['items']:
-        flash('Your cart is empty', 'error')
-        return redirect('/cart')
-    
-    order_id = f"ORD-{datetime.now().strftime('%Y%m%d%H%M%S')}"
-    
-    all_products = load_products()
-    order_items = []
-    
-    for cart_item in cart_data['items']:
-        for product in all_products:
-            if product['oem'] == cart_item['oem']:
-                order_item = {
-                    'name': product.get('name', 'Unknown Product'),
-                    'oem': product.get('oem', ''),
-                    'price': product.get('price', 0),
-                    'quantity': cart_item['quantity'],
-                    'brand': product.get('brand', ''),
-                    'category': product.get('category', ''),
-                    'line_total': product.get('price', 0) * cart_item['quantity']
-                }
-                order_items.append(order_item)
-                break
-    
-    order = {
-        'order_id': order_id,
-        'customer': {
-            'first_name': first_name,
-            'last_name': last_name,
-            'email': email,
-            'phone': phone,
-            'address': address,
-            'city': city,
-            'zip_code': zip_code
-        },
-        'items': order_items,
-        'total_items': cart_data['total_items'],
-        'total_price': cart_data['total_price'],
-        'payment_method': payment_method,
-        'status': 'pending',
-        'order_date': datetime.now().isoformat(),
-        'notes': ''
+    if total_quantity == 0:
+        flash("Your cart is empty", "error")
+        return redirect(url_for("cart.cart"))
+
+    shipping = 100
+    tax = round(subtotal * 0.14, 2)
+    grand_total = subtotal + shipping + tax
+
+    checkout_items = []
+    for item in cart_items:
+        product = item["product"]
+
+        checkout_items.append({
+            "name": product.get("name", "Unknown product"),
+            "oem": product.get("oem"),
+            "price": product.get("price", 0),
+            "quantity": item.get("quantity", 1),
+            "brand": product.get("brand", ""),
+            "line_total": item.get("line_total", 0),
+        })
+
+    cart_view = {
+        "items": checkout_items,
+        "total_items": total_quantity,
+        "subtotal": subtotal,
+        "shipping": shipping,
+        "tax": tax,
+        "total_price": grand_total,
     }
-    
+
+    return render_template(
+        "checkout.html",
+        cart=cart_view,
+        cart_items=checkout_items,
+    )
+
+
+@checkout_bp.route("/checkout", methods=["POST"])
+def process_checkout():
+    first_name = request.form.get("first_name", "").strip()
+    last_name = request.form.get("last_name", "").strip()
+    email = request.form.get("email", "").strip()
+    phone = request.form.get("phone", "").strip()
+    address = request.form.get("address", "").strip()
+    city = request.form.get("city", "").strip()
+    zip_code = request.form.get("zip", "").strip()
+    payment_method = request.form.get("payment", "cod")
+
+    if not all([first_name, last_name, email, phone, address, city, zip_code]):
+        flash("Please fill in all required fields", "error")
+        return redirect(url_for("checkout.checkout_page"))
+
+    cart_items, subtotal, total_quantity = get_cart_items_with_totals()
+
+    if total_quantity == 0:
+        flash("Your cart is empty", "error")
+        return redirect(url_for("cart.cart"))
+
+    shipping = 100
+    tax = round(subtotal * 0.14, 2)
+    grand_total = subtotal + shipping + tax
+
+    order_items = []
+    for item in cart_items:
+        product = item["product"]
+
+        order_items.append({
+            "name": product.get("name", "Unknown product"),
+            "oem": product.get("oem"),
+            "price": product.get("price", 0),
+            "quantity": item.get("quantity", 1),
+            "brand": product.get("brand", ""),
+            "category": product.get("category", ""),
+            "line_total": item.get("line_total", 0),
+        })
+
+    order_id = "ORD-" + datetime.now().strftime("%Y%m%d%H%M%S")
+
+    order = {
+        "order_id": order_id,
+        "customer": {
+            "first_name": first_name,
+            "last_name": last_name,
+            "email": email,
+            "phone": phone,
+            "address": address,
+            "city": city,
+            "zip_code": zip_code,
+        },
+        "items": order_items,
+        "total_items": total_quantity,
+        "subtotal": subtotal,
+        "shipping": shipping,
+        "tax": tax,
+        "total_price": grand_total,
+        "payment_method": payment_method,
+        "status": "pending",
+        "order_date": datetime.now().isoformat(),
+        "notes": "",
+    }
+
+    orders_file = get_data_folder() / "orders.json"
     try:
-        with open(get_data_folder() / 'orders.json', 'r') as f:
+        with open(orders_file, "r", encoding="utf-8") as f:
             orders = json.load(f)
     except FileNotFoundError:
         orders = []
-    
+
     orders.append(order)
-    
-    with open(get_data_folder() / 'orders.json', 'w') as f:
-        json.dump(orders, f, indent=2)
-    
+    save_orders(orders)
     clear_cart()
-    
-    return redirect(f'/order-confirmation/{order_id}')
 
-@checkout_bp.route('/order-confirmation/<order_id>')
+    return redirect(url_for("checkout.order_confirmation", order_id=order_id))
+
+
+@checkout_bp.route("/order-confirmation/<order_id>")
 def order_confirmation(order_id):
-    try:
-        with open(get_data_folder() / 'orders.json', 'r') as f:
-            orders = json.load(f)
-        
-        order = None
-        for o in orders:
-            if o['order_id'] == order_id:
-                order = o
-                break
-        
-        if not order:
-            flash('Order not found', 'error')
-            return redirect('/')
-        
-        return render_template('order_confirmation.html', order=order)
-    
-    except FileNotFoundError:
-        flash('Order not found', 'error')
-        return redirect('/')
+    orders_file = get_data_folder() / "orders.json"
 
-@checkout_bp.route('/orders')
-def order_history():
     try:
-        with open(get_data_folder() / 'orders.json', 'r') as f:
+        with open(orders_file, "r", encoding="utf-8") as f:
             orders = json.load(f)
-        
-        orders.sort(key=lambda x: x.get('order_date', ''), reverse=True)
-        
-        return render_template('order_history.html', orders=orders)
-    
+
+        order = next((o for o in orders if o["order_id"] == order_id), None)
+
+        if order is None:
+            flash("Order not found", "error")
+            return redirect(url_for("home.home"))
+
+        return render_template("order_confirmation.html", order=order)
+
     except FileNotFoundError:
-        return render_template('order_history.html', orders=[])
+        flash("Order not found", "error")
+        return redirect(url_for("home.home"))
+
+
+@checkout_bp.route("/orders")
+def order_history():
+    orders_file = get_data_folder() / "orders.json"
+
+    try:
+        with open(orders_file, "r", encoding="utf-8") as f:
+            orders = json.load(f)
+
+        orders.sort(key=lambda o: o.get("order_date", ""), reverse=True)
+        return render_template("order_history.html", orders=orders)
+
+    except FileNotFoundError:
+        return render_template("order_history.html", orders=[])
