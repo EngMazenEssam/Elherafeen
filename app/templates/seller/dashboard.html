@@ -64,94 +64,64 @@
             <div class="form-card">
                 <form action="{{ url_for('seller.submit_product') }}" method="POST" enctype="multipart/form-data">
 
-                    <h3>1. Car Basic Information</h3>
+                    <h3>1. Product Basic Information</h3>
                     <div class="form-grid">
                         <div class="form-group">
-                            <label>Car Brand</label>
-                            <select name="brand" class="form-control" required>
-                                <option value="" disabled selected>Select Brand</option>
-                                <option value="BMW">BMW</option>
-                                <option value="Mercedes">Mercedes-Benz</option>
-                                <option value="Audi">Audi</option>
-                                <option value="Lamborghini">Lamborghini</option>
-                                <option value="Ferrari">Ferrari</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Car Model</label>
-                            <input type="text" name="model" class="form-control" placeholder="e.g. Aventador SVJ"
+                            <label>Product Name</label>
+                            <input type="text" name="name" class="form-control" placeholder="e.g. Mahle Thermostat"
                                 required>
                         </div>
                         <div class="form-group">
-                            <label>Year</label>
-                            <input type="number" name="year" class="form-control" placeholder="2024" min="1900"
-                                max="2025" required>
+                            <label>Category</label>
+                            <select name="category" class="form-control" required>
+                                <option value="" disabled selected>Select Category</option>
+                                <option value="Car Oils">Car Oils</option>
+                                <option value="Brakes">Brakes</option>
+                                <option value="Batteries">Batteries</option>
+                                <option value="Cooling">Cooling</option>
+                                <option value="Electrical">Electrical</option>
+                                <option value="Engine">Engine</option>
+                                <option value="Suspensions">Suspensions</option>
+                                <option value="Fluids">Fluids</option>
+                            </select>
                         </div>
+                        <div class="form-group">
+                            <label>Type</label>
+                            <input type="text" name="type" class="form-control" placeholder="e.g. Thermostat" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Brand</label>
+                            <input type="text" name="brand" class="form-control" placeholder="e.g. Mahle" required>
+                        </div>
+                    </div>
+
+                    <h3>2. Details & Inventory</h3>
+                    <div class="form-grid">
                         <div class="form-group">
                             <label>Condition</label>
                             <select name="condition" class="form-control" required>
                                 <option value="New">New</option>
                                 <option value="Used">Used</option>
-                                <option value="Certified Pre-Owned">Certified Pre-Owned</option>
+                                <option value="Open Box">Open Box</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>Color</label>
-                            <input type="text" name="color" class="form-control" placeholder="e.g. Rosso Corsa Red">
+                            <label>Stock Quantity</label>
+                            <input type="number" name="stock" class="form-control" placeholder="e.g. 12" min="1"
+                                required>
                         </div>
-                        <div class="form-group">
-                            <label>Body Type</label>
-                            <select name="body_type" class="form-control">
-                                <option value="Coupe">Coupe</option>
-                                <option value="Sedan">Sedan</option>
-                                <option value="SUV">SUV</option>
-                                <option value="Convertible">Convertible</option>
-                            </select>
+                        <div class="form-group" style="grid-column: span 2;">
+                            <label>Tags</label>
+                            <input type="text" name="tags" class="form-control"
+                                placeholder="e.g. cooling, heat, replacement (comma separated)">
                         </div>
                     </div>
 
-                    <h3>2. Performance & Specs</h3>
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label>Engine Type</label>
-                            <input type="text" name="engine_type" class="form-control" placeholder="e.g. V12 6.5L">
-                        </div>
-                        <div class="form-group">
-                            <label>Horsepower</label>
-                            <input type="text" name="horsepower" class="form-control" placeholder="e.g. 770">
-                        </div>
-                        <div class="form-group">
-                            <label>Transmission</label>
-                            <select name="transmission" class="form-control">
-                                <option value="Automatic">Automatic</option>
-                                <option value="Manual">Manual</option>
-                                <option value="Dual Clutch">Dual Clutch</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Drivetrain</label>
-                            <select name="drivetrain" class="form-control">
-                                <option value="AWD">AWD</option>
-                                <option value="RWD">RWD</option>
-                                <option value="FWD">FWD</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>0-60 Time (seconds)</label>
-                            <input type="text" name="zero_to_sixty" class="form-control" placeholder="e.g. 2.8">
-                        </div>
-                        <div class="form-group">
-                            <label>Fuel Type / Range</label>
-                            <input type="text" name="fuel_type" class="form-control"
-                                placeholder="e.g. Premium Gasoline">
-                        </div>
-                    </div>
-
-                    <h3>3. Pricing & Availability</h3>
+                    <h3>3. Pricing</h3>
                     <div class="form-grid">
                         <div class="form-group">
                             <label>Price</label>
-                            <input type="number" name="price" class="form-control" placeholder="e.g. 350000" required>
+                            <input type="number" name="price" class="form-control" placeholder="e.g. 550" required>
                         </div>
                         <div class="form-group">
                             <label>Currency</label>
@@ -161,37 +131,25 @@
                                 <option value="EUR">EUR</option>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <label>Location</label>
-                            <input type="text" name="location" class="form-control" placeholder="e.g. Dubai, UAE">
-                        </div>
-                        <div class="form-group">
-                            <label>Availability Date</label>
-                            <input type="date" name="availability_date" class="form-control">
-                        </div>
-                        <div class="form-group" style="grid-column: span 2;">
-                            <label>VIN (Optional)</label>
-                            <input type="text" name="vin" class="form-control"
-                                placeholder="Vehicle Identification Number">
-                        </div>
                     </div>
 
-                    <h3>4. Car Media Upload</h3>
+                    <h3>4. Product Image</h3>
                     <div class="form-group">
                         <div class="file-upload-area" onclick="document.getElementById('fileInput').click()">
                             <p style="font-size: 1.2rem; color: var(--primary);">⬆ Drag & drop or click to upload</p>
-                            <p style="color: var(--text-muted); font-size: 0.9rem;">Supports JPG, PNG, WEBP, MP4 — Max
-                                10MB</p>
+                            <p style="color: var(--text-muted); font-size: 0.9rem;">Supports JPG, PNG, WEBP — Max 10MB
+                            </p>
                             <input type="file" name="image" id="fileInput" style="display: none"
                                 onchange="document.getElementById('fileNameUI').innerText = this.files[0].name">
                             <p id="fileNameUI" style="margin-top: 10px; color: var(--success);"></p>
                         </div>
                     </div>
 
-                    <h3>5. Supplier Notes</h3>
+                    <h3>5. Description</h3>
                     <div class="form-group">
+                        <label>Description</label>
                         <textarea name="description" class="form-control" rows="4"
-                            placeholder="Include extra details such as car history, modifications, special conditions, etc."></textarea>
+                            placeholder="e.g. Opens at 87 degrees celsius."></textarea>
                     </div>
 
                     <div style="text-align: right; margin-top: 30px;">
@@ -208,13 +166,12 @@
             <div class="products-list">
                 {% for p in pending_products %}
                 <div class="product-item">
-                    <img src="{{ url_for('static', filename='images/' ~ p.image) if 'products/' not in p.image else url_for('static', filename='images/' ~ p.image.replace('static/images/', '')) }}"
-                        alt="{{ p.model }}"
+                    <img src="{{ url_for('static', filename='images/' ~ p.images[0]) }}" alt="{{ p.name }}"
                         onerror="this.src='{{ url_for('static', filename='images/products/default.jpg') }}'">
-                    <!-- Simple fix for pathing if necessary, assuming code saves to static/images/products -->
                     <div class="product-details">
-                        <h4>{{ p.brand }} {{ p.model }}</h4>
-                        <p style="color: var(--text-muted); font-size: 0.9rem;">{{ p.price }} {{ p.currency }}</p>
+                        <h4>{{ p.name }}</h4>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">{{ p.price }} {{ p.currency }} | {{
+                            p.brand }}</p>
                         <p style="font-size: 0.8rem; margin-top: 10px;">Submitted: {{ p.submission_date }}</p>
                         <span class="status-badge status-pending">Pending Review</span>
                     </div>
@@ -233,10 +190,12 @@
             <div class="products-list">
                 {% for p in approved_products %}
                 <div class="product-item">
-                    <img src="{{ url_for('static', filename='images/' ~ p.image) }}" alt="{{ p.model }}">
+                    <img src="{{ url_for('static', filename='images/' ~ p.images[0]) }}" alt="{{ p.name }}"
+                        onerror="this.src='{{ url_for('static', filename='images/products/default.jpg') }}'">
                     <div class="product-details">
-                        <h4>{{ p.brand }} {{ p.model }}</h4>
-                        <p style="color: var(--text-muted); font-size: 0.9rem;">{{ p.price }} {{ p.currency }}</p>
+                        <h4>{{ p.name }}</h4>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">{{ p.price }} {{ p.currency }} | {{
+                            p.brand }}</p>
                         <span class="status-badge status-approved">Live</span>
                     </div>
                 </div>
