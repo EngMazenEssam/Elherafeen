@@ -7,6 +7,12 @@ PENDING_FILE = os.path.join(str(DATA_DIR), "pending.json")
 APPROVED_FILE = os.path.join(str(DATA_DIR), "approved.json")
 
 class SellerRepository:
+    _instance = None
+
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super(SellerRepository, cls).__new__(cls)
+        return cls._instance
 
     def _load_json(self, path: str) -> List[Dict[str, Any]]:
         if not os.path.exists(path):
