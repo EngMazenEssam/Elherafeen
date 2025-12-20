@@ -36,22 +36,22 @@ jobs:
 
     - name: Build Docker image
       run: |
-        docker-compose build test
+        docker compose build test
 
     - name: Run tests with Docker Compose
       run: |
-        docker-compose up test --abort-on-container-exit
+        docker compose up test --abort-on-container-exit
 
     - name: Check test results
       if: always()
       run: |
-        docker-compose ps test
-        exit $(docker-compose ps -q test | xargs docker inspect -f '{{.State.ExitCode}}')
+        docker compose ps test
+        exit $(docker compose ps -q test | xargs docker inspect -f '{{.State.ExitCode}}')
 
     - name: Clean up
       if: always()
       run: |
-        docker-compose down -v
+        docker compose down -v
 
     - name: Notify on failure
       if: failure()
