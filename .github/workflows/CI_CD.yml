@@ -1,0 +1,60 @@
+name: Docker CI/CD
+on:
+  push:
+    branches:
+      - "main"
+      - "develop"
+      - "Ali-Testing"
+  pull_request:
+    branches:
+      - "main"
+      - "develop"
+      - "Ali-Testing"
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    name: Run Tests with Docker
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Cache Docker layers
+      uses: actions/cache@v4
+      with:
+        path: /tmp/.buildx-cache
+        key: ${{ runner.os }}-buildx-${{ hashFiles('**/Dockerfile', '**/requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-buildx-
+
+    - name: Build Docker image
+      run: |
+        docker-compose build test
+
+    - name: Run tests with Docker Compose
+      run: |
+        docker-compose up test --abort-on-container-exit
+
+    - name: Check test results
+      if: always()
+      run: |
+        docker-compose ps test
+        exit $(docker-compose ps -q test | xargs docker inspect -f '{{.State.ExitCode}}')
+
+    - name: Clean up
+      if: always()
+      run: |
+        docker-compose down -v
+
+    - name: Notify on failure
+      if: failure()
+      run: |
+        curl -X POST -H 'Content-type: application/json' --data '{"text":"Docker tests failed on commit push"}' ${{ secrets.SLACK_WEBHOOK_URL }}
+
