@@ -1,0 +1,29 @@
+version: '3.7'
+
+services:
+  dev:
+    build:
+      context: .
+      target: main
+    command: bash -c "python run.py"
+    volumes:
+      - .:/elherafeen-api
+      - staticfiles:/elherafeen-api/static
+    ports:
+      - "3000:5000"
+    environment:
+      - SECRET_KEY=Pr0duct!0nKeY
+
+  test:
+    build:
+      context: .
+      target: main
+    command: bash -c "python -m pytest tests/ -v"
+    volumes:
+      - .:/elherafeen-api
+      - staticfiles:/elherafeen-api/static
+    environment:
+      - SECRET_KEY=Te$tKeY
+
+volumes:
+  staticfiles:
