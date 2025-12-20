@@ -1,19 +1,23 @@
+/* Seller Dashboard - Elherafeen Theme */
 :root {
-    --bg-dark: #0f111a;
-    --card-bg: #1a1d2d;
-    --primary: #00d4ff;
-    --primary-hover: #00b8e6;
-    --text-main: #ffffff;
-    --text-muted: #a0a3b1;
-    --border-color: #2a2e45;
-    --success: #00ff9d;
-    --warning: #ffbf00;
+    --bg-light: #f5f5f5;
+    --card-bg: #ffffff;
+    --primary: #e01b1b;
+    --primary-hover: #c01717;
+    --text-main: #111111;
+    --text-muted: #8b8b8b;
+    --border-color: rgba(0, 0, 0, 0.12);
+    --input-bg: #f9fafb;
+    --success: #008a00;
+    --warning: #ffb900;
+    --shadow-sm: 0 4px 10px rgba(0, 0, 0, 0.04);
+    --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.08);
 }
 
 body {
-    background-color: var(--bg-dark);
+    background-color: var(--bg-light);
     color: var(--text-main);
-    font-family: 'Inter', sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0;
 }
@@ -28,27 +32,28 @@ h1,
 h2,
 h3 {
     margin-top: 0;
+    font-weight: 700;
 }
 
 .seller-header {
     margin-bottom: 40px;
-    border-bottom: 1px solid var(--border-color);
     padding-bottom: 20px;
+    border-bottom: 1px solid var(--border-color);
 }
 
 .seller-header h1 {
     font-size: 2.5rem;
-    background: linear-gradient(90deg, var(--primary), #ffffff);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: var(--text-main);
+    /* Removed gradient to match simple style of Home.css */
 }
 
+/* Form Styles */
 .form-card {
     background: var(--card-bg);
-    border-radius: 16px;
+    border-radius: 12px;
     padding: 30px;
     border: 1px solid var(--border-color);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    box-shadow: var(--shadow-lg);
     margin-bottom: 50px;
 }
 
@@ -66,13 +71,15 @@ h3 {
 .form-group label {
     display: block;
     margin-bottom: 8px;
-    color: var(--text-muted);
-    font-size: 0.9rem;
+    color: #4b5563;
+    /* Slightly darker than muted for readability */
+    font-size: 0.95rem;
+    font-weight: 600;
 }
 
 .form-control {
     width: 100%;
-    background: #0f111a;
+    background: var(--input-bg);
     border: 1px solid var(--border-color);
     border-radius: 8px;
     padding: 12px 16px;
@@ -80,18 +87,17 @@ h3 {
     font-size: 1rem;
     transition: border-color 0.3s, box-shadow 0.3s;
     box-sizing: border-box;
-    /* Fix for overflow issues */
 }
 
 .form-control:focus {
     outline: none;
     border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.1);
+    box-shadow: 0 0 0 3px rgba(224, 27, 27, 0.1);
 }
 
 select.form-control {
     appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23a0a3b1' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%238b8b8b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right 12px center;
     background-size: 16px;
@@ -104,17 +110,17 @@ select.form-control {
     text-align: center;
     cursor: pointer;
     transition: all 0.3s;
-    background: rgba(42, 46, 69, 0.3);
+    background: #ffffff;
 }
 
 .file-upload-area:hover {
     border-color: var(--primary);
-    background: rgba(0, 212, 255, 0.05);
+    background: #fff5f5;
 }
 
 .btn-submit {
-    background: linear-gradient(135deg, var(--primary), #00a3cc);
-    color: #000;
+    background: var(--primary);
+    color: #fff;
     font-weight: 700;
     padding: 14px 28px;
     border: none;
@@ -123,21 +129,25 @@ select.form-control {
     width: 100%;
     font-size: 1.1rem;
     transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 8px 24px rgba(224, 27, 27, 0.16);
 }
 
 .btn-submit:hover {
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0, 212, 255, 0.3);
+    box-shadow: 0 10px 28px rgba(224, 27, 27, 0.22);
+    background: var(--primary-hover);
 }
 
+/* Setup Sections */
 .section-title {
     margin-bottom: 20px;
     color: var(--text-main);
-    font-size: 1.5rem;
-    border-left: 4px solid var(--primary);
-    padding-left: 12px;
+    font-size: 1.6rem;
+    border-left: 5px solid var(--primary);
+    padding-left: 15px;
 }
 
+/* Status Lists */
 .products-list {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -150,12 +160,20 @@ select.form-control {
     border-radius: 12px;
     overflow: hidden;
     border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.product-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
 }
 
 .product-item img {
     width: 100%;
     height: 180px;
     object-fit: cover;
+    background: #efefef;
 }
 
 .product-details {
@@ -163,8 +181,9 @@ select.form-control {
 }
 
 .product-details h4 {
-    margin: 0 0 10px 0;
+    margin: 0 0 6px 0;
     color: var(--text-main);
+    font-size: 1.1rem;
 }
 
 .status-badge {
@@ -172,15 +191,17 @@ select.form-control {
     padding: 4px 12px;
     border-radius: 20px;
     font-size: 0.8rem;
-    font-weight: 600;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .status-pending {
-    background: rgba(255, 191, 0, 0.15);
-    color: var(--warning);
+    background: #fff4ce;
+    color: #9c6500;
 }
 
 .status-approved {
-    background: rgba(0, 255, 157, 0.15);
-    color: var(--success);
+    background: #e6ffec;
+    color: #006600;
 }
