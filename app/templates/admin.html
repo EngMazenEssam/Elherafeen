@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Elherafeen Admin</title>
+
+  <!-- CSS -->
+ <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+ 
+</head>
+
+<body>
+
+  <!-- TOP BAR -->
+  <header class="topbar">
+    <img
+      src="{{ url_for('static', filename='images/icons/ELHERAFEEN LOGO BLACK - croped.png') }}"
+      alt="Elherafeen Logo"
+      class="logo"
+    >
+
+    <!-- ADMIN INFO -->
+    <div class="admin-info">
+      <div class="avatar">AD</div>
+
+      <div class="admin-text">
+        <span class="admin-name">
+          {{ admin.name if admin else "Admin User" }}
+        </span>
+        <span class="admin-email">
+          {{ admin.email if admin else "admin@elherafeen.com" }}
+        </span>
+      </div>
+
+      <span class="dropdown-icon">▾</span>
+      <span class="logout-icon">⎋</span>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="container">
+
+    <h1>Pending Ads Requests</h1>
+    <p class="subtitle">Ads must be approved before appearing on the store</p>
+
+    {% for product in requests %}
+    <div class="product-card">
+
+      <img
+        src="{{ url_for('static', filename='images/products/' ~ product.image) }}"
+        class="product-img"
+        alt="product image"
+      >
+
+      <div class="product-info">
+        <h3>{{ product.title }}</h3>
+        <p class="meta">{{ product.seller }} · {{ product.category }}</p>
+        <p><strong>Price:</strong> EGP {{ product.price }}</p>
+        <p><strong>SKU:</strong> {{ product.sku }}</p>
+        <p class="time">Submitted {{ product.submitted }}</p>
+      </div>
+
+      <div class="actions">
+
+        <!-- APPROVE -->
+        <form
+          method="post"
+          action="{{ url_for('admin.approve', request_id=product.id) }}"
+        >
+          <button type="submit" class="approve">✔ Approve</button>
+        </form>
+
+        <!-- REJECT -->
+        <form
+          method="post"
+          action="{{ url_for('admin.reject', request_id=product.id) }}"
+        >
+          <button type="submit" class="reject">✖ Reject</button>
+        </form>
+
+      </div>
+    </div>
+    {% endfor %}
+
+    {% if requests|length == 0 %}
+      <p style="margin-top:20px; color:#777;">
+        No pending requests at the moment.
+      </p>
+    {% endif %}
+
+  </main>
+
+</body>
+</html>

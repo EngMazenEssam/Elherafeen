@@ -9,6 +9,7 @@ from app.controllers.checkout_controller import checkout_bp
 from app.controllers.profile_controller import profile_bp
 from app.controllers.marketplace_controller import marketplace_bp
 from app.controllers.seller_controller import seller_bp
+from app.controllers.admin_controller import admin_bp
 
 
 def create_app():
@@ -32,5 +33,6 @@ def create_app():
     app.register_blueprint(profile_bp)
     app.register_blueprint(marketplace_bp)
     app.register_blueprint(seller_bp)
+    app.register_blueprint(admin_bp)
 
     return app
