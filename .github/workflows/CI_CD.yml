@@ -39,14 +39,10 @@ jobs:
         docker compose build test
 
     - name: Run tests with Docker Compose
+      env:
+        tKeY: "" 
       run: |
-        docker compose up test --abort-on-container-exit
-
-    - name: Check test results
-      if: always()
-      run: |
-        docker compose ps test
-        exit $(docker compose ps -q test | xargs docker inspect -f '{{.State.ExitCode}}')
+        docker compose up --exit-code-from test
 
     - name: Clean up
       if: always()
@@ -63,4 +59,3 @@ jobs:
         else
           echo "SLACK_WEBHOOK_URL not set, skipping notification."
         fi
-
