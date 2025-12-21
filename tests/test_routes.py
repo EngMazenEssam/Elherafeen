@@ -30,6 +30,7 @@ def test_add_to_cart_api(mock_service_add, client):
 
 @patch('app.controllers.cart_controller.add_to_cart')
 def test_add_to_cart_api_missing_data(mock_service_add, client):
+    mock_service_add.return_value = (False, "Missing OEM", 400)
     response = client.post('/cart/add', json={"quantity": 1})
     assert response.status_code == 400
     assert not response.json["ok"]
