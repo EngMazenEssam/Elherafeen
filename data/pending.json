@@ -20,27 +20,5 @@
     "tags": [
       "dtgdf"
     ]
-  },
-  {
-    "id": "p-e998227e",
-    "seller_id": "b3f9cc10-ae3b-4911-9da8-7ab0cc54bc02",
-    "status": "Pending",
-    "submission_date": "2025-12-20",
-    "name": "Disoo",
-    "category": "Car Oils",
-    "type": "Hi",
-    "brand": "BMW",
-    "condition": "Open Box",
-    "price": "222",
-    "currency": "EGP",
-    "stock": 5,
-    "images": [
-      "default.jpg"
-    ],
-    "description": "",
-    "sold_count": 0,
-    "tags": [
-      "sdfsd"
-    ]
   }
 ]
