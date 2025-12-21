@@ -69,6 +69,16 @@
           method="post"
           action="{{ url_for('admin.reject', request_id=product.id) }}"
         >
+       <form method="post"
+      action="{{ url_for('admin.approve', product_id=product.id) }}">
+
+          <button type="submit" class="approve">✔ Approve</button>
+        </form>
+
+        <!-- REJECT -->
+       <form method="post"
+      action="{{ url_for('admin.reject', product_id=product.id) }}">
+
           <button type="submit" class="reject">✖ Reject</button>
         </form>
 
