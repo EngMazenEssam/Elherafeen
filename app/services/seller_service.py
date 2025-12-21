@@ -4,7 +4,6 @@ from datetime import datetime
 from werkzeug.utils import secure_filename
 from app.repository.seller_repository import SellerRepository
 
-# Constants
 UPLOAD_FOLDER = os.path.join("app", "static", "images", "products")
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'webp', 'mp4'}
 
@@ -14,12 +13,11 @@ class SellerService:
 
     def _allowed_file(self, filename):
         return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+        filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
     def submit_product(self, form_data, files, seller_id):
         product_id = f"p-{uuid.uuid4().hex[:8]}"
         
-        # Handle file upload
         image_filename = "default.jpg"
         if 'image' in files:
             file = files['image']
@@ -34,7 +32,6 @@ class SellerService:
                 
                 image_filename = f"products/{unique_name}"
 
-        # Process tags
         tags_input = form_data.get("tags", "")
         tags_list = [t.strip() for t in tags_input.split(",") if t.strip()]
 

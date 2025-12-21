@@ -132,15 +132,12 @@ h3 {
 .seller-header h1 {
     font-size: 2.5rem;
     color: var(--text-main);
-    /* Removed gradient to match simple style of Home.css */
 }
 
-/* Global Box Sizing */
 * {
     box-sizing: border-box;
 }
 
-/* Form Section Headers */
 form h3 {
     margin-top: 30px;
     margin-bottom: 15px;
@@ -150,7 +147,6 @@ form h3 {
     padding-bottom: 10px;
 }
 
-/* Form Styles */
 .form-card {
     background: var(--card-bg);
     border-radius: 12px;
@@ -163,9 +159,7 @@ form h3 {
 .form-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    /* Slightly smaller min-width for flexibility */
     gap: 24px;
-    /* More breathing room */
     margin-bottom: 30px;
 }
 
@@ -177,7 +171,6 @@ form h3 {
     display: block;
     margin-bottom: 8px;
     color: #4b5563;
-    /* Slightly darker than muted for readability */
     font-size: 0.95rem;
     font-weight: 600;
 }
@@ -191,10 +184,8 @@ form h3 {
     color: var(--text-main);
     font-size: 1rem;
     min-height: 48px;
-    /* Ensure uniform height */
     transition: border-color 0.3s, box-shadow 0.3s;
     appearance: none;
-    /* Normalize browser defaults */
 }
 
 .form-control:focus {
@@ -247,7 +238,6 @@ select.form-control {
     background: var(--primary-hover);
 }
 
-/* Setup Sections */
 .section-title {
     margin-bottom: 20px;
     color: var(--text-main);
@@ -256,7 +246,6 @@ select.form-control {
     padding-left: 15px;
 }
 
-/* Status Lists */
 .products-list {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));

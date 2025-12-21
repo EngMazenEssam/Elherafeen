@@ -15,7 +15,6 @@ profile_bp = Blueprint(
 
 @profile_bp.route("/")
 def profile():
-    # TEMP until auth/session is added
     email = "mazenessam@gmail.com"
 
     user_service = UserService()
@@ -38,7 +37,6 @@ def profile():
 
 @profile_bp.route('/profile/edit', methods=['GET'])
 def edit_profile_page():
-    # TEMP until auth/session is added
     email = "mazenessam@gmail.com"
 
     user_service = UserService()
@@ -76,7 +74,7 @@ print(us.__file__)
 
 @profile_bp.route("/address/edit", methods=["GET"])
 def edit_address_page():
-    email = "mazenessam@gmail.com"  # temp until session
+    email = "mazenessam@gmail.com"
 
     address_service = AddressService()
     address = address_service.get_address_for_user(email)

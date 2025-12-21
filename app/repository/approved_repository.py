@@ -1,17 +1,17 @@
-import json
 from app.config import DATA_DIR
+from app.utils.json_handler import JsonHandler
+
 
 class ApprovedRepository:
     def __init__(self):
         self.file = DATA_DIR / "products.json"
+        self.json_handler = JsonHandler()
 
     def add(self, product):
-        data = []
-        if self.file.exists():
-            with open(self.file, "r", encoding="utf-8") as f:
-                data = json.load(f)
+        data = self.json_handler.read(self.file)
+        if not isinstance(data, list):
+            data = []
 
         data.append(product)
 
-        with open(self.file, "w", encoding="utf-8") as f:
-            json.dump(data, f, indent=2, ensure_ascii=False)
+        self.json_handler.write(self.file, data)

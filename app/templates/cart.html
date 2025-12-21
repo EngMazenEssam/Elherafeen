@@ -8,7 +8,6 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/checkout.css') }}">
   <title>Elherafeen Store | Cart</title>
   <style>
-    /* Additional styles for checkout functionality */
     * {
         margin: 0;
         padding: 0;
@@ -22,7 +21,6 @@
         line-height: 1.6;
     }
     
-    /* Checkout Form Styles */
     .checkout-form-container {
         display: none;
         background-color: white;
@@ -333,7 +331,6 @@
           </aside>
         </div>
 
-        <!-- Checkout Form (Initially Hidden) -->
         <div id="checkout-form" class="checkout-form-container">
           <div class="checkout-header">
             <h2>Checkout</h2>
@@ -417,13 +414,11 @@
 
   </main>
 
-  <!-- CART JS FOR BUTTONS -->
   <script>
     const updateUrl = "{{ url_for('cart.update_cart_quantity') }}";
     const removeUrl = "{{ url_for('cart.remove_from_cart') }}";
 
-    // + / - quantity buttons
-    // + / - quantity
+
     document.querySelectorAll(".qty-btn").forEach(btn => {
       btn.addEventListener("click", async () => {
         const direction = btn.dataset.direction;
@@ -467,7 +462,6 @@
       });
     });
 
-    // Remove button
     document.querySelectorAll(".cart-remove-btn").forEach(btn => {
       btn.addEventListener("click", async () => {
         const oem = btn.dataset.oem;
@@ -496,38 +490,29 @@
       });
     });
 
-    // Checkout Form Functionality
     document.addEventListener('DOMContentLoaded', function() {
-      // Get DOM elements
       const checkoutButton = document.getElementById('checkout-button');
       const checkoutFormContainer = document.getElementById('checkout-form');
       const closeCheckoutButton = document.getElementById('close-checkout');
       const paymentOptions = document.querySelectorAll('.payment-option');
       const checkoutFormElement = document.getElementById('checkoutForm');
       
-      // Show checkout form when "Proceed to Checkout" is clicked
       if (checkoutButton) {
         checkoutButton.addEventListener('click', function() {
-          // Show the checkout form
           checkoutFormContainer.classList.add('show');
           
-          // Smooth scroll to checkout form
           checkoutFormContainer.scrollIntoView({ behavior: 'smooth' });
           
-          // Update the checkout button text
           checkoutButton.innerHTML = '<i class="fas fa-check"></i> Checkout Form Opened';
           checkoutButton.style.background = 'linear-gradient(to right, #28a745, #20c997)';
           checkoutButton.disabled = true;
         });
       }
       
-      // Close checkout form
       if (closeCheckoutButton) {
         closeCheckoutButton.addEventListener('click', function() {
-          // Hide the checkout form
           checkoutFormContainer.classList.remove('show');
           
-          // Reset the checkout button
           if (checkoutButton) {
             checkoutButton.innerHTML = '<i class="fas fa-lock"></i> Proceed to Checkout';
             checkoutButton.style.background = 'linear-gradient(to right, #1a3a8f, #2d5cc2)';
@@ -536,16 +521,12 @@
         });
       }
       
-      // Payment method selection
       if (paymentOptions.length > 0) {
         paymentOptions.forEach(option => {
           option.addEventListener('click', function() {
-            // Remove selected class from all options
             paymentOptions.forEach(opt => opt.classList.remove('selected'));
-            // Add selected class to clicked option
             this.classList.add('selected');
             
-            // Show/hide card details based on selection
             const paymentType = this.getAttribute('data-payment');
             const cardNumberGroup = document.getElementById('cardNumberGroup');
             const expiryDateGroup = document.getElementById('expiryDateGroup');
@@ -570,23 +551,19 @@
         });
       }
       
-      // Form submission
       if (checkoutFormElement) {
         checkoutFormElement.addEventListener('submit', function(e) {
           e.preventDefault();
           
-          // Get form data
           const firstName = document.getElementById('firstName').value;
           const lastName = document.getElementById('lastName').value;
           const email = document.getElementById('email').value;
           const totalAmount = document.querySelector('.cart-summary-total span:last-child').textContent;
           const paymentMethod = document.querySelector('.payment-option.selected').getAttribute('data-payment');
           
-          // In a real application, you would send this data to a server
-          // Here we'll just show an alert
+
           alert(`Thank you for your order, ${firstName} ${lastName}!\n\nA confirmation email has been sent to ${email}.\n\nPayment Method: ${paymentMethod.toUpperCase()}\n\nTotal Amount: ${totalAmount}`);
           
-          // Reset form and close checkout
           checkoutFormElement.reset();
           checkoutFormContainer.classList.remove('show');
           if (checkoutButton) {

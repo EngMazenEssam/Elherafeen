@@ -28,7 +28,7 @@ def dashboard():
         "name": session.get("admin_name", "Admin User"),
         "email": "admin@elherafeen.com",
     }
-    requests = []  # مؤقت لحد ما نربطه بالـ JSON
+    requests = []
 
     return render_template(
         "admin.html",

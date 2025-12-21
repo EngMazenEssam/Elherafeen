@@ -5,7 +5,6 @@ import uuid
 
 @dataclass
 class User:
-    """User representation in the system."""
     id: str
     fullname: str
     email: str
@@ -14,7 +13,6 @@ class User:
 
     @staticmethod
     def create(fullname: str, email: str, phone: str, password_hash: str) -> "User":
-        """Factory to create a new user with unique id."""
         return User(
             id=str(uuid.uuid4()),
             fullname=fullname,

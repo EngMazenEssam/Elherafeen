@@ -10,8 +10,8 @@ def dashboard():
     
     data = service.get_dashboard_data(seller_id)
     return render_template("seller/dashboard.html", 
-                           pending_products=data["pending"], 
-                           approved_products=data["approved"])
+                        pending_products=data["pending"], 
+                        approved_products=data["approved"])
 
 @seller_bp.route("/submit", methods=["POST"])
 def submit_product():

@@ -1,1 +1,24 @@
-[]
+[
+    {
+    "id": "p-8fc45b12",
+    "seller_id": "b3f9cc10-ae3b-4911-9da8-7ab0cc54bc02",
+    "status": "Pending",
+    "submission_date": "2025-12-20",
+    "name": "test 1",
+    "category": "Brakes",
+    "type": "gob",
+    "brand": "fluid",
+    "condition": "New",
+    "price": "430",
+    "currency": "EGP",
+    "stock": 4,
+    "images": [
+      "default.jpg"
+    ],
+    "description": "",
+    "sold_count": 0,
+    "tags": [
+      "dtgdf"
+    ]
+  }
+]
